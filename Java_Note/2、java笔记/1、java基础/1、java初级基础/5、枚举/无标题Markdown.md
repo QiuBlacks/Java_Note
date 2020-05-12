@@ -1,0 +1,181 @@
+# 枚举
+
+---
+# 一、问题引出
+ &emsp; &emsp;在java语言中还没有引入枚举类型之前，表示枚举类型的常用模式是声明一组具有int常量。
+ 我们通常利用public final static 方法定义的代码:
+```
+public class Season {
+    public static final int SPRING = 1;
+    public static final int SUMMER = 2;
+    public static final int AUTUMN = 3;
+    public static final int WINTER = 4;
+}
+```
+但不满足类型安全性和程序可读性。<br>
+可以用枚举解决：
+
+```
+public enum Season {
+    SPRING, SUMMER, AUTUMN, WINTER;
+}
+```
+
+==**注意**==：枚举类型对象之间的值比较，是可以使用==，直接来比较值，是否相等的，不是必须使用equals方法的哟。
+# 二、实现原理
+
+
+
+
+### 使用规范：
+> 【参考】枚举类名建议带上Enum后缀，枚举成员名称需要全大写，单词间用下划线隔开。<br>
+说明：枚举其实就是特殊的常量类，且构造方法被默认强制是私有。<br>
+正例：枚举名字： DealStatusEnum ; 成 员 名 称 ：SUCCESS /  UNKOWN _ REASON 
+
+
+
+# 三、用法
+## 1、常量
+
+```
+public enum Color {  
+  RED, GREEN, BLANK, YELLOW  
+}  
+```
+## 2、swith
+
+```
+enum Signal {  
+    GREEN, YELLOW, RED  
+}  
+public class TrafficLight {  
+    Signal color = Signal.RED;  
+    public void change() {  
+        switch (color) {  
+        case RED:  
+            color = Signal.GREEN;  
+            break;  
+        case YELLOW:  
+            color = Signal.RED;  
+            break;  
+        case GREEN:  
+            color = Signal.YELLOW;  
+            break;  
+        }  
+    }  
+}  
+```
+## 3、向枚举中添加新方法
+
+```
+public enum Color {  
+    RED("红色", 1), GREEN("绿色", 2), BLANK("白色", 3), YELLO("黄色", 4);  
+    // 成员变量  
+    private String name;  
+    private int index;  
+    // 构造方法  
+    private Color(String name, int index) {  
+        this.name = name;  
+        this.index = index;  
+    }  
+    // 普通方法  
+    public static String getName(int index) {  
+        for (Color c : Color.values()) {  
+            if (c.getIndex() == index) {  
+                return c.name;  
+            }  
+        }  
+        return null;  
+    }  
+    // get set 方法  
+    public String getName() {  
+        return name;  
+    }  
+    public void setName(String name) {  
+        this.name = name;  
+    }  
+    public int getIndex() {  
+        return index;  
+    }  
+    public void setIndex(int index) {  
+        this.index = index;  
+    }  
+}  
+```
+## 4、覆盖枚举的方法
+
+```
+public enum Color {  
+    RED("红色", 1), GREEN("绿色", 2), BLANK("白色", 3), YELLO("黄色", 4);  
+    // 成员变量  
+    private String name;  
+    private int index;  
+    // 构造方法  
+    private Color(String name, int index) {  
+        this.name = name;  
+        this.index = index;  
+    }  
+    //覆盖方法  
+    @Override  
+    public String toString() {  
+        return this.index+"_"+this.name;  
+    }  
+}  
+```
+## 5、实现接口
+
+```
+public interface Behaviour {  
+    void print();  
+    String getInfo();  
+}  
+public enum Color implements Behaviour{  
+    RED("红色", 1), GREEN("绿色", 2), BLANK("白色", 3), YELLO("黄色", 4);  
+    // 成员变量  
+    private String name;  
+    private int index;  
+    // 构造方法  
+    private Color(String name, int index) {  
+        this.name = name;  
+        this.index = index;  
+    }  
+//接口方法  
+    @Override  
+    public String getInfo() {  
+        return this.name;  
+    }  
+    //接口方法  
+    @Override  
+    public void print() {  
+        System.out.println(this.index+":"+this.name);  
+    }  
+}  
+```
+## 6、使用接口组织枚举
+
+```
+public interface Food {  
+    enum Coffee implements Food{  
+        BLACK_COFFEE,DECAF_COFFEE,LATTE,CAPPUCCINO  
+    }  
+    enum Dessert implements Food{  
+        FRUIT, CAKE, GELATO  
+    }  
+}
+
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 参考：http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/enum-usage
+ https://blog.csdn.net/qq_27093465/article/details/52180865
