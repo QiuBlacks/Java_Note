@@ -1,0 +1,111 @@
+#  网络配置
+
+## 一、 Linux网络配置原理图(含虚拟机)
+
+ 
+
+目前我们的网络配置采用的是 NAT。
+
+![image-20200513235458393](E:\black user\Java\有道云截图\image-20200513235458393.png)
+
+![img](http://note.youdao.com/yws/res/1699/WEBRESOURCEd0f428a9a55d1b60547cc7866186aaff)
+
+## 二、 查看网络 IP和网关
+
+ 
+
+1、 查看虚拟网络编辑器
+
+ ![image-20200513235512725](E:\black user\Java\有道云截图\image-20200513235512725.png)
+
+
+
+
+
+2、 修改 ip地址(修改虚拟网络的 ip)
+
+![image-20200513235520292](E:\black user\Java\有道云截图\image-20200513235520292.png)
+
+
+
+3、 查看网关
+
+ ![image-20200513235528860](E:\black user\Java\有道云截图\image-20200513235528860.png)
+
+
+
+ 
+
+4、 查看 windows环境的中 VMnet8网络配置 (ipconfig指令)
+
+ 
+
+1) 使用 ipconfig查看
+
+ ![image-20200513235537768](E:\black user\Java\有道云截图\image-20200513235537768.png)
+
+2) 界面查看
+
+
+
+
+
+## 三、ping 测试主机之间网络连通
+
+ 
+
+### 1、 基本语法
+
+ 
+
+ping 目的主机 （功能描述：测试当前服务器是否可以连接目的主机）
+
+ 
+
+### 2、应用实例
+
+ 
+
+测试当前服务器是否可以连接百度
+
+ 
+
+[root@hadoop100 桌面]# ping www.baidu.com
+
+ 
+
+ 
+
+ 
+
+## 四、linux网络环境配置
+
+ 
+
+### 1、 第一种方法(自动获取)
+
+ ![image-20200513235556586](E:\black user\Java\有道云截图\image-20200513235556586.png)
+
+缺点: linux启动后会自动获取 IP,缺点是每次自动获取的 ip地址可能不一样。这个不适用于做服务器，因为我们的服务器的 ip需要时固定的。
+
+ 
+
+### 2、 第二种方法(指定固定的 ip)
+
+说明：直 接 修 改 配 置 文 件 来 指 定 IP, 并 可 以 连 接 到 外 网 ( 程 序 员 推 荐 ) ， 编 辑                                                                vi
+
+```
+/etc/sysconfig/network-scripts/ifcfg-eth0
+```
+
+ ![image-20200513235609631](E:\black user\Java\有道云截图\image-20200513235609631.png)
+
+要求：将 ip地址配置的静态的，ip地址为 192.168.184.130
+
+
+
+修改后，一定要 重启服务
+
+1) service network restart
+
+2) reboot 重启系统

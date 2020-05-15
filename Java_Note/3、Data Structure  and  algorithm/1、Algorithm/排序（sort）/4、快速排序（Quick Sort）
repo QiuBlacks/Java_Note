@@ -1,0 +1,411 @@
+
+
+# 快速排序（Quick Sort）
+
+[TOC]
+
+
+
+# **一、基本思想**
+
+快速排序（Quicksort）是对冒泡排序的一种改进，借用了分治的思想
+
+基本思想是：
+
+ 选择一个==基准数==，通过一趟排序将要排序的数据分割成独立的两部分；其中一部分的所有数据都比另外一部分的所有数据都要小。然后，再按此方法对这两部分数据分别进行快速排序，整个排序过程可以递归进行，以此达到整个数据变成有序序列
+
+
+
+# 二、 快速排序
+
+## 1、算法思路
+
+①. 挖坑法 
+
+（1）low = L; high = R; 将基准数挖出形成第一个坑a[low]。
+
+（2）high–-，由后向前找比它小的数，找到后挖出此数填前一个坑a[low]中。
+
+（3）low++，由前向后找比它大的数，找到后也挖出此数填到前一个坑a[high]中。
+
+（4）再重复执行②，③二步，直到low==high，将基准数填入a[low]中。
+
+
+
+②. 左右指针法
+
+用伪代码描述如下：
+
+（1）low = L; high = R; 选取a[low]作为关键字记录为 [key ](http://www.liuhaihua.cn/archives/tag/key)。
+
+（2）high–，由后向前找比它小的数
+
+（3）low++，由前向后找比它大的数
+
+（4）交换第（2）、（3）步找到的数
+
+（5）重复（2）、（3），一直往后找，直到left和right相遇，这时将key和a[low]交换位置
+
+## 2、图解
+
+![image-20200513172237028](E:\black user\Java\有道云截图\image-20200513172237028.png)
+
+
+
+
+
+## 3、代码实现
+
+#### 	1)  左右指针法
+
+图解过程参考：https://blog.csdn.net/shujuelin/article/details/82423852
+
+```java
+    public static void quickSort(int arr[], int low, int high) {
+        if (arr == null || arr.length <= 0) {
+            return;
+        }
+        if (low >= high) {
+            return;
+        }
+        int left = low;
+        int right = high;
+
+        int key = arr[left];
+		//条件：左边的数组比key小，右边的比key大
+        while (left < right) {
+            while (left < right && arr[right] >= key) {
+                right--;
+            }
+            
+            while (left < right && arr[left] <= key) {
+                left++;
+            }
+            //两边找到各自不符合条件的数进行交换
+            if (left < right) {
+                swap(arr, left, right);
+            }
+        }
+        //将基准值与中间值交换交换
+        swap(arr, low, left);
+        quickSort(arr, low, left - 1);
+        quickSort(arr, left + 1, high);
+    }
+
+    public static void swap(int arr[], int low, int high) {
+        int tmp = arr[low];
+        arr[low] = arr[high];
+        arr[high] = tmp;
+    }
+```
+
+
+
+## 4、算法效率
+
+快速排序并不稳定，快速排序每次交换的元素都有可能不是相邻的, 因此它有可能打破原来值为相同的元素之间的顺序。
+
+| 平均时间复杂度 | 最好情况 | 最坏情况 | 空间复杂度  |
+| -------------- | -------- | -------- | ----------- |
+| O(n*log2（n）) | O(nlogn) | O(n 2 )  | O(**logN**) |
+
+
+
+
+
+# 三、优化
+
+参考：	https://blog.csdn.net/qq_19525389/article/details/81436838
+
+​				https://blog.csdn.net/scgaliguodong123_/article/details/46473365
+
+## 1、基本概念
+
+### **找基准三种方法：**
+
+**1）固定位置法**：low值就是最后的基准值，万一low值刚好是所有元素最小值（或者元素刚好是有序），第一次找基准过程就相当于什么都没做
+
+2）**随机基准法**：元素中随机找一个数，并赋给low，避免固定位置法的不足之处
+
+3）**三分取基准**：找出low和high下标的中值mid，mid值放在low位置，low值放在mid位置，这样就会尽可能的让一个中间大小的值成为了tmp值（基准值）
+
+
+
+## 2、优化方案
+
+### i、优化思路
+
+1）**不用swap,用赋值操作**
+
+```java
+ while (left < right) {
+            while (left < right && arr[right] >= key) {
+                right--;
+            }
+            arr[left]=arr[right];
+            while (left < right && arr[left] <= key) {
+                left++;
+            }
+             arr[right]=arr[left];
+        }
+```
+
+2）**优化小数组时的排序方案**：如果数组非常小，快速排序配合着使用插入排序
+
+3）聚集元素：把与key相同的数字放在一起
+
+4）随机选取基准值base
+
+5）**优化递归操作**
+
+6）**三路快排法(**三分取基准**)**：取*待排序序列中low、mid、high三个位置上数据，选取他们中间的那个数据作为枢轴*
+
+
+
+
+
+#### ii、优化方案
+
+随机速排   	快速排序的优化,解决普通快排在部分有序数组中进行排序,每次取得的都是趋近最值 
+
+ 二路快排  	随机速排的优化,解决数组中存在大量键值重复的情况以及基本有序数组  
+
+三路快排		 二路排序的优化，把等于value的元素放在另一个区间内，不参与下次的排序。
+
+
+
+#### iii、代码实现
+
+##### 		1）三路+插入+聚集元素
+
+```java
+public class QuickSort {
+    final static int MAX_LENGTH_INSERT_SORT = 7;
+    static void QSort(int arr[], int low, int high)
+    {
+        int first = low;
+        int last = high;
+
+        int left = low;
+        int right = high;
+
+        int leftLen = 0;
+        int rightLen = 0;
+
+        if (high - low  < MAX_LENGTH_INSERT_SORT)
+        {
+            insertSort(arr);
+            return;
+        }
+
+       
+        //使用三数取中法选择枢轴
+        int key = SelectPivotMedianOfThree(arr,low,high);
+        
+		 //一次分割开始
+        while(low < high)
+        {
+            while(high > low && arr[high] >= key)
+            {
+                if (arr[high] == key)//处理相等元素
+                {
+                    swap(arr[right],arr[high]);
+                    right--;
+                    rightLen++;
+                }
+                high--;
+            }
+            //这里取消swap交换算法，采用赋值交换
+            arr[low] = arr[high];
+            
+            while(high > low && arr[low] <= key)
+            {
+                if (arr[low] == key)
+                {
+                    swap(arr[left],arr[low]);
+                    left++;
+                    leftLen++;
+                }
+                low++;
+            }
+            arr[high] = arr[low];
+        }
+        
+        arr[low] = key;
+
+        //一次快排结束
+        
+        //把与枢轴key相同的元素移到枢轴最终位置周围
+        gather(arr,low,first,last,left,right,key);
+
+        QSort(arr,first,low - 1 - leftLen);
+        QSort(arr,low + 1 + rightLen,last);
+    }
+    
+    //聚集元素
+    public static void gather(int arr[], int low, int first,int last,int left,int right,int key){
+        int i = low - 1;
+        int j = first;
+        while(j < left && arr[i] != key)
+        {
+            swap(arr[i],arr[j]);
+            i--;
+            j++;
+        }
+        i = low + 1;
+        j = last;
+        while(j > right && arr[i] != key)
+        {
+            swap(arr[i],arr[j]);
+            i++;
+            j--;
+        }
+    }
+    
+	//插入排序
+    public static void insertSort(int[] arr) {
+        int i, j;
+        //4,2,1,7,8
+        for (i = 1; i < arr.length; i++) {
+            if (arr[i - 1] > arr[i]) {
+                //temp=2
+                int temp = arr[i];//设置哨兵
+                //必须要保证数组下标>=0,才for循环
+                for (j = i - 1; j >= 0 && arr[j] > temp; j--) 
+                    arr[j + 1] = arr[j];  
+          
+                arr[j + 1] = temp;//arr[0]=2
+                //2 4 1 7 8
+            }
+        }
+    }
+	//交换算法
+    public static void swap(int low,int high){
+        int temp = low;
+        low = high;
+        high = temp;
+    }
+    
+	//三路取中基准法：最后结果arr[mid] <= arr[low] <= arr[high]
+   static int SelectPivotMedianOfThree(int arr[],int low,int high) {
+        int mid = low + ((high - low) >> 1);//计算数组中间的元素的下标
+        //使用三数取中法选择枢轴（基准数）
+
+        if (arr[mid] > arr[high])//目标: arr[mid] <= arr[high]
+            swap(arr[mid], arr[high]);
+
+        if (arr[low] > arr[high])//目标: arr[low] <= arr[high]
+            swap(arr[low], arr[high]);
+
+
+        if (arr[mid] > arr[low]) //目标: arr[low] >= arr[mid]
+            swap(arr[mid], arr[low]);
+       
+
+        return arr[low];
+        //low的位置上保存这三个位置中间的值
+        //分割时可以直接使用low位置的元素作为枢轴，而不用改变分割函数了
+    }
+
+```
+
+测试：
+
+```java
+    public static void main(String[] args) {
+                int[] arr = {5,6,1,3,8,7,9,22,12,15,35,4,0,-1,-2,3};
+                QSort(arr,6,7);
+                //insertSort(arr);
+                for (int array : arr) {
+                    System.out.print(array+" ");
+                }
+                System.out.println();
+            }
+        }
+```
+
+
+
+##### 		2）快排+插入+赋值交换
+
+```java
+    final static int MAX_LENGTH_INSERT_SORT = 7;
+
+    public static void QuickSort(int[] arr){
+        QSort(arr,0,arr.length-1);
+    }
+
+    //对顺序表子序列作快速排序     待排序序列的最小下标值low和最大下标值high
+    public static void QSort(int[] arr,int low,int high){
+        int pivot;
+        if((high-low)>MAX_LENGTH_INSERT_SORT){
+            pivot = Partition(arr,low,high);//将数组子序列一分为二
+
+            QSort(arr, low, pivot-1);//对低子表递归排序
+            QSort(arr, pivot+1, high);//对高子表递归排序
+        }else{
+            insertSort(arr);//小数组使用插入排序
+        }
+    }
+
+    //选择一个关键字，想尽办法将它放到一个位置，使得它左边的值都比它小，
+    //右边的值都比它大，我们称这个关键字叫枢轴。
+    public static int Partition(int[] arr,int low,int high){
+
+        if(arr == null || low<0 || high>=arr.length){
+            new Exception();
+        }
+
+        int pivotkey;
+        pivotkey = arr[low];//选取第一个记录作枢轴记录
+
+        int tempCopy = pivotkey;//将枢轴值备份到tempCopy中
+
+        while(low<high)//从表的两端向中间扫描
+        {
+            while(low<high && arr[high]>=pivotkey){//如果大于枢轴值，则下标减一，否则，跳出循环。
+                high--;
+            }
+            //Swap(arr, low, high);//交换
+            arr[low] = arr[high];//采用替换而不是交换的方式进行操作
+            while (low<high && arr[low]<pivotkey){//如果小于枢轴值，则下标加一，否则，跳出循环。
+                low++;
+            }
+            //Swap(arr, low, high);//交换
+            arr[high] = arr[low];//采用替换而不是交换的方式进行操作
+        }
+        arr[low] = tempCopy;//将枢轴值替换回arr[low]
+        return low;//返回枢轴值所在位置
+    }
+	
+	//插入排序
+    public static void insertSort(int[] arr){
+        int i,j;
+        //4,2,1,7,8
+        for(i=1;i<arr.length;i++){
+            if(arr[i-1]>arr[i]){
+                //temp=2
+                int temp = arr[i];//设置哨兵
+                //必须要保证数组下标>=0,才for循环
+                for(j= i-1; j>=0&&arr[j]>temp ;j--){
+                    arr[j+1]=arr[j];//arr[1]=4
+                }
+                //j=-1
+                arr[j+1]=temp;//arr[0]=2
+                //2 4 1 7 8
+            }
+        }
+        
+        //不使用Swap（）
+        public static void Swap(int[] arr,int low,int high){
+        int temp = arr[low];
+        arr[low] = arr[high];
+        arr[high] = temp;
+    }
+    }
+```
+
+##### 
+
+
+

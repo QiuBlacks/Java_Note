@@ -23,7 +23,11 @@ public class Math {
 ```
 ## JVM工作流程图：
 
-![image](WEBRESOURCEc656f419404457663b0f778261577277)
+
+
+![3a42e990bc6eb7dac71088301801a53 (2)](E:\black user\Java\有道云截图\3a42e990bc6eb7dac71088301801a53 (2).png)
+
+
 
 
 可参考其字节码文件

@@ -10,9 +10,9 @@
 
 
 基本类型 | byte | short | int| long| float|  double | char  |  boolean
----|---|---|---|---|---|---|---|---
-| 包装类型| Byte| Short |Integer| Long |Float |Double |Character| Boolean|
- 位数	|	8 | 	16|	32|	64|	32	|64	|16|	1 |
+---|---|---|---|---|:-:|---|---|---
+包装类型| Byte | Short | Integer |Long| Float | Double |Character |Boolean
+ 位数	|	8 | 	16|	32|	64|	32	|64	|16|	1 
 
 
 注意：包装类型初始值默认为null;
@@ -21,7 +21,7 @@
 Integer a;   //a=null;
 ```
 
-
+B
 
 
 ## 1、问题引出

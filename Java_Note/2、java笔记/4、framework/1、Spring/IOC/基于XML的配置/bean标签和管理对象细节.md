@@ -22,7 +22,10 @@ factory-bean:设置bean工厂，class属性必须为空，factory-bean属性必�
 factory-method：工厂中的工厂方法
 
 ```
+
+
 ## 二、bean的作用范围和生命周期
+
 ### 作用范围取值：
 ```
 singleton:单例的（默认值）
@@ -53,7 +56,10 @@ global-session:作用与集群环境的会话范围（全局范围）,当不是�
 
 <bean id="InstanceFactory" class="com.itheima.factory.InstanceFactory" scope="prototype"></bean>
 ```
+
+
 ## 三、实例化bean的三种方式
+
 ###   第一种方式：使用默认无参构造函数
    在默认情况下：它会根据默认无参构造函数来创建类对象。如果 bean 中没有默认无参构造函数，将会创建失败。
 ```
@@ -80,7 +86,7 @@ factory-method 属性：用于指定实例工厂中创建对象的方法。
 -->
 <bean id="instancFactory" class="com.itheima.factory.InstanceFactory"></bean>
 <bean id="accountService" factory-bean="instancFactory" factory-method="createAccountService"></bean>
-```
+  ```
 
 ###  第三种方式：使用静态工厂的方法创建对象(使用某个类中的静态方法创建对象，并存入Spring容器)     
 ```

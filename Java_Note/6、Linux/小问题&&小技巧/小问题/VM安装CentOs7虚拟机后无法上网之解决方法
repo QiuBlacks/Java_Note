@@ -1,0 +1,21 @@
+# **VM安装CentOs7虚拟机后无法上网之解决方法**
+
+https://blog.csdn.net/u014056175/article/details/64918637
+
+```
+sudo vim  /etc/sysconfig/network-scripts/ifcfg-ens32
+```
+
+1.在windows下查看自己的ip设置，cmd运行，ipconfig /all，以我的ip环境为例，主要记录下IPV4地址，子网掩码，默认网关，dns服务器。
+
+2.在VM中选中你的虚拟机进行网络适配器编辑，选择VMnet8（NAT模式）
+
+3.在VM的“编辑”菜单中选择“虚拟网络编辑器”，主机的IP地址是172.31.5.210，将子网IP设置成172.31.21.0，注意不要跟主机的IP地址再一个网段，子网掩码设置成对应的255.255.255.0，这其中的道理可以参看多级路由的子网划分，来不及看的同学就先随意设置。
+
+4.NAT设置，网关设置跟上一步一个网段的IP即可。
+
+5.DNS设置，我得DNS设置有点怪，这个要看你实际的情况，我们公司就是用这俩DNS，你也可以直接设置成8.8.8.8和8.8.4.4
+
+6.启动CentOs7，进入/etc/sysconfig/network-scripts目录，在该目录下找一个ifcfg-ens*的文件，以我的为例就是ifcfg-ens33。
+
+7.vi打开该文件后，可见以下内容，根据3，4，5步中的子网IP，网关，及DNS服务器，添加或修改红框中的内容，onboot=yes是设置开机启动网卡，boottproto=static 是使用静态ip，设置完成后保存，可以重启电脑也可以使用命令 service network restart。

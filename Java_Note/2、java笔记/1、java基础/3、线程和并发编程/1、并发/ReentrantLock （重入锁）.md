@@ -13,20 +13,20 @@ public class ReentrantLock implements Lock, java.io.Serializable
 ## 3、使用方法
 &emsp;&emsp;ReentrantLock是Java并发包中互斥锁，它有公平锁和非公平锁两种实现方式，以lock()为例，其使用方式为：
 
-```
-		ReentrantLock takeLock = new ReentrantLock();
-		
-		// 获取锁
-		takeLock.lock();
-		
-		try {
-		  
-		  // 业务逻辑
-		  
-		} finally {
-		  // 释放锁
-		  takeLock.unlock();
-		}
+```java
+ReentrantLock takeLock = new ReentrantLock();
+
+// 获取锁
+takeLock.lock();
+
+try {
+
+    // 业务逻辑
+
+} finally {
+    // 释放锁
+    takeLock.unlock();
+}
 ```
 
 ## 4、注意点：

@@ -23,8 +23,8 @@
  &emsp;&emsp;我们都知道Java源文件，通过编译器，能够生产相应的.Class文件，也就是字节码文件，而字节码文件又通过Java虚拟机中的解释器，编译成特定机器上的机器码 
 
  &emsp;&emsp;每一种平台的解释器是不同的，但是实现的虚拟机是相同的，这也就是Java为什么能够跨平台的原因了 ，当一个程序从开始运行，这时虚拟机就开始实例化了，多个程序启动就会存在多个虚拟机实例。程序退出或者关闭，则虚拟机实例消亡，多个虚拟机实例之间数据不能共享。<br>
- 
-![image](WEBRESOURCE5f04a2ffdf4f6468ee5f78e884c4e3e1)
+
+![截图](E:\black user\Java\有道云截图\截图.png)
 
 
 
@@ -37,14 +37,25 @@
 
 ## 1、体系结构
 ### jdk7<br>
-![image](WEBRESOURCE625d8c630694e59d739b8c79008b2675)
+
+![截图](E:\black user\Java\有道云截图\截图.png)
+
+
 
 ### JDK8<br>
-![image](WEBRESOURCEc16aa6d48f5c04d95e124f92240317c1)
 
 
 
-## 2、组成详解
+
+
+
+## ![20190801003717155 (2)](E:\black user\Java\有道云截图\20190801003717155 (2).png)
+
+
+
+
+
+# 2、组成详解
 
 ### .1）Class Loader类加载器
 
@@ -65,7 +76,7 @@
 &emsp;&emsp;虚拟机内存或者Jvm内存，冲整个计算机内存中开辟一块内存存储Jvm需要用到的对象，变量等，运行区数据有分很多小区，分别为：方法区，虚拟机栈，本地方法栈，堆，程序计数器。
 
 # 三、JVM运行数据区（内存）
-![image](WEBRESOURCE1353c7e9da89e81ca08f088e83744e56)<br>
+![截图](E:\black user\Java\有道云截图\截图.png)
 
 &emsp;&emsp;JVM主要包括：程序计数器(Program Counter)，Java堆(Heap)，Java虚拟机栈(Stack)，本地方法栈(Native Stack)，方法区(Method Area)
 
