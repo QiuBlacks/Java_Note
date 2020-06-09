@@ -4,7 +4,7 @@
 
 **注意：这里我们要求spring配置文件只扫描service和dao层的注解，而不去扫controller层**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -32,7 +32,7 @@
 
 ## **2、使用注解配置业务层和持久层**
 
-```
+```java
 @Repository("accountDao"）
 public class AccountDaoImpl  implements IAccountDao {
     @Override
@@ -49,7 +49,7 @@ public class AccountDaoImpl  implements IAccountDao {
 
 **不调用持久层方法，只测试业务层AccountServiceImpl方法**
 
-```
+```java
 @Service("accountService")
 public class AccountServiceImpl implements IAccountService {
     //@Autowired
@@ -70,7 +70,7 @@ public class AccountServiceImpl implements IAccountService {
 
 ## **3、测试**
 
-```
+```java
 public class Test01Spring {
     public static void main(String[] args) {
     ApplicationContext  ac  =  new  ClassPathXmlApplicationContext("applicationContext.xml");

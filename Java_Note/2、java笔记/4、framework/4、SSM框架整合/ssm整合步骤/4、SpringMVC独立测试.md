@@ -1,8 +1,8 @@
-**SpringMVC独立测试**
+## **SpringMVC独立测试**
 
-**1、在 web.xml  中配置核心控制器**
+### **1、在 web.xml  中配置核心控制器**
 
-```
+```xml
 <!DOCTYPE web-app PUBLIC
  "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
  "http://java.sun.com/dtd/web-app_2_3.dtd" >
@@ -49,11 +49,11 @@
 </web-app>
 ```
 
-**2、编写SpringMVC配置文件SpringMVC.xml**
+### **2、编写SpringMVC配置文件SpringMVC.xml**
 
 **注意：这里要求springmvc只扫描controller层的注解**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
@@ -86,12 +86,11 @@
 </beans>
 ```
 
-**3、编写index.jsp文件**
+### **3、编写index.jsp文件**
 
 **注意：herf路径前面不加 ”/“**
 
-```
-jsp  代码：
+```jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"  "http://www.w3.org/TR/html4/loose.dtd">
 <html>
@@ -106,9 +105,9 @@ jsp  代码：
 </html>
 ```
 
-**4、测试**
+### **4、测试**
 
-```
+```java
 @Controller("accountController")
 @RequestMapping("/account")
 public class AccountController {

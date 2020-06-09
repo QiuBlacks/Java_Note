@@ -1,12 +1,12 @@
 # **KMP算法**
 
-参考：https://note.youdao.com/web/#/file/WEB8a52b35a855bfb1992e64962881a9eec/note/WEBc7670bd418995725c2a3af28d1ad88a7/
 
-# **一、介绍**
+
+## **一、介绍**
 
 KMP算法，又称作“看猫片”算法（误），是一种改进的字符串模式匹配算法，可以在O(n+m)的时间复杂度以内完成字符串的匹配操作，其核心思想在于：当一趟匹配过程中出现字符不匹配时，不需要回溯主串的指针，而是利用已经得到的“部分匹配”，将模式串尽可能多地向右“滑动”一段距离，然后继续比较。
 
-# **二、最佳应用--字符串匹配问题**
+## **二、最佳应用--字符串匹配问题**
 
  
 
@@ -18,7 +18,7 @@ KMP算法，又称作“看猫片”算法（误），是一种改进的字符�
 
  
 
-# **三、思路分析图解**
+## **三、思路分析图解**
 
 **首先理解几个概念：**
 
@@ -62,9 +62,11 @@ KMP算法，又称作“看猫片”算法（误），是一种改进的字符�
 
 
 
-四、代码实现**
+## 四、代码实现
 
-**kmp匹配算法**
+### 1、一维数组
+
+参考：[有道云笔记](https://note.youdao.com/web/#/file/WEB8a52b35a855bfb1992e64962881a9eec/note/WEBc7670bd418995725c2a3af28d1ad88a7/)
 
 ```
 	 * @param str1 源字符串
@@ -121,4 +123,48 @@ KMP算法，又称作“看猫片”算法（误），是一种改进的字符�
 	}
 ```
 
- 
+###  2、二维数组
+
+参考：[动态规划KMP](https://mp.weixin.qq.com/s?__biz=Mzg2NzA4MTkxNQ==&mid=2247485979&idx=2&sn=56d4d0dd11951c29c9e6f94803d92e03&scene=21#wechat_redirect)
+
+```
+public class KMP {
+    private int[][] dp;
+    private String pat;
+
+    public KMP(String pat) {
+        this.pat = pat;
+        int M = pat.length();
+        // dp[状态][字符] = 下个状态
+        dp = new int[M][256];
+        // base case
+        dp[0][pat.charAt(0)] = 1;
+        // 影子状态 X 初始为 0
+        int X = 0;
+        // 构建状态转移图（稍改的更紧凑了）
+        for (int j = 1; j < M; j++) {
+            for (int c = 0; c < 256; c++) {
+                dp[j][c] = dp[X][c];
+            dp[j][pat.charAt(j)] = j + 1;
+            // 更新影子状态
+            X = dp[X][pat.charAt(j)];
+        }
+    }
+
+    public int search(String txt) {
+        int M = pat.length();
+        int N = txt.length();
+        // pat 的初始态为 0
+        int j = 0;
+        for (int i = 0; i < N; i++) {
+            // 计算 pat 的下一个状态
+            j = dp[j][txt.charAt(i)];
+            // 到达终止态，返回结果
+            if (j == M) return i - M + 1;
+        }
+        // 没到达终止态，匹配失败
+        return -1;
+    }
+}
+```
+

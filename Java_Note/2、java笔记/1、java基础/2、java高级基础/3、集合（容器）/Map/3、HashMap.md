@@ -1,16 +1,34 @@
+
+
+
+
+
+
+[TOC]
+
+
+
 # HashMap
+
 ---
 
 # 一、基本介绍
+
 ## 1、特点
 底层实现：数组+链表+红黑树（JDK1.8增加了红黑树部分）
-![image](WEBRESOURCE21c9b52696311f17466570ae2700d2e3)
+![image-20200603233725215](E:\black user\Java\有道云截图\image-20200603233725215.png)
+
+
 
 ## 2、存储位置
+
 &emsp;&emsp;当系统决定存储 HashMap 中的 key-value 对时，完全没有考虑 Entry 中的 value，仅仅只是根据 key 来计算并决定每个 Entry 的存储位置。这也说明了前面的结论：我们完全可以把 Map 集合中的 value 当成 key 的附属，当系统决定了 key 的存储位置之后，value 随之保存在那里即可。
+
+
+
 ## 3、主要属性参数
 
-```
+```java
 static final int DEFAULT_INITIAL_CAPACITY = 1 << 4; // 默认（桶）数组长度2^4=16
 static final int MAXIMUM_CAPACITY = 1 << 30; // 最大（桶）数组容量2^30
 static final float DEFAULT_LOAD_FACTOR = 0.75f; // 默认负载因子
@@ -20,16 +38,20 @@ transient Node<K,V>[] table;
 ```
 
 
+
 ## 4、主要构造器
+
 - HashMap()：构建一个初始容量为 16，负载因子为 0.75 的 HashMap
 - HashMap(int initialCapacity)：构建一个初始容量为 initialCapacity，负载因子为 0.75 的 HashMap
 - HashMap(int initialCapacity, float loadFactor)：以指定初始容量、指定的负载因子创建一个 HashMap
 - public HashMap(Map<? extends K, ? extends V> m) ：包含“子Map”的构造函数
 
 
+
 ## 5、Node<K,V>[]底层实现
+
 注意里面的四个变量：
-```
+```java
 static class Node<K,V> implements Map.Entry<K,V> {
     final int hash;
     final K key;
@@ -96,11 +118,11 @@ static int indexFor(int h, int length) {  //jdk1.7的源码，jdk1.8没有这个
 ## 2、扩容机制
 ### 1）实现方法
 &emsp;&emsp;新建一个新的数组代替已有的容量小的数组，默认长度是原来的两倍。
-1.7中是先扩容后插入新值的，1.8中是先插值再扩容
+				1.7中是先扩容后插入新值的，1.8中是先插值再扩容
 
 ### 2）具体实现（jdk1.7）
 
-```
+```java
 void resize(int newCapacity) {   //传入新的容量
       Entry[] oldTable = table;    //引用扩容前的Entry数组
       int oldCapacity = oldTable.length;         
@@ -145,7 +167,7 @@ transfer()方法将原有Entry数组的元素拷贝到新的Entry数组里
 
 ## 1、put方法详解
 ### 1）图解
-![image](WEBRESOURCE29d86685ad541c5aabbcc7df7b661458)
+![image-20200528204817290](E:\black user\Java\有道云截图\image-20200528204817290.png)
 
 ### 2）过程（jdk1.8的尾插法）
 1.  判断当前桶是否为空，空的就需要初始化（resize 中会判断是否进行初始化）。

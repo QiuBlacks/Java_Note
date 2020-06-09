@@ -1,16 +1,20 @@
+[TOC]
+
+
+
 # **2、Spring整合mybatis**
 
-# **一、主要知识点**
+## **一、主要知识点**
 
 **在基础的 MyBatis 用法中，是通过 SqlSessionFactoryBuilder 来创建 SqlSessionFactory 的。 而在 MyBatis-Spring 中，则使用 SqlSessionFactoryBean 来创建。**
 
-## **1、sqlSessionFactory**
+### **1、sqlSessionFactory**
 
 **里面有Mybatis里的所有属性，可以完全取代Mybatis配置文件**
 
 SqlSessionFactory 有一个唯一的必要属性：用于 JDBC 的 **DataSource**。这可以是任意的 DataSource 对象，它的配置方法和其它 Spring 数据库连接是一样的。
 
-**1）configLocation**
+#### **1）configLocation**
 
 它用来指定 MyBatis 的 XML 配置文件路径。它在需要修改 MyBatis 的基础配置非常有用。通常，基础配置指的是 <settings> 或 <typeAliases> 元素。
 
@@ -18,7 +22,9 @@ SqlSessionFactory 有一个唯一的必要属性：用于 JDBC 的 **DataSource*
 
 SqlSessionFactoryBean 会创建它自有的 MyBatis 环境配置（Environment），并按要求设置自定义环境的值。
 
-**2）mapperLocations** 
+
+
+#### **2）mapperLocations** 
 
 ​	如果 MyBatis 在映射器类对应的路径下找不到与之相对应的映射器 XML 文件，那么也需要配置文件。这时有两种解决办法：
 
@@ -28,7 +34,7 @@ SqlSessionFactoryBean 会创建它自有的 MyBatis 环境配置（Environment�
 
 ​	mapperLocations 属性接受多个资源位置。这个属性可以用来指定 MyBatis 的映射器 XML 配置文件的位置。属性的值是一个 Ant 风格的字符串，可以指定加载一个目录中的所有文件，或者从一个目录开始递归搜索所有目录。比如:
 
-```java
+```xml
 <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <!--绑定（替换）
@@ -41,11 +47,11 @@ SqlSessionFactoryBean 会创建它自有的 MyBatis 环境配置（Environment�
 
 
 
-# **二、步骤**
+## **二、步骤**
 
-## **1、创建Spring-Dao.xml开始整合**
+### **1、创建Spring-Dao.xml开始整合**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -81,7 +87,9 @@ SqlSessionFactoryBean 会创建它自有的 MyBatis 环境配置（Environment�
 
 替换mybatis-config.xml
 
-```
+
+
+```java
 //1.读取配置文件，生成字节输入流
 InputStream in = Resources.getResourceAsStream("mybatis-config.xml");
 //2.获取SqlSessionFactory
@@ -92,9 +100,9 @@ SqlSession  sqlSession = factory.openSession(true);
 
 
 
-## **2、创建UserMapperImpl 实现类**
+### **2、创建UserMapperImpl 实现类**
 
-```
+```java
 public class UserMapperImpl implements UserMapper{
 
     //我们的所有操作，都使用sqlSession来执行，在原来，现在都使用SqlSessionTemplate；
@@ -115,9 +123,9 @@ public class UserMapperImpl implements UserMapper{
 
 
 
-## **3、将UserMapperImpl注入Spring-Dao.xml中**
+### **3、将UserMapperImpl注入Spring-Dao.xml中**
 
-```
+```java
 <bean id="UserMapper" class="com.qiu.mapper.UserMapperImpl">
     <property name="sqlSession" ref="sqlSession"/>
 </bean>
@@ -125,9 +133,9 @@ public class UserMapperImpl implements UserMapper{
 
 
 
-## **4、测试：此时没有了mybatis的内容**
+### **4、测试：此时没有了mybatis的内容**
 
-```
+```java
 public class MyText {
     public static void main(String[] args) {
 
@@ -143,15 +151,15 @@ public class MyText {
 
 
 
-# **三、改进**
+## **三、改进**
 
-## **1、改进Spring-Dao.xml**
+### **1、改进Spring-Dao.xml**
 
 **可以把userMapper的配置弄到新的一个配置文件applicationContext.xml里**
 
 **这样Spring-Dao.xml里的文件就基本是固定的mybatis配置了**
 
-```java
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -169,7 +177,7 @@ public class MyText {
 
 
 
-## **2、改进UserMapperImpl**
+### **2、改进UserMapperImpl**
 
 通过继承SqlSessionDaoSupport，使用getSqlSession()方法即可获得一个sqlSession
 
@@ -185,9 +193,9 @@ public class UserMapperImpl2  extends SqlSessionDaoSupport implements UserMapper
 }
 ```
 
-测试时；
+测试时
 
-```
+```java
 public class MyText {
     public static void main(String[] args) {
 

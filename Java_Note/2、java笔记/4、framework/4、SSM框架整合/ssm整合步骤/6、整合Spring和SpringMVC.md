@@ -6,7 +6,7 @@
 
 **又因为该监听器只能加载 WEB-INF 目录中名称为 applicationContext.xml 的配置文件 ，所以要配置好applicationContext.xml的路径使之变成在/resources路径下**
 
-```
+```xml
 <listener>
       <listener-class>
         org.springframework.web.context.ContextLoaderListener

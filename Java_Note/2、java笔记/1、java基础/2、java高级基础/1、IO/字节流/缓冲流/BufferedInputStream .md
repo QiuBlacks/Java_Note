@@ -2,9 +2,9 @@
 
 ## 一、构造方法
 
-1.BufferedInputStream(InputStream in) 创建 BufferedInputStream 并保存其参数，即输入流 in，以便将来使用。 
+1、BufferedInputStream(InputStream in) 创建 BufferedInputStream 并保存其参数，即输入流 in，以便将来使用。 
 
-2.BufferedInputStream(InputStream in, int size) 创建具有指定缓冲区大小的BufferedInputStream，并保存其参数，即输入流 in，以便将来使用。
+2、BufferedInputStream(InputStream in, int size) 创建具有指定缓冲区大小的BufferedInputStream，并保存其参数，即输入流 in，以便将来使用。
 
 ## 二、代码演示
 

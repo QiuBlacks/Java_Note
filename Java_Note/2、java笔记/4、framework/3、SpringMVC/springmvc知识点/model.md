@@ -1,16 +1,16 @@
 # **model**
 
-**一、基本介绍**
+## **一、基本介绍**
 
-**1、概念**
+### **1、概念**
 
 控制器是通过Model对象把数据传到view层的.
 
-**2、作用**
+### **2、作用**
 
 主要是保存数据，可以借助它们将数据带到前端
 
-**二、使用方法**
+## **二、使用方法**
 
 ```
   @RequestMapping("/testString")
@@ -27,11 +27,11 @@
     }
 ```
 
-**model会将数据****存放在requestScope中，然后我们可以在表现层调用**
+**model会将数据存放在requestScope中，然后我们可以在表现层调用**
 
 ```
 ${user.Username}
 ${requestScope}
 ```
 
-**三、****ModelMap以及ModelAndView**
+## **三、ModelMap以及ModelAndView**

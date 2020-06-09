@@ -2,7 +2,7 @@
 
 
 
-# 一、REST****ful（表现层状态转换）**
+# 一、RESTful（表现层状态转换）
 
 ## **1、基本介绍**
 
@@ -40,7 +40,7 @@ RESTful不是一种标准，而是一种设计风格。
 
 ## **2、示例**
 
-```
+```java
    @RequestMapping(value="/testPathVariable/{sid}")
     public String testPathVariable(@PathVariable(name="sid") String id){
         System.out.println("执行了...");
@@ -51,7 +51,7 @@ RESTful不是一种标准，而是一种设计风格。
 
 **此时，jsp文件的请求路径应该这么写：**
 
-```
+```java
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <body>

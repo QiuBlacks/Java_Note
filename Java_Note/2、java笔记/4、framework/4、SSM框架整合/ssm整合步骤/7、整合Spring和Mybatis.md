@@ -1,8 +1,8 @@
-# **整合Spring和Mybatis**
+## **整合Spring和Mybatis**
 
-## **1、将mybatis配置文件SqlMapConfig.xml配置到Sping配置文件applicationContext.xml文件中**
+### **1、将mybatis配置文件SqlMapConfig.xml配置到Spring配置文件applicationContext.xml文件中**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -39,7 +39,7 @@
         <!-- 数据库连接池 -->
         <property name="dataSource" ref="dataSource" />
        // <property name="configLocation" value="classpath:SqlMapConfig.xml" />
-        </bean>
+    </bean>
 
     <!-- 配置 Mapper 扫描器 -->
     <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">

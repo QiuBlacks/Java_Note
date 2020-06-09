@@ -1,0 +1,219 @@
+[TOC]
+
+# SpringBoot运行原理
+
+## 一、**pom.xml**
+
+### 1、父依赖
+
+它主要是依赖一个父项目，主要是管理项目的资源过滤及插件！
+
+```xml
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-parent</artifactId>
+    <version>2.2.5.RELEASE</version>
+    <relativePath/> <!-- lookup parent from repository -->
+</parent>
+```
+
+点进去，发现还有一个父依赖
+
+```xml
+<parent>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-dependencies</artifactId>
+    <version>2.2.5.RELEASE</version>
+    <relativePath>../../spring-boot-dependencies</relativePath>
+</parent>
+```
+
+这里才是真正管理SpringBoot应用里面所有依赖版本的地方，SpringBoot的版本控制中心；
+
+**以后我们导入依赖默认是不需要写版本；但是如果导入的包没有在依赖中管理着就需要手动配置版本了；**
+
+
+
+### 2、启动器 spring-boot-starter
+
+```xml
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-web</artifactId>
+</dependency>
+```
+
+**springboot-boot-starter-xxx**：就是spring-boot的场景启动器
+
+**spring-boot-starter-web**：帮我们导入了web模块正常运行所依赖的组件；
+
+SpringBoot将所有的功能场景都抽取出来，做成一个个的starter （启动器），只需要在项目中引入这些starter即可，所有相关的依赖都会导入进来 ， 我们要用什么功能就导入什么样的场景启动器即可 ；我们未来也可以自己自定义 starter；
+
+
+
+## 二、**主启动类**
+
+### 1、默认的主启动类
+
+```java
+//@SpringBootApplication 来标注一个主程序类
+//说明这是一个Spring Boot应用
+@SpringBootApplication
+public class SpringbootApplication {
+
+   public static void main(String[] args) {
+     //以为是启动了一个方法，没想到启动了一个服务
+      SpringApplication.run(SpringbootApplication.class, args);
+   }
+
+}
+```
+
+### 2、@SpringBootApplication
+
+作用：标注在某个类上说明这个类是SpringBoot的主配置类 ， SpringBoot就应该运行这个类的main方法来启动SpringBoot应用；
+
+进入这个注解：可以看到上面还有很多其他注解！
+
+```java
+@SpringBootConfiguration
+@EnableAutoConfiguration
+@ComponentScan(
+    excludeFilters = {@Filter(
+    type = FilterType.CUSTOM,
+    classes = {TypeExcludeFilter.class}
+), @Filter(
+    type = FilterType.CUSTOM,
+    classes = {AutoConfigurationExcludeFilter.class}
+)}
+)
+public @interface SpringBootApplication {
+    // ......
+}
+```
+
+### 3、@SpringBootConfiguration
+
+作用：SpringBoot的配置类 ，标注在某个类上 ， 表示这是一个SpringBoot的配置类；
+
+```java
+// 点进去得到下面的 @Component
+@Configuration
+public @interface SpringBootConfiguration {}
+
+@Component
+public @interface Configuration {}
+```
+
+这里的 @Configuration，说明这是一个配置类 ，配置类就是对应Spring的xml 配置文件；
+
+里面的 @Component 这就说明，启动类本身也是Spring中的一个组件而已，负责启动应用！
+
+### 4、@EnableAutoConfiguration
+
+**@EnableAutoConfiguration ：开启自动配置功能**
+
+以前我们需要自己配置的东西，而现在SpringBoot可以自动帮我们配置 ；@EnableAutoConfiguration告诉SpringBoot开启自动配置功能，这样自动配置才能生效；
+
+
+
+### 5、@ComponentScan
+
+这个注解在Spring中很重要 ,它对应XML配置中的元素。
+
+作用：自动扫描并加载符合条件的组件或者bean ， 将这个bean定义加载到IOC容器中
+
+
+
+## 三、spring.factories(自动配置的核心)
+
+
+
+![image-20200529153804472](E:\black user\Java\有道云截图\image-20200529153804472.png)
+
+
+
+自动配置真正实现是从classpath中搜寻所有的META-INF/spring.factories配置文件 ，并将其中对应的 ==org.springframework.boot.autoconfigure.==包下的配置项，通过反射实例化为对应标注了 @Configuration的JavaConfig形式的IOC容器配置类 ， 然后将这些都汇总成为一个实例并加载到IOC容器中。
+
+
+
+## 四、结论
+
+1. SpringBoot在启动的时候从类路径下的META-INF/spring.factories中获取EnableAutoConfiguration指定的值
+
+2. 将这些值作为自动配置类导入容器 ， 自动配置类就生效 ， 帮我们进行自动配置工作；只有满足配置条件@ConditionClass才会自动配置，不满足的不会进行配置
+
+   ![image-20200529155501304](E:\black user\Java\有道云截图\image-20200529155501304.png)
+
+3. 整个J2EE的整体解决方案和自动配置都在springboot-autoconfigure的jar包中；
+
+4. 它会给容器中导入非常多的自动配置类 （xxxAutoConfiguration）, 就是给容器中导入这个场景需要的所有组件 ， 并配置好这些组件 ；
+
+5. 有了自动配置类 ， 免去了我们手动编写配置注入功能组件等的工作；
+
+
+
+## 五、Springboot启动过程
+
+### 1、SpringApplication
+
+**这个类主要做了以下四件事情：**
+
+1、推断应用的类型是普通的项目还是Web项目
+
+2、查找并加载所有可用初始化器 ， 设置到initializers属性中
+
+3、找出所有的应用程序监听器，设置到listeners属性中
+
+4、推断并设置main方法的定义类，找到运行的主类
+
+```java
+//构造器
+public SpringApplication(ResourceLoader resourceLoader, Class... primarySources) {
+    // ......
+    this.webApplicationType = WebApplicationType.deduceFromClasspath();
+    this.setInitializers(this.getSpringFactoriesInstances();
+    this.setListeners(this.getSpringFactoriesInstances(ApplicationListener.class));
+    this.mainApplicationClass = this.deduceMainApplicationClass();
+}
+```
+
+
+
+### 2、run方法流程分析
+
+调用链：`SpringApplication.run()` -> `run(new Class[]{primarySource}, args)` -> 
+
+`new SpringApplication(primarySources)).run(args)`：
+
+- 创建 SpringApplication 对象。
+- 运行 run() 方法。
+
+
+
+
+
+![img](E:\black user\Java\有道云截图\640.jpg)
+
+
+
+
+
+
+
+
+
+## 底层代码可以参考：
+
+​				[狂神说的视频](https://www.bilibili.com/video/BV1PE411i7CV?p=6)
+
+​				[狂神说的文档](https://mp.weixin.qq.com/s?__biz=Mzg2NTAzMTExNg==&mid=2247483743&idx=1&sn=431a5acfb0e5d6898d59c6a4cb6389e7&scene=19#wechat_redirect)
+
+
+
+
+
+
+
+
+

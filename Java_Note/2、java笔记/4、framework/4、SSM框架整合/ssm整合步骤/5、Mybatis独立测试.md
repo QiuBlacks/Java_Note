@@ -6,7 +6,7 @@
 
 **id要和方法名相同**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -28,7 +28,7 @@
 
 ## **二、编写 Mybatis配置文件SqlMapConfig .xml**
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
 PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-config.dtd">
@@ -57,7 +57,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-c
 
 ## **三、编写jdbcConfig.properties配置文件**
 
-```
+```properties
 jdbc.driver=com.mysql.cj.jdbc.Driver
 jdbc.url=jdbc:mysql://127.0.0.1:3306/ssm?useUnicode=true&characterEncoding=utf8&serverTimezone=GMT
 jdbc.username=root
@@ -68,7 +68,7 @@ jdbc.password=qrj15521026074
 
 ## **四、测试**
 
-```
+```java
 public class Test02MyBatis {
     @Test
     public void testFindAll() throws Exception{ 
