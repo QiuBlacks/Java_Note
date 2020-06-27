@@ -60,7 +60,7 @@ git clone url  //url为项目服务器地址或github地址
 
 ​	也可以 git add -A全部更新
 
-3、git commit -m "heiheihei"	
+3、git commit -m "java_note_update"	
 
 4、 git push
 
