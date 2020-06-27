@@ -1,33 +1,33 @@
 #  Spring Security环境搭建
 --------------------------------------------------------------------------------
 
-# 一、基本介绍
+## 一、基本介绍
 
 是 Spring 项目组中用来提供安全认证服务的框架。
 
 
-# 二、环境搭建（在xml设置登陆用户和密码）
+## 二、环境搭建（在xml设置登陆用户和密码）
 1、导入jar包
 
-```
+```xml
 <dependencies>
-<dependency>
-<groupId>org.springframework.security</groupId>
-<artifactId>spring-security-web</artifactId>
-<version>5.0.1.RELEASE</version>
-</dependency>
-<dependency>
-<groupId>org.springframework.security</groupId>
-<artifactId>spring-security-config</artifactId>
-<version>5.0.1.RELEASE</version>
-</dependency>
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-web</artifactId>
+        <version>5.0.1.RELEASE</version>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.security</groupId>
+        <artifactId>spring-security-config</artifactId>
+        <version>5.0.1.RELEASE</version>
+    </dependency>
 </dependencies>
 ```
 
 
 2、spring-security.xml配置（自带登陆页面）
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 xmlns:security="http://www.springframework.org/schema/security"
@@ -61,78 +61,257 @@ http://www.springframework.org/schema/security/spring-security.xsd">
 
 三、自定义页面设置
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-xmlns:security="http://www.springframework.org/schema/security"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.springframework.org/schema/beans
-http://www.springframework.org/schema/beans/spring-beans.xsd
-http://www.springframework.org/schema/security
-http://www.springframework.org/schema/security/spring-security.xsd">
-<!-- 配置不过滤的资源（静态资源及登录相关） -->
-<security:http security="none" pattern="/login.html" />
-<security:http security="none" pattern="/failer.html" />
-<security:http auto-config="true" use-expressions="false">
-<!-- 配置资料连接，表示任意路径都需要ROLE_USER权限 -->
-<security:intercept-url pattern="/**" access="ROLE_USER" />
-<!-- 自定义登陆页面，login-page 自定义登陆页面 authentication-failure-url 用户权限校验失败之
-后才会跳转到这个页面，如果数据库中没有这个用户则不会跳转到这个页面。
-default-target-url 登陆成功后跳转的页面。 注：登陆页面用户名固定 username，密码
-password，action:login -->
-<security:form-login login-page="/login.html"
-login-processing-url="/login" username-parameter="username"
-password-parameter="password" authentication-failure-url="/failer.html"
-default-target-url="/success.html"
-/>
-<!-- 登出， invalidate-session 是否删除session logout-url：登出处理链接 logout-success-
-url：登出成功页面
-注：登出操作 只需要链接到 logout即可登出当前用户 -->
-<security:logout invalidate-session="true" logout-url="/logout"
-logout-success-url="/login.jsp" />
-<!-- 关闭CSRF,默认是开启的 -->
-<security:csrf disabled="true" />
-</security:http>
-<security:authentication-manager>
-<security:authentication-provider>
-<security:user-service>
-<security:user name="user" password="{noop}user"
-authorities="ROLE_USER" />
-<security:user name="admin" password="{noop}admin"
-authorities="ROLE_ADMIN" />
-</security:user-service>
-</security:authentication-provider>
-</security:authentication-manager>
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+    
+    <!-- 配置不过滤的资源（静态资源及登录相关） -->
+    <security:http security="none" pattern="/login.html" />
+    <security:http security="none" pattern="/failer.html" />
+    <security:http auto-config="true" use-expressions="false">
+        
+    <!-- 配置资料连接，表示任意路径都需要ROLE_USER权限 -->
+    <security:intercept-url pattern="/**" access="ROLE_USER" />
+        
+    <!-- 自定义登陆页面，login-page 自定义登陆页面 authentication-failure-url 用户权限校验失败之
+    后才会跳转到这个页面，如果数据库中没有这个用户则不会跳转到这个页面。
+    default-target-url 登陆成功后跳转的页面。 注：登陆页面用户名固定 username，密码
+    password，action:login -->
+    <security:form-login login-page="/login.html"
+        login-processing-url="/login" username-parameter="username"
+        password-parameter="password" authentication-failure-url="/failer.html"
+        default-target-url="/success.html"
+    />
+        
+    <!-- 登出， invalidate-session 是否删除session logout-url：登出处理链接 logout-success-
+    url：登出成功页面
+    注：登出操作 只需要链接到 logout即可登出当前用户 -->
+    <security:logout invalidate-session="true" logout-url="/logout"
+    			logout-success-url="/login.jsp" />
+        
+    <!-- 关闭CSRF,默认是开启的 -->
+    <security:csrf disabled="true" />
+   </security:http>
+    <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="user" password="{noop}user"
+                authorities="ROLE_USER" />
+                <security:user name="admin" password="{noop}admin"
+                authorities="ROLE_ADMIN" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>
 </beans>
 ```
 
-# 三、使用数据库认证
+
+
+## 三、使用数据库认证
+
 1、在Spring Security中如果想要使用数据进行认证操作，有很多种操作方式，这里我们介绍使用UserDetails、
 UserDetailsService来完成操作。
+
 ### 1）UserDetails
 
-```
+```java
 public interface UserDetails extends Serializable {
 Collection<? extends GrantedAuthority> getAuthorities();
-String getPassword();
-String getUsername();
-boolean isAccountNonExpired();
-boolean isAccountNonLocked();
-boolean isCredentialsNonExpired();
-boolean isEnabled();
+    String getPassword();
+    String getUsername();
+    boolean isAccountNonExpired();
+    boolean isAccountNonLocked();
+    boolean isCredentialsNonExpired();
+    boolean isEnabled();
 }
 ```
 UserDetails是一个**接口**，我们可以认为UserDetails作用是于封装当前进行认证的==用户信息==，但由于其是一个
 接口，所以我们可以对其进行实现，也可以使用Spring Security提供的一个UserDetails的==实现类User==来完成
 操作
 
-```
+```java
 public class User implements UserDetails, CredentialsContainer
 ```
 使用实例：
 
+自定义UserDetails类
+
 ```
-    @Override
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+ 
+public class User implements UserDetails{
+	private Long id;
+	private String username;
+	private String password;
+	private boolean enabled;
+	private Collection<? extends GrantedAuthority> authorities;
+	
+	public User(Long id, String username, String password, boolean enabled) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+	}
+	
+	public User(Long id, String username, String password, boolean enabled,
+			Collection<? extends GrantedAuthority> authorities) {
+		super();
+		this.id = id;
+		this.username = username;
+		this.password = password;
+		this.enabled = enabled;
+		this.authorities = authorities;
+	}
+	public Long getId(){
+		return this.id;
+	}
+ 
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		return authorities;
+	}
+	@Override
+	public String getPassword() {
+		return password;
+	}
+	@Override
+	public String getUsername() {
+		return username;
+	}
+	@Override
+	public boolean isAccountNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isAccountNonLocked() {
+		return true;
+	}
+	@Override
+	public boolean isCredentialsNonExpired() {
+		return true;
+	}
+	@Override
+	public boolean isEnabled() {
+		return enabled;
+	}
+ 
+	@Override
+	public String toString() {
+		return "MyUserDetails [id=" + id + ", username=" + username
+				+ ", password=" + password + ", enabled=" + enabled
+				+ ", authorities=" + authorities + "]";
+	}
+ 
+ 
+}
+```
+
+
+
+
+### 2）UserDetailsService
+对实现方法的认证
+
+```java
+public interface UserDetailsService {
+	UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+}
+```
+
+实现UserDetailsService接口，重写loadUserByUsername方法
+
+```
+package com.cpwl.security;
+ 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.List;
+ 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+ 
+public class CpwlUserDetailsService implements UserDetailsService {
+ 
+	@Autowired
+	JdbcTemplate jdbcTemplate;
+	private final String sqlLoadUser;
+	private final String sqlLoadAuthorities;
+	private final RowMapper<User> myUserDetailsRowMapper;
+	private final RowMapper<GrantedAuthority> authorityRowMapper;
+ 
+	private static Logger logger = LoggerFactory
+			.getLogger(CpwlUserDetailsService.class);
+ 
+	public CpwlUserDetailsService() {
+		super();
+		sqlLoadUser = "SELECT id,username,password,enabled FROM user WHERE username=? OR phoneNumber=? OR email=?";
+		sqlLoadAuthorities = "SELECT authority FROM view_role WHERE username=?";
+		myUserDetailsRowMapper = new RowMapper<User>() {
+			@Override
+			public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+				return new User(rs.getLong(1), rs.getString(2),
+						rs.getString(3), rs.getBoolean(4));
+			}
+		};
+		authorityRowMapper = new RowMapper<GrantedAuthority>() {
+			@Override
+			public GrantedAuthority mapRow(ResultSet rs, int rowNum)
+					throws SQLException {
+				return new SimpleGrantedAuthority(rs.getString(1));
+			}
+		};
+	}
+ 
+	@Override
+	public UserDetails loadUserByUsername(String username)
+			throws UsernameNotFoundException {
+		try {
+			User userFromQuery = jdbcTemplate.queryForObject(sqlLoadUser,
+					myUserDetailsRowMapper, username, username, username);
+			logger.debug("查询得到用户：{}", userFromQuery);
+			List<GrantedAuthority> authorities = jdbcTemplate.query(
+					sqlLoadAuthorities, authorityRowMapper, username);
+			logger.debug("得到其权限：{}", authorities);
+			return new User(userFromQuery.getId(), userFromQuery.getUsername(),
+					userFromQuery.getPassword(), userFromQuery.isEnabled(),
+					authorities);
+		} catch (EmptyResultDataAccessException e) {
+			logger.debug("查询结果集为空:{}", username);
+			throw new UsernameNotFoundException("用户名或密码不正确");
+		}
+	}
+ 
+}
+```
+
+好像也可以直接使用userdetails.User的user对象来封装
+
+```java
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+
+
+public interface IUserService extends UserDetailsService {} 
+
+public class UserServiceImpl implements IUserService {
+	@Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         UserInfo userInfo = null;
 
@@ -150,21 +329,7 @@ public class User implements UserDetails, CredentialsContainer
 
         return user;
     }
+      
 ```
-
-
-
-
-### 2）UserDetailsService
-对实现方法的认证
-```
-public interface UserDetailsService {
-UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
-}
-```
-
-
-
-
 
 

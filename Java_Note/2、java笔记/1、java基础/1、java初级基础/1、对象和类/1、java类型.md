@@ -3,7 +3,7 @@
 
 # 一、java的数据类型
 1. 基本类型：byte，short，int，long，boolean，float，double，char
-1. 引用类型：所有class和interface类型
+1. 引用类型：所有class和interface类型、数组
 
 
 # 二、包装类型

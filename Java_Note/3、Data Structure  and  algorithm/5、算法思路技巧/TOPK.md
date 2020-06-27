@@ -14,7 +14,7 @@
 
 #### 1）全局排序
 
-​			   Arrays.sort()、  排序算法
+​		 Arrays.sort()、  排序算法
 
 #### 2）局部排序
 
@@ -34,9 +34,9 @@
 
 #### 1）思想
 
-- 若 k = m，我们就找到了最小的 kk 个数，就是左侧的数组；
-- 若 k<m，则最小的 kk 个数一定都在左侧数组中，我们只需要对左侧数组递归地 parition 即可；
-- 若 k>m，则左侧数组中的 mm 个数都属于最小的 kk 个数，我们还需要在右侧数组中寻找最小的 k-mk−m 个数，对右侧数组递归地 partition 即可
+- 若 k = m，我们就找到了最小的 k 个数，就是左侧的数组；
+- 若 k<m，则最小的 k个数一定都在左侧数组中，我们只需要对左侧数组递归地 parition 即可；
+- 若 k>m，则左侧数组中的 m 个数都属于最小的 k 个数，我们还需要在右侧数组中寻找最小的 k−m 个数，对右侧数组递归地 partition 即可
 
 #### 2）复杂度
 
@@ -85,7 +85,6 @@ void partitionArray(int[] arr, int lo, int hi, int k) {
 }
 
 // partition 函数和快速排序中相同，具体可参考快速排序相关的资料
-// 代码参考 Sedgewick 的《算法4》
 int partition(int[] a, int lo, int hi) {
     int i = lo;
     int j = hi + 1;

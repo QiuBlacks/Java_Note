@@ -3,24 +3,35 @@
 ---
 # 一、基本介绍
 ## 1、背景介绍
-&emsp;&emsp;Java平台允许我们在内存中创建可复用的Java对象，但一般情况下，只有当JVM处于运行时，这些对象才可能存在，即，这些对象的生命周期不会比JVM的生命周期更长。但在现实应用中，就可能要求在JVM停止运行之后能够保存(持久化)指定的对象，并在将来重新读取被保存的对象。Java对象序列化就能够帮助我们实现该功能。
+Java平台允许我们在内存中创建可复用的Java对象，但一般情况下，只有当JVM处于运行时，这些对象才可能存在，即，这些对象的生命周期不会比JVM的生命周期更长。但在现实应用中，就可能要求在JVM停止运行之后能够保存(持久化)指定的对象，并在将来重新读取被保存的对象。Java对象序列化就能够帮助我们实现该功能。
 ## 2、基本概念
 - Serialization（序列化）是一种将一个对象表示为一个字节序列的过程；
 - deserialization(反序列化)是一种将这些字节序列重建成一个对象的过程。
 
  &emsp;&emsp;该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。<br>
  &emsp;&emsp;如果去掉继承Serialization会报：==java.io.NotSerializableException==
+
+
+
 ## 3、注意：
 
 - 对象序列化保存的是对象的”状态”，即它的成员变量。由此可知，对象序列化==不会保存类中的静态变量==。
+
 - 整个过程都是 Java 虚拟机（JVM）独立的，也就是说，在一个平台上序列化的对象可以在另一个完全不同的平台上反序列化该对象。
+
 - 要想将父类对象也序列化，就需要让父类也实现Serializable 接口。
-- ==Transient== 关键字的作用是控制变量的序列化，在变量声明前加上该关键字，可以阻止该变量被序列化到文件中，在被反序列化后，transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。
-- 服务器端给客户端发送序列化对象数据，对象中有一些数据是敏感的，比如密码字符串等，希望对该密码字段在序列化时，进行加密，而客户端如果拥有解密的密钥，只有在客户端进行反序列化时，才可以对密码进行读取，这样可以一定程度保证序列化对象的数据安全。
+
+- ==Transient== 关键字的作用是控制变量的序列化，在变量声明前加上该关键字，可以==阻止该变量被序列化==到文件中，在被反序列化后，transient 变量的值被设为初始值，如 int 型的是 0，对象型的是 null。
+
+- 服务器端给客户端发送序列化对象数据，对象中有一些数据是敏感的，比如密码字符串等，希望对该密码字段在序列化时，进行加密，而客户端如果拥有解密的密钥，只有在客户端进行反序列化时，才可以对密码进行读取，这样可以一定程度保证序列化对象的数据安全
+
+  
 
 ## 4、使用场景
 - 当你想把的内存中的对象保存到一个文件中或者数据库中时候(数据持久化)；
 - 利用序列化实现远程通信，即在网络上传送对象的字节序列；
+
+
 
 
 # 二、实现序列化和反序列化
@@ -32,7 +43,7 @@
 
 ## 2、Serializable实现例子
 &emsp;&emsp;定义一个序列化类
-```
+```java
 public class User1 implements Serializable {
 
     private String name;
@@ -50,7 +61,7 @@ public class User1 implements Serializable {
 ```
 进行序列化和反序列化
 
-```
+```java
 public class SerializableDemo1 {
 
     public static void main(String[] args) {
@@ -100,7 +111,10 @@ public class SerializableDemo1 {
 
 ```
 
+
+
 # 三、自定义序列化
+
 ## 1、实现方式
 &emsp;&emsp;通过在被序列化的类中增加==writeObject（） 和 readObject==方法
 
@@ -123,5 +137,9 @@ public class SerializableDemo1 {
 ---
 
 
-参考：http://www.hollischuang.com/archives/1140#What%20Serializable%20Did<br>
+
+## 参考文献：
+
+http://www.hollischuang.com/archives/1140#What%20Serializable%20Did<br>
+
 http://hollischuang.gitee.io/tobetopjavaer/#/basics/java-basic/serialize-in-java

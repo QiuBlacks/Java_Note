@@ -6,13 +6,13 @@
 
 
 
-## **一、工厂设计模式** 
+## 一、工厂设计模式 
 
 ### 1、基本介绍
 
 ​			Spring使用工厂模式通过 `BeanFactory`、`ApplicationContext` 创建 bean 对象。
 
-### **2、两者对比：**
+### 2、两者对比：
 
 - `BeanFactory` ：延迟注入(使用到某个 bean 的时候才会注入),相比于`BeanFactory`来说会占用更少的内存，程序启动速度更快。
 - `ApplicationContext` ：容器启动的时候，不管你用没用到，一次性创建所有 bean 。`BeanFactory` 仅提供了最基本的依赖注入支持，`ApplicationContext` 扩展了 `BeanFactory` ,除了有`BeanFactory`的功能还有额外更多功能，所以一般开发人员使用`ApplicationContext`会更多。
@@ -25,24 +25,24 @@ ApplicationContext的三个实现类：
 
 
 
-## 二、**单例设计模式** 
+## 二、单例设计模式 
 
 ### 1、基本介绍
 
 在我们的系统中，有一些对象其实我们只需要一个，比如说：线程池、缓存、对话框、注册表、日志对象、充当打印机、显卡等设备驱动程序的对象。事实上，这一类对象只能有一个实例，如果制造出多个实例就可能会导致一些问题的产生，比如：程序的行为异常、资源使用过量、或者不一致性的结果。
 
-==Spring 中的 Bean 默认**作用域**都是单例的==
+==Spring 中的 Bean 默认作用域都是单例的==
 
 ==Spring 通过 `ConcurrentHashMap` 实现单例注册表的特殊方式实现单例模式==
 
 
 
-### 2、**使用单例模式的好处:**
+### 2、使用单例模式的好处:
 
 - 对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；
 - 由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。
 
-### 3、**Spring 实现单例的方式**
+### 3、Spring 实现单例的方式
 
 ```java
 //xml
@@ -53,17 +53,17 @@ ApplicationContext的三个实现类：
 
 
 
-## **三、代理设计模式** : AOP的实现
+## 三、代理设计模式 : AOP的实现
 
 ### 1、基本介绍
 
-**JDK** 代理和**Cglib** 代理
+JDK 代理和Cglib 代理
 
 AOP(Aspect-Oriented Programming:面向切面编程)能够将那些与业务无关，却为业务模块所共同调用的逻辑或责任（例如事务处理、日志管理、权限控制等）封装起来，便于减少系统的重复代码，降低模块间的耦合度，并有利于未来的可拓展性和可维护性。
 
 ### 2、Spring AOP 和 AspectJ AOP 有什么区别
 
-**Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。**
+Spring AOP 属于运行时增强，而 AspectJ 是编译时增强。
 
  Spring AOP 基于代理(Proxying)，而 AspectJ 基于字节码操作(Bytecode Manipulation)。
 
@@ -133,7 +133,7 @@ public class TemplateImpl extends Template {
 
 在Spring MVC中，`DispatcherServlet` 根据请求信息调用 `HandlerMapping`，解析请求对应的 `Handler`。解析到对应的 `Handler`（也就是我们平常说的 `Controller` 控制器）后，开始由`HandlerAdapter` 适配器处理。`HandlerAdapter` 作为期望接口，具体的适配器实现类用于对目标类进行适配，`Controller` 作为需要适配的类。
 
-**为什么要在 Spring MVC 中使用适配器模式？** 
+为什么要在 Spring MVC 中使用适配器模式？ 
 
 Spring MVC 中的 `Controller` 种类众多，不同类型的 `Controller` 通过不同的方法来对请求进行处理。如果不利用适配器模式的话，`DispatcherServlet` 直接获取对应类型的 `Controller`，需要的自行来判断，像下面这段代码一样：
 
@@ -165,7 +165,7 @@ Spring 中配置 DataSource 的时候，DataSource 可能是不同的数据库�
 
 
 
-## **七、观察者模式**
+## 七、观察者模式
 
 ### 1、基本介绍
 
@@ -175,11 +175,11 @@ Spring 中配置 DataSource 的时候，DataSource 可能是不同的数据库�
 
 
 
-- **包装器设计模式** : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。
+- 包装器设计模式 : 我们的项目需要连接多个数据库，而且不同的客户在每次访问中根据需要会去访问不同的数据库。这种模式让我们可以根据客户的需求能够动态切换不同的数据源。
 
 - 
 
-- **适配器模式** :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配`Controller`。
+- 适配器模式 :Spring AOP 的增强或通知(Advice)使用到了适配器模式、spring MVC 中也是用到了适配器模式适配`Controller`。
 
 ### 2、Spring 事件驱动模型中的三种角色
 

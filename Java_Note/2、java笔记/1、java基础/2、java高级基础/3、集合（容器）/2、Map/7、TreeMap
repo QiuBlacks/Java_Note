@@ -1,0 +1,7 @@
+
+
+## 一、基本介绍
+
+Java *TreeMap*实现了*SortedMap*接口，也就是说会按照`key`的大小顺序对*Map*中的元素进行排序，`key`大小的评判可以通过其本身的自然顺序(natural ordering)，也可以通过构造时传入的比较器(Comparator)。
+
+TreeMap底层通过红黑树(Red-Black tree)实现

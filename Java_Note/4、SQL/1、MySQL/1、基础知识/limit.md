@@ -14,13 +14,13 @@
 
 原始 SQL 语句：
 
-```
+```mysql
 select * from Member limit 10000,100
 ```
 
 优化后：
 
-```
+```mysql
 select * from Member where MemberID >= (select MemberID from Member limit 100000,1) limit 100
 ```
 
@@ -30,12 +30,12 @@ select * from Member where MemberID >= (select MemberID from Member limit 100000
 
 原始 SQL 语句：
 
-```
+```mysql
 select * from orders_history where type=2 limit 100000,100
 ```
 
 优化后：
 
-```
+```mysql
 select * from orders_history where type=2 and id between 1000000 and 1000100 limit 100
 ```

@@ -1,4 +1,9 @@
+[TOC]
+
+
+
 # Java
+
 ----------------------------------------------------------------
 # 一、基本介绍
 ## 1、分类
@@ -23,7 +28,7 @@
 
 
 # 二、JDK(Java  Development Kit)、 JRE（Java Runtime Environment ）
-- JDK是Java开发工具包，包含java开发工具+JRE+类库
+- JDK是Java开发工具包，包含java开发工具+JRE+类库，它能够创建和编译程序。
 - JRE是Java运行时环境，提供 jvm+类库；Java虚拟机、库函数、运行Java应用程序所必须的文件。
 
 

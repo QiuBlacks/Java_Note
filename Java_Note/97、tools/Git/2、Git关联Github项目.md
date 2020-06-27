@@ -63,3 +63,23 @@ git clone url  //url为项目服务器地址或github地址
 3、git commit -m "heiheihei"	
 
 4、 git push
+
+
+
+## 四、忽略文件上传
+
+
+
+.gitignore  文件
+
+```
+target          //忽略这个target目录
+angular.json    //忽略这个angular.json文件
+log/*           //忽略log下的所有文件
+css/*.css       //忽略css目录下的.css文件
+```
+
+
+
+
+

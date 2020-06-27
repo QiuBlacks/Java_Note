@@ -1,12 +1,22 @@
 # ReentrantLock（重入锁） 详解
 ---
 # 一、基本介绍
-## 1、实现接口
+
+## 1、基本概念
+
+### 1.1  可重入锁
+
+自己可以再次获取自己的内部锁。比如一个线程获得了某个对象的锁，此时这个对象锁还没有释放，当其再次想要获取这个对象的锁的时候还是可以获取的，如果不可锁重入的话，就会造成死锁。同一个线程每次获取锁，锁的计数器都自增1，所以要等到锁的计数器下降为0时才能释放锁。
+
+### 1.2   实现接口
 
 ```
 public class ReentrantLock implements Lock, java.io.Serializable
 ```
+
+
 ## 2、内部类
+
 ![image](https://www.pdai.tech/_images/thread/java-thread-x-juc-reentrantlock-1.png)
 
 &emsp;&emsp;ReentrantLock类内部总共存在Sync、NonfairSync、FairSync三个类; NonfairSync与FairSync类继承自Sync类,正好对应了ReentrantLock的非公平锁、公平锁两大类型。 <br>
@@ -32,7 +42,7 @@ try {
 ## 4、注意点：
   都是通过CAS抢占锁
 
----
+
 
 # 二、实现流程
 
@@ -58,7 +68,7 @@ try {
 
 ## 1、Sync类
 ### &emsp;&emsp;1）源码分析
-```
+```java
 abstract static class Sync extends AbstractQueuedSynchronizer {
     // 序列号
     private static final long serialVersionUID = -5179523762034025860L;
