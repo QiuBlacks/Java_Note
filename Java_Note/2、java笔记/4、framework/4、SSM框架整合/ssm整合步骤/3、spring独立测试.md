@@ -1,8 +1,8 @@
-# **spring独立测试**
+# spring独立测试
 
-## **1、配置spring配置文件applicationContext.xml**
+## 1、配置spring配置文件applicationContext.xml
 
-**注意：这里我们要求spring配置文件只扫描service和dao层的注解，而不去扫controller层**
+注意：这里我们要求spring配置文件只扫描service和dao层的注解，而不去扫controller层
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -30,7 +30,7 @@
 
 
 
-## **2、使用注解配置业务层和持久层**
+## 2、使用注解配置业务层和持久层
 
 ```java
 @Repository("accountDao"）
@@ -47,7 +47,7 @@ public class AccountDaoImpl  implements IAccountDao {
 }
 ```
 
-**不调用持久层方法，只测试业务层AccountServiceImpl方法**
+不调用持久层方法，只测试业务层AccountServiceImpl方法
 
 ```java
 @Service("accountService")
@@ -68,7 +68,7 @@ public class AccountServiceImpl implements IAccountService {
 
 
 
-## **3、测试**
+## 3、测试
 
 ```java
 public class Test01Spring {

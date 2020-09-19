@@ -1,14 +1,18 @@
-# **properties**
+# properties
 
-配置properties
+### 1、properties标签
 
 ​        可以在标签内部配置连接数据库的信息。也可以通过属性引用外部配置文件信息
 
-​        resource属性： 常用的
+
+
+### 2、属性
+
+​      2.1  resource属性： 常用的
 
 ​            用于指定配置文件的位置，是按照类路径的写法来写，并且必须存在于类路径下。
 
-​        url属性：
+​      2.2  url属性：
 
 ​            是要求按照Url的写法来写地址
 
@@ -24,13 +28,19 @@
 
 
 
-```
-<properties url="file:///D:/IdeaProjects/day02_eesy_01mybatisCRUD/src/main/resources/jdbcConfig.properties">
+```xml
+<properties      url="D:/IdeaProjects/day02_eesy_01mybatisCRUD/src/main/resources/jdbcConfig.properties">
      
-<!-- <property name="driver" value="com.mysql.jdbc.Driver"></property>
+	<!--
+ 		<property name="driver" value="com.mysql.jdbc.Driver"></property>
         <property name="url" value="jdbc:mysql://localhost:3306/eesy_mybatis"></property>
         <property name="username" value="root"></property>
-        <property name="password" value="1234"></property>-->
-    </properties>
+        <property name="password" value="1234"></property>
+	-->
+</properties>
 ```
+
+
+
+
 

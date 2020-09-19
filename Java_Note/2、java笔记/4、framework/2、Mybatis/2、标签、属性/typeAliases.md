@@ -1,4 +1,4 @@
-# **typeAliases**
+# typeAliases
 
 ## 一、：标签介绍
 

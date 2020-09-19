@@ -23,7 +23,7 @@ db.shutdownServer()
 ./mongod
 
 use admin
-db.auth("blackjack","19981017")
+db.auth("blackjack","981017")
 db.auth("root","root")
 ```
 
@@ -31,14 +31,17 @@ db.auth("root","root")
 
 ```
 use admin
-db.auth("blackjack","19981017")
+db.auth("blackjack","981017")
 db.auth("root","root")
+
+use db01
+db.dropDatabase()
 ```
 
 
 
 ```
-
+//创建集合
 db.createCollection("students")
 db.students_res.drop()
 show Collections
@@ -51,11 +54,13 @@ db.grantRolesToUser(
      {
        user:"blackjack",
       
-       roles:[{role:"dbAdmin",db:"testdb"}]
+       roles:[{role:"root",db:"job"}]
      }
   )
+//创建用户  
+db.createUser({user:"blackjack",pwd:"981017",roles:[  {role:"dbAdmin", db:"admin" } ]})
   
-  db.createUser({user:"blackjack",pwd:"19981017",roles:[  {role:"dbAdmin", db:"mydb" } ]})
+  db.dropUser("balckjack")
 ```
 
 

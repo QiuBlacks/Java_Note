@@ -12,11 +12,11 @@ mybatis在使用代理dao的方式实现增删改查时做什么事呢？
 
 
 
-**自定义mybatis流程图![2cf31ea038b2e990f4ef9af6ea9f4f77_WEBRESOURCE44c190dd1f88fdbea8d37a5519526fd5](E:\black user\Java\有道云截图\2cf31ea038b2e990f4ef9af6ea9f4f77_WEBRESOURCE44c190dd1f88fdbea8d37a5519526fd5.png)**
+**自定义mybatis流程图![2cf31ea038b2e990f4ef9af6ea9f4f77_WEBRESOURCE44c190dd1f88fdbea8d37a5519526fd5](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170033.png)**
 
 
 
-![自定义mybatis开发流程图 (1)](E:\black user\Java\有道云截图\自定义mybatis开发流程图 (1).png)
+![自定义mybatis开发流程图 (1)](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170034.png)
 
 # **二、手写mybatis**
 

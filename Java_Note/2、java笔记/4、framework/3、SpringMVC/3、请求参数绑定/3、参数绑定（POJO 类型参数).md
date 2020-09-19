@@ -1,8 +1,8 @@
-# **参数绑定（POJO 类型参数)**
+# 参数绑定（POJO 类型参数)
 
-## **在基本类型参数步骤基础上**
+## 在基本类型参数步骤基础上
 
-### **1、Account 类添加User实体**
+### 1、Account 类添加User实体
 
 ```
   public class Account implements Serializable{
@@ -16,7 +16,7 @@
 
 
 
-## **2、编辑param.jap**
+## 2、编辑param.jap
 
 **注意：  param/saveAccount  不能写成：/param/saveAccount**
 
@@ -47,7 +47,7 @@
 
 
 
-## **3、测试**
+## 3、测试
 
 ```
 @Controller

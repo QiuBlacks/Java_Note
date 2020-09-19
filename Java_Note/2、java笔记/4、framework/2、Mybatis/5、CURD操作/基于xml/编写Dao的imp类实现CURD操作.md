@@ -1,6 +1,6 @@
-# **编写Dao的imp类实现CURD操作**
+# 编写Dao的imp类实现CURD操作
 
-```
+```java
 public class UserDaoImpl implements IUserDao {
 
     private SqlSessionFactory factory;

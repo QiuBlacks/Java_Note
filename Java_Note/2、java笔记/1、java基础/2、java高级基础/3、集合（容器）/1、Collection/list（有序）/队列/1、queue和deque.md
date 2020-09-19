@@ -6,7 +6,7 @@
 
 
 
-![image-20200523223709457](E:\black user\Java\有道云截图\image-20200523223709457.png)
+![image-20200523223709457](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165051.png)
 
 
 

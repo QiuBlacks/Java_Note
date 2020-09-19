@@ -1,10 +1,6 @@
-#  **插入排序** （Insertion  Sort）
+#  插入排序 （Insertion  Sort）
 
- 
-
-## 一、插入排序法介绍:
-
- 
+##  一、插入排序法介绍
 
 插入式排序属于内部排序法，是对于欲排序的元素以插入的方式找寻该元素的适当位置，以达到排序的目的。
 
@@ -20,7 +16,7 @@
 
 ### 2、思路图:
 
-![img](E:\black user\Java\有道云截图\nU3MJrY-1589361939325.gif)
+![img](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181710.gif)
 
 
 

@@ -25,7 +25,7 @@ public class Math {
 
 
 
-![3a42e990bc6eb7dac71088301801a53 (2)](E:\black user\Java\有道云截图\3a42e990bc6eb7dac71088301801a53 (2).png)
+![3a42e990bc6eb7dac71088301801a53 (2)](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165354.png)
 
 
 

@@ -1,8 +1,8 @@
-# **Spring整合junit的注解**
+# Spring整合junit的注解
 
-#  **一、Spring整合junit的配置步骤：**
+#  一、Spring整合junit的配置步骤：
 
-​     **1、**导入spring整合junit的jar包 (坐标)
+​     1、导入spring整合junit的jar包 (坐标)
 
 ```
 <dependency>
@@ -18,13 +18,13 @@
 </dependency>
 ```
 
-​     **2、**使用Junit提供的一个注解把原有的main方法替换了，替换成spring提供的
+​     2、使用Junit提供的一个注解把原有的main方法替换了，替换成spring提供的
 
-​           **@Runwith**
+​           @Runwith
 
-​    **3、**告知spring的运行器，spring和ioc创建是基于xml还是注解的，并且说明位置
+​    3、告知spring的运行器，spring和ioc创建是基于xml还是注解的，并且说明位置
 
-​         **@ContextConfiguration**
+​         @ContextConfiguration
 
 ```
 locations：指定xml文件的位置，加上classpath关键字，表示在类路径下		@ContextConfiguration( locations= “classpath="bean.xml" )
@@ -32,9 +32,9 @@ locations：指定xml文件的位置，加上classpath关键字，表示在类�
  classes：指定注解类所在地位置    						@ContextConfiguration(classes = SpringConfiguration.class)
 ```
 
-**注意：**  当我们使用spring 5.x版本的时候，要求junit的jar必须是4.12及以上
+注意：  当我们使用spring 5.x版本的时候，要求junit的jar必须是4.12及以上
 
-# **二、例子：**
+# 二、例子：
 
 开发测试时，junit无法识别spring框架，不能使用容器
 

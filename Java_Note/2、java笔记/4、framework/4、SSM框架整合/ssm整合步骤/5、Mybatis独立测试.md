@@ -1,10 +1,10 @@
-# **5、Mybatis独立测试**
+# 5、Mybatis独立测试
 
-## **一、编写持久层AcoountDao的映射文件AccountDao.xml**
+## 一、编写持久层AcoountDao的映射文件AccountDao.xml
 
-**注意：映射文件要放在resources里，与src包中accountdao.java相同的路径**
+注意：映射文件要放在resources里，与src包中accountdao.java相同的路径
 
-**id要和方法名相同**
+id要和方法名相同
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -14,7 +14,7 @@
 <mapper namespace="com.qiu.dao.IAccountDao">
 
 <select id="findAll" resultType="com.qiu.domain.Account">
-        select * from account
+        select  from account
 </select>
 
 <insert id="saveAccount" parameterType="com.qiu.domain.Account">
@@ -26,7 +26,7 @@
 
 
 
-## **二、编写 Mybatis配置文件SqlMapConfig .xml**
+## 二、编写 Mybatis配置文件SqlMapConfig .xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -55,7 +55,7 @@ PUBLIC "-//mybatis.org//DTD Config 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-c
 
 
 
-## **三、编写jdbcConfig.properties配置文件**
+## 三、编写jdbcConfig.properties配置文件
 
 ```properties
 jdbc.driver=com.mysql.cj.jdbc.Driver
@@ -66,7 +66,7 @@ jdbc.password=qrj15521026074
 
    
 
-## **四、测试**
+## 四、测试
 
 ```java
 public class Test02MyBatis {

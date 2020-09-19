@@ -1,14 +1,14 @@
-# **实现JSON数据的请求与响应**
+# 实现JSON数据的请求与响应
 
-# **一、主要知识点**
+# 一、主要知识点
 
-**1、@ResponseBody**
+## 1、@ResponseBody
 
  将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后（案例里指 json数据），写入到Response对象的body（响应体）数据区。
 
-**2、json:**
+## 2、json
 
-是一种轻量级的数据交换格式，采用一种**“键：值”**对的文本格式来存储和表示数据
+是一种轻量级的数据交换格式，采用一种“键：值”对的文本格式来存储和表示数据
 
 ```
 {     
@@ -20,19 +20,19 @@
 
 
 
-# **二、实现步骤**
+# 二、实现步骤
 
-## **目录结构**
+### 目录结构
 
-![image-20200513145320067](E:\black user\Java\有道云截图\image-20200513145320067.png)
+![image-20200513145320067](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170704.png)
 
-## **项目准备**
+### 项目准备
 
-**1、导入jqurey文件jquery.min.js**
+#### 1、导入jqurey文件jquery.min.js
 
-**2、导入json的jar包（方便对 json 数据进行转换成java属性）**
+#### 2、导入json的jar包（方便对 json 数据进行转换成java属性）
 
-```
+```xml-dtd
 <dependency>
     <groupId>com.fasterxml.jackson.core</groupId>
     <artifactId>jackson-databind</artifactId>
@@ -50,9 +50,9 @@
 </dependency>
 ```
 
-**3、在springmvc.xml配置；避免静态资源被拦截**
+#### 3、在springmvc.xml配置；避免静态资源被拦截
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:mvc="http://www.springframework.org/schema/mvc"
@@ -70,13 +70,13 @@
     <context:component-scan base-package="com.qiu"/>
 
     <!-- 视图解析器对象 -->
-    <bean id="internalResourceViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <bean id="internalResourceViewResolver" 		 class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <property name="prefix" value="/WEB-INF/pages/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
 
     <!--前端控制器，哪些静态资源不拦截-->
-    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/js/" mapping="/js/"/>
 
     <!-- 开启SpringMVC框架注解的支持 -->
     <mvc:annotation-driven />
@@ -86,11 +86,11 @@
 
 
 
-## **开始项目**
+### 开始项目
 
 #### 4、配置jsp文件进行请求；编写json格式，设置属性和值；并显示后台响应数据
 
-```
+```jsp
 <%--
   Created by IntelliJ IDEA.
   User: 彼岸の烟火
@@ -137,15 +137,15 @@
 
 
 
-#### **5、后台响应**
+#### 5、后台响应
 
 ```
 @Controller
 @RequestMapping("/user")
 public class UserController {
-    /**
-     * 模拟异步请求响应
-     */
+    /
+      模拟异步请求响应
+     /
     @RequestMapping("/testAjax")
     public @ResponseBody  User testAjax(@RequestBody User user){
         System.out.println("testAjax方法执行了...");

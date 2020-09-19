@@ -18,7 +18,7 @@ Map.Entry< >
 
 ## 2、遍历
 
-### 1）普通遍历
+### 2.1  普通遍历
 
 ```Java
 for (Map.Entry<String, String> entry : map.entrySet()) {   		 								      	 	System.out.println(entry.getKey() + " ：" + entry.getValue()); 
@@ -27,7 +27,7 @@ for (Map.Entry<String, String> entry : map.entrySet()) {   		 								      	 	S
 
 
 
-### 2）迭代器遍历
+### 2.2  迭代器遍历
 
 1）使用keySet()遍历
 

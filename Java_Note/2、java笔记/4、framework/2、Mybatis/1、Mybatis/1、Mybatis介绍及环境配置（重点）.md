@@ -1,14 +1,16 @@
-# **Mybatis介绍及环境配置（重点）**
+# Mybatis介绍及环境配置（重点）
 
-# **一、MyBatis** **框架概述**
+# 一、MyBatis 框架概述
 
-mybatis 是一个优秀的基于 java 的持久层框架，它内部封装了 jdbc，使开发者只需要关注 sql 语句本身， 而不需要花费精力去处理加载驱动、创建连接、创建 statement 等繁杂的过程。
+mybatis 是一个优秀的基于 java 的持久层框架，它内部封装了 jdbc，使开发者只需要关注 sql 语句本身， 而不需要花费精力去处理加载驱动、创建连接、创建 statement 等繁杂的过程
 
-mybatis 通过**XML**或**注解**的方式将要执行的各种 statement 配置起来，并通过 java 对象和statement 中sql 的动态参数进行映射生成最终执行的 sql 语句，最后由 mybatis 框架执行 sql 并将结果映射为 java 对象并返回。
+mybatis 通过XML或注解的方式将要执行的各种 statement 配置起来，并通过 java 对象和statement 中sql 的动态参数进行映射生成最终执行的 sql 语句，最后由 mybatis 框架执行 sql 并将结果映射为 java 对象并返回
 
-采用 **ORM** **思想**解决了实体和数据库映射的问题，对 jdbc 进行了封装，屏蔽了jdbc api 底层访问细节，使我们不用与 jdbc api 打交道，就可以完成对数据库的持久化操作。
+采用 ORM 思想解决了实体和数据库映射的问题，对 jdbc 进行了封装，屏蔽了jdbc api 底层访问细节，使我们不用与 jdbc api 打交道，就可以完成对数据库的持久化操作
 
-## **1、ORM** **思想**
+
+
+## 1、ORM 思想
 
 Object Relational Mapping，对象关系映射
 
@@ -18,49 +20,51 @@ Object Relational Mapping，对象关系映射
 
 
 
-# **二、jdbc缺点分析**
+# 二、jdbc缺点分析
 
-![image-20200513133010283](E:\black user\Java\有道云截图\image-20200513133010283.png)
+![image-20200513133010283](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170027.png)
 
 
 
-# 三、整体结构**
+# 三、整体结构
 
-![image-20200513133028737](E:\black user\Java\有道云截图\image-20200513133028737.png)
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170028.png" alt="image-20200513133028737" style="zoom:200%;" />
 
 
 
 # 四、环境搭配（重点）
 
-#### **环境搭建的注意事项：（重点）**
+## 1、环境搭建的注意事项：（重点）
 
- 第一个：创建IUserDao.xml 和 IUserDao.java时，在Mybatis中它把**持久层的操作接口**和**映射文件**也叫做**Mapper**，
+ 第一个：创建IUserDao.xml 和 IUserDao.java时，在Mybatis中它把持久层的操作接口和映射文件也叫做Mapper，
 
-​				所以：**IUserDao 和 IUserMapper**是一样的
+​				所以：IUserDao 和 IUserMapper是一样的
 
-​		第二个：在idea中创建目录的时候，如果要创建**多级目录**，需要一个一个目录创建
+第二个：在idea中创建目录的时候，如果要创建多级目录，需要一个一个目录创建
 
 ​			包在创建时：com.itheima.dao它是三级结构
 
 ​			目录在创建时：com.itheima.dao是一级目录
 
-​		第三个：mybatis的映射配置文件位置必须和dao接口的**包结构相同**
+第三个：mybatis的映射配置文件位置必须和dao接口的包结构相同
 
-![image-20200513133107329](E:\black user\Java\有道云截图\image-20200513133107329.png)
+![image-20200513133107329](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170029.png)
 
 ​		
 
-第四个：映射配置文件的mapper标签namespace属性的取值必须是dao接口的全限定类名
+第四个：**映射配置文件**的mapper标签namespace属性的取值必须是dao接口的全限定类名
 
-​		第五个：映射配置文件的操作配置（select），id属性的取值必须是dao接口的方法名
+第五个：映射配置文件的操作配置（select），id属性的取值必须是dao接口的方法名
 
 ​		当我们遵从了第三，四，五点之后，我们在开发中就无须再写dao的实现类。
 
-**1、创建表和Maven工程**
+## 2、步骤
 
-**2、引入依赖（pom.xml）**
+### 2.1、创建表和Maven工程
 
-```
+### 2.2、引入依赖（pom.xml）
+
+```xml
 <dependency>
     <groupId>org.mybatis</groupId>
     <artifactId>mybatis</artifactId>
@@ -68,9 +72,9 @@ Object Relational Mapping，对象关系映射
 </dependency>
 ```
 
-**3、全局配置文件（SqlMapconfig.xml）**
+### 2.3、全局配置文件（SqlMapconfig.xml）
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
   PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -93,19 +97,20 @@ Object Relational Mapping，对象关系映射
                 <property name="password" value="1234"/>
             </dataSource>
         </environment>
-    </environments>
+  
       
-      <environment id="development">
-         <!-- 事务管理器，JDBC类型的事务管理器 -->
-         <transactionManager type="JDBC" />
-         <!-- 数据源，池类型的数据源 -->
-         <dataSource type="POOLED">
-            <property name="driver" value="${driver}" /> <!-- 配置了properties，所以可以直接引用 -->
-            <property name="url" value="${url}" />
-            <property name="username" value="${username}" />
-            <property name="password" value="${password}" />
-         </dataSource>
-      </environment>  
+     	 <environment id="development">
+             <!-- 事务管理器，JDBC类型的事务管理器 -->
+             <transactionManager type="JDBC" />
+             <!-- 数据源，池类型的数据源 -->
+             <dataSource type="POOLED">
+                 <!-- 配置了properties，所以可以直接引用 -->
+                <property name="driver" value="${driver}" /> 
+                <property name="url" value="${url}" />
+                <property name="username" value="${username}" />
+                <property name="password" value="${password}" />
+             </dataSource>
+     	 </environment>  
    </environments>
    
    
@@ -117,9 +122,9 @@ Object Relational Mapping，对象关系映射
   </configuration>
 ```
 
-**4、.配置Map.xml（IUser.xml）**
+### 2.4、配置Map.xml（IUser.xml）
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -127,16 +132,16 @@ Object Relational Mapping，对象关系映射
 <mapper namespace="com.itheima.dao.IUserDao">
     <!--配置查询所有-->
     <select id="findAll" resultType="com.itheima.domain.User">
-        select * from user
+        select  from user
     </select>
 </mapper>
 ```
 
-**5、测试**
+### 2.5、测试
 
-**第一种：**
+#### 第一种：
 
- 第一步：读取配置文件
+​		 第一步：读取配置文件
 
 ​		第二步：创建SqlSessionFactory工厂
 
@@ -148,7 +153,7 @@ Object Relational Mapping，对象关系映射
 
 ​		第六步：释放资源
 
-```
+```java
 public static void main(String[] args)throws Exception {
     //1.读取配置文件
     InputStream in = Resources.getResourceAsStream("SqlMapConfig.xml");
@@ -170,11 +175,11 @@ public static void main(String[] args)throws Exception {
 }
 ```
 
-**第二种：**
+#### 第二种：
 
-**1)构建sqlSessionFactory（MybatisTest.java）**
+1)构建sqlSessionFactory（MybatisTest.java）
 
-```
+```java
 // 指定全局配置文件
 String resource = "mybatis-config.xml";
 // 读取配置文件
@@ -183,7 +188,7 @@ InputStream inputStream = Resources.getResourceAsStream(resource);
 SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 ```
 
-**2)打开sqlSession会话，并执行sql**	 
+2)打开sqlSession会话，并执行sql	 
 
 ```
    // 获取sqlSession
@@ -194,6 +199,25 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(input
         System.out.println(user);
 ```
 
-**6、缺点分析**
+6、缺点分析
 
-![image-20200513133135334](E:\black user\Java\有道云截图\image-20200513133135334.png)
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170030.png" alt="image-20200513133135334" style="zoom:200%;" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

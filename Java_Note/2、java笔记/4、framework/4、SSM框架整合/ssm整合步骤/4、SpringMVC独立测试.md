@@ -1,6 +1,6 @@
-## **SpringMVC独立测试**
+## SpringMVC独立测试
 
-### **1、在 web.xml  中配置核心控制器**
+### 1、在 web.xml  中配置核心控制器
 
 ```xml
 <!DOCTYPE web-app PUBLIC
@@ -23,7 +23,7 @@
   </filter>
   <filter-mapping>
     <filter-name>CharacterEncodingFilter</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>/</url-pattern>
   </filter-mapping>
 
   <!--配置前端控制器-->
@@ -49,9 +49,9 @@
 </web-app>
 ```
 
-### **2、编写SpringMVC配置文件SpringMVC.xml**
+### 2、编写SpringMVC配置文件SpringMVC.xml
 
-**注意：这里要求springmvc只扫描controller层的注解**
+注意：这里要求springmvc只扫描controller层的注解
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -78,7 +78,7 @@
     </bean>
 
     <!--过滤静态资源-->
-    <mvc:resources location="/js/" mapping="/js/**" />
+    <mvc:resources location="/js/" mapping="/js/" />
 
     <!--开启SpringMVC注解的支持-->
     <mvc:annotation-driven/>
@@ -86,9 +86,9 @@
 </beans>
 ```
 
-### **3、编写index.jsp文件**
+### 3、编写index.jsp文件
 
-**注意：herf路径前面不加 ”/“**
+注意：herf路径前面不加 ”/“
 
 ```jsp
 <%@ page language="java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
@@ -105,7 +105,7 @@
 </html>
 ```
 
-### **4、测试**
+### 4、测试
 
 ```java
 @Controller("accountController")

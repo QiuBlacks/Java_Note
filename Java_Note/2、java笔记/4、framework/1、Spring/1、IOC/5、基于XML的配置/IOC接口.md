@@ -11,6 +11,8 @@ ApplicationContext ac=new ClassPathXmlApplicationContext("bean.xml");
 ApplicationContext ac=new FileSystemXmlApplicationContext("E:\\black user\\IDEA\\IDEA-Worksapce\\springtext\\src\\main\\resources\\bean.xml ");
       
 ```
+
+
 ## 二、BeanFactory(顶层接口，适用于多例对象)
 
 在构建核心容器时，创建对象采取的策略是延迟加载的方式。什么时候根据id获取对象就什么时候创建对象
@@ -18,5 +20,5 @@ ApplicationContext ac=new FileSystemXmlApplicationContext("E:\\black user\\IDEA\
     Resource resource=new ClassPathResource("bean.xml");
     BeanFactory factory=new XmlBeanFactory(resource);
     IAccountService as=(IAccountService)factory.getBean("accountService");
- ```   
+```
 

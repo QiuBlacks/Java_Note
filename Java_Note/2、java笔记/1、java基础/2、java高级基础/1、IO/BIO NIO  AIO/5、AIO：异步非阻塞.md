@@ -16,7 +16,7 @@ Linux下由于没有这种异步IO技术，所以使用epoll多路复用IO技术
 
 ### 2、图解
 
-<img src="E:\black user\Java\有道云截图\java-io-aio-1.png" alt="img" style="zoom:80%;" />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910164922.png" alt="img" style="zoom:80%;" />
 
 
 
@@ -24,19 +24,21 @@ Linux下由于没有这种异步IO技术，所以使用epoll多路复用IO技术
 
 ## 二、要点分析
 
-
-
 1、注意在JAVA NIO框架中，我们说到了一个重要概念“selector”(选择器)。它负责代替应用查询中所有已注册的通道到操作系统中进行IO事件轮询、管理当前注册的通道集合，定位发生事件的通道等操操作；
 
-但是在JAVA AIO框架中，由于应用程序不是“轮询”方式，而是订阅-通知方式，所以不再需要“selector”(选择器)了，改由==channel通道==直接到操作系统注册监听
+但是在JAVA AIO框架中，由于应用程序不是“轮询”方式，而是订阅-通知方式，所以**不再需要“selector”(**选择器)了，改由==channel通道==直接到操作系统注册监听
 
 
 
-2、JAVA AIO框架中，只实现了两种网络IO通道“AsynchronousServerSocketChannel”(服务器监听通道)、“AsynchronousSocketChannel”(socket套接字通道)。但是无论哪种通道他们都有独立的fileDescriptor(文件标识符)、attachment(附件，附件可以使任意对象，类似“通道上下文”)，并被独立的SocketChannelReadHandle类实例引用。
+2、JAVA AIO框架中，只实现了两种网络IO通道：
+
+​		**“AsynchronousServerSocketChannel”(服务器监听通道)、“AsynchronousSocketChannel”(socket套接字通道)。**
+
+但是无论哪种通道他们都有独立的fileDescriptor(文件标识符)、attachment(附件，附件可以使任意对象，类似“通道上下文”)，并被独立的SocketChannelReadHandle类实例引用。
 
 
 
-3、JAVA AIO 和 JAVA NIO 框架都是要使用线程池的(当然您也可以不用)，线程池的使用原则，一定是只有业务处理部分才使用，使用后马上结束线程的执行(还回线程池或者消灭它)。JAVA AIO框架中还有一个线程池，是拿给“通知处理器”使用的，这是因为JAVA AIO框架是基于“订阅-通知”模型的，“订阅”操作可以由主线程完成，但是您总不能要求在应用程序中并发的“通知”操作也在主线程上完成吧^_^。
+3、JAVA AIO 和 JAVA NIO 框架都是要使用**线程池**的(当然您也可以不用)，线程池的使用原则，一定是只有业务处理部分才使用，使用后马上结束线程的执行(还回线程池或者消灭它)。JAVA AIO框架中还有一个线程池，是拿给“通知处理器”使用的，这是因为JAVA AIO框架是基于“订阅-通知”模型的，“订阅”操作可以由主线程完成，但是您总不能要求在应用程序中并发的“通知”操作也在主线程上完成吧^_^。
 
 
 

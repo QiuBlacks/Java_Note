@@ -1,66 +1,66 @@
-# **基于简单mybatis的CRUD操作**
+# 基于简单mybatis的CRUD操作
 
-# **一、创建UserDao接口**
+# 一、创建UserDao接口
 
 ```
 public interface IUserDao {
 
-    /**
-     * 查询所有用户
-     * @return
-     */
+    /
+      查询所有用户
+      @return
+     /
     List<User> findAll();
 
-    /**
-     * 保存用户
-     * @param user
-     */
+    /
+      保存用户
+      @param user
+     /
     void saveUser(User user);
 
-    /**
-     * 更新用户
-     * @param user
-     */
+    /
+      更新用户
+      @param user
+     /
     void updateUser(User user);
 
-    /**
-     * 根据Id删除用户
-     * @param userId
-     */
+    /
+      根据Id删除用户
+      @param userId
+     /
     void deleteUser(Integer userId);
 
-    /**
-     * 根据id查询用户信息
-     * @param userId
-     * @return
-     */
+    /
+      根据id查询用户信息
+      @param userId
+      @return
+     /
     User findById(Integer userId);
 
-    /**
-     * 根据名称模糊查询用户信息
-     * @param username
-     * @return
-     */
+    /
+      根据名称模糊查询用户信息
+      @param username
+      @return
+     /
     List<User> findByName(String username);
 
-    /**
-     * 查询总用户数
-     * @return
-     */
+    /
+      查询总用户数
+      @return
+     /
     int findTotal();
 
-    /**
-     * 根据queryVo中的条件查询用户
-     * @param vo
-     * @return
-     */
+    /
+      根据queryVo中的条件查询用户
+      @param vo
+      @return
+     /
     List<User> findUserByVo(QueryVo vo);
 }
 ```
 
 
 
-# **二、创建User类和QueryVo 类**
+# 二、创建User类和QueryVo 类
 
 
 
@@ -143,9 +143,9 @@ public class QueryVo {
 }
 ```
 
-# **三、配置UserDao.xml**
+# 三、配置UserDao.xml
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
@@ -167,7 +167,7 @@ public class QueryVo {
     <!-- 查询所有 -->
     <select id="findAll" resultMap="userMap">
         <!--select id as userId,username as userName,address as userAddress,sex as userSex,birthday as userBirthday from user;-->
-        select * from user;
+        select  from user;
     </select>
 
     <!-- 保存用户 -->
@@ -191,13 +191,13 @@ public class QueryVo {
     
     <!-- 根据id查询用户 -->
     <select id="findById" parameterType="INT" resultMap="userMap">
-        select * from user where id = #{uid}
+        select  from user where id = #{uid}
     </select>
 
     <!-- 根据名称模糊查询 -->
     <select id="findByName" parameterType="string" resultMap="userMap">
-          select * from user where username like #{name}
-        <!-- select * from user where username like '%${value}%'-->
+          select  from user where username like #{name}
+        <!-- select  from user where username like '%${value}%'-->
    </select>
 
     <!-- 获取用户的总记录条数 -->
@@ -207,18 +207,18 @@ public class QueryVo {
 
     <!-- 根据queryVo的条件查询用户 -->
     <select id="findUserByVo" parameterType="com.itheima.domain.QueryVo" resultMap="userMap">
-        select * from user where username like #{user.username}
+        select  from user where username like #{user.username}
     </select>
 </mapper>
 ```
 
 
 
-# **四、配置SqlMapconfig.xml**
+# 四、配置SqlMapconfig.xml
 
 
 
-```
+```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE configuration
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
@@ -280,9 +280,9 @@ public class QueryVo {
 
 # 五、测试
 
-**1、注意inti()和destory()的使用，简化代码**
+1、注意inti()和destory()的使用，简化代码
 
-```
+```java
 public class MybatisTest {
 
     private InputStream in;
@@ -312,9 +312,9 @@ public class MybatisTest {
 ```
 
 ```
-   /**
-     * 测试查询所有
-     */
+   /
+      测试查询所有
+     /
     @Test
     public void testFindAll(){
         //5.执行查询所有方法
@@ -327,8 +327,8 @@ public class MybatisTest {
 ```
 
 ```
-   * 测试保存操作
-     */
+    测试保存操作
+     /
     @Test
     public void testSave(){
         User user = new User();

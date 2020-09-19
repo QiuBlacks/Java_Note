@@ -1,6 +1,4 @@
 # java类型
----
-
 # 一、java的数据类型
 1. 基本类型：byte，short，int，long，boolean，float，double，char
 1. 引用类型：所有class和interface类型、数组
@@ -45,25 +43,30 @@ public class Integer {
 即可使用
 Integer a=null;
 
+
+
 # 三、深入剖析装箱和拆箱
---------------------------------------------------------------------------------
-## 一、基本介绍
-## 1、定义
+
+## 1、基本介绍
+
+## 1.1、定义
 - 装箱：将基本数据类型转化为包装类型
 - 拆箱：将包装类型转化为基本数据类型
 
-## 2、装箱与自动装箱的区别
+## 1.2、装箱与自动装箱的区别
   装箱：利用Integer的构造方法Integer（int value），即Integer c=new Integer(1);<br>
  &emsp; &emsp;自动装箱：或者叫隐式装箱，直接给Integer赋值，即Integer d=1,在编译的时候，会调用Integer.valueOf（）方法完成装箱。<br>
  &emsp; &emsp;相比而言，自动装箱可能比装箱具有更高的效率，体现在自动装箱的缓存上，下面从几道题目来讲自动装箱的缓存。
 
 
-## 3、new Integer(123) 与 Integer.valueOf(123) 的区别在于:
+## 1.3、new Integer(123) 与 Integer.valueOf(123) 的区别在于:
   new Integer(123): 每次都会新建一个对象<br>
  &emsp; &emsp;Integer.valueOf(123):   会使用缓存池中的对象，多次调用会取得同一个对象的引用<br>
  &emsp; &emsp;Integer 缓存池的大小默认为 -128~127
 
-# 二、实现思路
+
+
+## 2、实现思路
 
 以Interger类为例，下面看一段代码：
 
@@ -76,10 +79,12 @@ public class Main {
 }
 ```
 
- &emsp; &emsp;装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的 xxxValue方法实现的。（xxx代表对应的基本数据类型）
+ 装箱过程是通过调用包装器的valueOf方法实现的，而拆箱过程是通过调用包装器的 xxxValue方法实现的。（xxx代表对应的基本数据类型）
 
 
-# 三、相关面试题
+
+## 3、相关面试题
+
 以下代码的输出结果为？
 
 ```java

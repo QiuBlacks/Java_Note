@@ -1,10 +1,7 @@
 [TOC]
 
-
-
 # JVM（Java虚拟机）
 
----
 ## 一、基本介绍
 ### 1、JVM介绍
 
@@ -20,10 +17,29 @@ Java虚拟机包括一套字节码指令集、一组寄存器、一个栈、一�
 HotSpot 是JVM概念的一个实现。它最初由Sun开发，现在由Oracle拥有。 JVM规范还有其他实现，例如 JRockit ， IBM J9 等等。<br>
 &emsp;&emsp;jvm是规范，而HotSpot是实现方式，并且在openJdk的项目上开发的。
 
-
 ### 3. JRE和JDK
-JRE：Java Runtime Environment，也就是JVM的运行平台，联系平时用的虚拟机，大概可以理解成：JRE=虚拟机平台+虚拟机本体(JVM)。类似于你电脑上的VMWare+适用于VMWare的Ubuntu虚拟机。这样我们也就明白了JVM到底是个什么。<br>
-&emsp;&emsp;JDK：Java Develop Kit，Java的开发工具包，JDK本体也是Java程序，因此运行依赖于JRE,由于需要保持JDK的独立性与完整性，JDK的安装目录下通常也附有JRE。目前Oracle提供的Windows下的JDK安装工具会同时安装一个正常的JRE和隶属于JDK目录下的JRE
+
+#### 3.1 JDK
+
+Java Develop Kit，Java的开发工具包，是JDK是整个Java的核心。
+
+包括了Java运行环境JRE（Java Runtime Envirnment）、一堆Java工具（javac/java/jdb等）和 Java基础的类库（即Java API 包括rt.jar）
+
+目前Oracle提供的Windows下的JDK安装工具会同时安装**一个正常的JRE**和**隶属于JDK目录下的JRE**
+
+#### 3.2  JRE
+
+Java Runtime Environment，也就是java运行时环境。
+
+JRE是运行Java程序所必须环境的集合，包含JVM标准实现及 Java核心类库。它包括Java虚拟机、Java平台核心类和支持文件。它不包含开发工具(编译器、调试器等)。
+
+联系平时用的虚拟机，大概可以理解成：JRE=虚拟机平台+虚拟机本体(JVM)。类似于你电脑上的VMWare+适用于VMWare的Ubuntu虚拟机。这样我们也就明白了JVM到底是个什么。<br>
+
+
+
+参考：https://www.cnblogs.com/baizhanshi/p/7015811.html
+
+
 
 ### 4、运行过程：
 -  Java源文件—->编译器—->字节码文件<br>
@@ -33,20 +49,20 @@ JRE：Java Runtime Environment，也就是JVM的运行平台，联系平时用�
 
  每一种平台的解释器是不同的，但是实现的虚拟机是相同的，这也就是Java为什么能够跨平台的原因了 ，当一个程序从开始运行，这时虚拟机就开始实例化了，多个程序启动就会存在多个虚拟机实例。程序退出或者关闭，则虚拟机实例消亡，多个虚拟机实例之间数据不能共享。<br>
 
-<img src="E:\black user\Java\有道云截图\image-20200611210243710.png" alt="image-20200611210243710"  />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165401.png" alt="image-20200611210243710"  />
 
 
 
 ## 二、JVM体系结构
-### 1、总图解：
+### 1、总图解
 
 ​		类加载器子系统、运行时数据区、执行引擎 、本地方法接口
 
-![image](https://www.pdai.tech/_images/jvm/java-jvm-overview.png)
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165402.png" alt="image" style="zoom:200%;" />
 
 
 
-<img src="E:/black user/Java/有道云截图/image-20200612104642003.png" alt="image-20200612104642003" style="zoom:80%;" />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165403.png" alt="image-20200612104642003" style="zoom:80%;" />
 
 ### 2、组成详解
 
@@ -74,13 +90,13 @@ JRE：Java Runtime Environment，也就是JVM的运行平台，联系平时用�
 ## 三、运行时数据区（内存）
 #### jdk7<br>
 
-![image-20200612104820554](E:/black user/Java/有道云截图/image-20200612104820554.png)
+![image-20200612104820554](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165404.png)
 
 
 
 #### JDK8<br>
 
-<img src="E:\black user\Java\有道云截图\20190801003717155 (2).png" alt="20190801003717155 (2)" style="zoom:80%;" />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165405.png" alt="20190801003717155 (2)" style="zoom:80%;" />
 
 
 
@@ -88,21 +104,21 @@ JVM主要包括：程序计数器(Program Counter)，Java堆(Heap)，Java虚拟�
 
 
 ### 1、程序计数器：(Program Counter)
-&emsp;&emsp;当前线程所执行的字节码的行号指示器，用于记录正在执行的虚拟机字节指令地址，==线程私有==，用于指示，跳转下一条需要执行的命令。
+当前线程所执行的字节码的行号指示器，用于记录正在执行的虚拟机字节指令地址，==线程私有==，用于指示，跳转下一条需要执行的命令。
 
 ### 2、Java虚拟栈：(Stack)
 
-&emsp;&emsp;存放基本数据类型、对象的引用、方法出口等，==线程私有==。
+存放基本数据类型、对象的引用、方法出口等，==线程私有==。
 
-### 3、Native本地方法栈：
-&emsp;&emsp;和虚拟栈相似，只不过它服务于Native方法==，线程私有==。
+### 3、Native本地方法栈
+和虚拟栈相似，只不过它服务于Native方法==，线程私有==。
 
 ### 4、Java堆：(Heap)
-&emsp;&emsp;java内存最大的一块，所有对象实例、数组都存放在java堆，GC回收的地方，==线程共享==。
+java内存最大的一块，所有对象实例、数组都存放在java堆，GC回收的地方，==线程共享==。
 
 ### 5、方法区：(Method Area)
-所有定义的方法的信息都保存在该区域，此区域属于共享区间。<br>
-&emsp;&emsp;存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码数据等。回收目标主要是常量池的回收和类型的卸载，各==线程共享==
+所有定义的方法的信息都保存在该区域，此区域属于共享区间。
+		存放已被加载的类信息、常量、静态变量、即时编译器编译后的代码数据等。回收目标主要是常量池的回收和类型的卸载，各==线程共享==
 
 
 

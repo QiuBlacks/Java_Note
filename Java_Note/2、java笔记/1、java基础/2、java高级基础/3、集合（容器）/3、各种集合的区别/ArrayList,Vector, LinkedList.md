@@ -1,9 +1,5 @@
 [TOC]
 
-
-
-# List
-
 ## 一、ArrayList,Vector, LinkedList的存储性能和特性
 
 ArrayList和Vector都是使用数组方式存储数据，此数组元素数大于实际存储的数据以便增加和插入元素，它们都允许直接按序号索引元素，但是插入元素要涉及数组元素移动等内存操作，所以索引数据快而插入数据慢
@@ -38,7 +34,7 @@ Vector提供indexOf(obj, start)接口，ArrayList没有。
 
 Vector 和 ArrayList 实现了同一接口 List, 但所有的 Vector 的方法都具有 synchronized 关键修饰。但对于复合操作，Vector 仍然需要进行同步处理。
 
-```
+```java
 if (!vector.contains(element))  
 	vector.add(element);     
 ... }
@@ -50,11 +46,11 @@ if (!vector.contains(element))
 
 
 
-
-
 ## 三、Arraylist 与 LinkedList 区别?
 
-### 1. 是否保证线程安全：
+**Arraylist适合查找，LinkedList适合增删查改**
+
+### 1. 是否保证线程安全
 
 ​	 ArrayList 和 LinkedList 都是不同步的，也就是不保证线程安全；
 
@@ -62,15 +58,17 @@ if (!vector.contains(element))
 
  Arraylist 底层使用的是 **Object 数组**；LinkedList 底层使用的是 **双向链表** 数据结构（JDK1.6之前为循环链表，JDK1.7取消了循环。注意双向链表和双向循环链表的区别，下面有介绍到！）
 
-### 3、插入和删除是否受元素位置的影响：
+### 3、插入和删除是否受元素位置的影响
 
  ① ArrayList 采用数组存储，所以插入和删除元素的时间复杂度受元素位置的影响。
 
  比如：执行add(E e)方法的时候， ArrayList 会默认在将指定的元素追加到此列表的末尾，这种情况时间复杂度就是O(1)。但是如果要在指定位置 i 插入和删除元素的话（add(int index, E element)）时间复杂度就为 O(n-i)。因为在进行上述操作的时候集合中第 i 和第 i 个元素之后的(n-i)个元素都要执行向后位/向前移一位的操作。 
 
-② LinkedList 采用链表存储，所以对于add(E e)方法的插入，删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置i插入和删除元素的话（(add(int index, E element)） 时间复杂度近似为o(n))因为需要先移动到指定位置再插入。
+② LinkedList 采用链表存储，所以对于add(E e)方法的插入，
 
-### 4、是否支持快速随机访问： 
+删除元素时间复杂度不受元素位置的影响，近似 O（1），如果是要在指定位置i插入和删除元素的话（(add(int index, E element)） 时间复杂度近似为o(n))因为需要先移动到指定位置再插入。
+
+### 4、是否支持快速随机访问
 
 LinkedList 不支持高效的随机元素访问，而 ArrayList 支持。快速随机访问就是通过元素的序号快速获取元素对象(对应于get(int index)方法)。
 

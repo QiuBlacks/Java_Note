@@ -1,24 +1,21 @@
-[TOC]
+# ==concurrenthashmap==
 
-
-
-# concurrenthashmap
-
----
 # 一、基本介绍
 ## 1、为什么要用ConcurrentHashMap
-&emsp;&emsp;随着并发量的增加，HashMap并没有使用同步，在多线程情况下使用HashMap的时候就会出现并发问题，不安全。而HashTable虽然是安全的，但是使用的是synchronized 锁整表操作，当多线程并发的情况下，都要竞争同一把锁，导致效率极其低下，这样在性能上将会产生很大的影响。而在JDK1.5后为了改进Hashtable的痛点，ConcurrentHashMap应运而生。
+随着并发量的增加，HashMap并没有使用同步，在多线程情况下使用HashMap的时候就会出现并发问题，不安全。而HashTable虽然是安全的，但是使用的是synchronized 锁整表操作，当多线程并发的情况下，都要竞争同一把锁，导致效率极其低下，这样在性能上将会产生很大的影响。而在JDK1.5后为了改进Hashtable的痛点，ConcurrentHashMap应运而生。
 
-&emsp;&emsp;ConcurrentHashMap只是针对put方法进行了加锁，而对于get方法并没有采用加锁的操作，因为具体的值，在Segment的HashEntry里面是volatile的，基于happens-before（先行发生）原则，对数据的写先行发生于对数据的读，所以再读取的时候获取到的必然是最新的结果。
+ConcurrentHashMap只是**针对put方法进行了加锁**，而对于get方法并没有采用加锁的操作，因为具体的值，在Segment的HashEntry里面的Node等**变量是volatile**的，基于happens-before（先行发生）原则，对数据的写先行发生于对数据的读，所以再读取的时候获取到的必然是最新的结果。
 
-&emsp;&emsp;因为对数组的操作，在主内存和工作内存中，load和use、assgin和store是必然连在一起的，一旦使用（use）发生，那load必先行发生于use之前，use前必然从主内存中加载最新的值到工作内存的变量副本里。而一旦赋值（assgin），必然先行发生于store将值传递给主内存，在write到主内存中去。==所以get方式无需加锁也能获取到最新的结果。==
+因为对数组的操作，在主内存和工作内存中，load和use、assgin和store是必然连在一起的，一旦使用（use）发生，那load必先行发生于use之前，use前必然从主内存中加载最新的值到工作内存的变量副本里。而一旦赋值（assgin），必然先行发生于store将值传递给主内存，在write到主内存中去。==所以get方式无需加锁也能获取到最新的结果。==
 
 
 ## 2、concurrenthashmap1.7和1.8
 ## 1） JDK1.7：
-- 使用分段锁机制实现;即Segment 通过继承ReentrantLock来进行加锁
+- 使用分段锁机制实现；即Segment 通过继承ReentrantLock来进行加锁
 - 两个静态内部类 HashEntry链表数组 和 Segment数组；
 - 查询遍历链表效率太慢；
+
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200906164739680.png" alt="image-20200906164739680" style="zoom:67%;" />
 
 
 ## 2）JDK1.8
@@ -28,31 +25,43 @@
   
 
 ---
----
-# concurrenthashmap1.7
+
+
+
+
+# ==concurrenthashmap1.7==
+
 # 一、基本介绍
-&emsp;&emsp;1、在JDK1.5~1.7版本，Java使用了分段锁机制实现ConcurrentHashMap.
+1、在JDK1.5~1.7版本，Java使用了分段锁机制实现ConcurrentHashMap
 
-&emsp;&emsp;2、ConcurrentHashMap在对象中保存了一个Segment数组，即将整个Hash表划分为多个分段；而==每个Segment元素，即每个分段则类似于一个Hashtable==；这样，在执行put操作时首先根据hash算法定位到元素属于哪个Segment，然后对该Segment加锁即可。因此，ConcurrentHashMap在多线程并发编程中可以实现多线程put操作
+2、ConcurrentHashMap在对象中保存了一个Segment数组，即将整个Hash表划分为多个分段；而==每个Segment元素，即每个分段则类似于一个Hashtable==；这样，在执行put操作时首先根据hash算法定位到元素属于哪个Segment，然后对该Segment加锁即可。因此，ConcurrentHashMap在多线程并发编程中可以实现多线程put操作
 
-&emsp;&emsp;3、concurrencyLevel: 并行级别、并发数、Segment 数，怎么翻译不重要，理解它。默认是 16，也就是说 ConcurrentHashMap 有 16 个 Segments，所以理论上，这个时候，最多可以同时支持 16 个线程并发写，只要它们的操作分别分布在不同的 Segment 上。这个值可以在初始化的时候设置为其他值，但是一旦初始化以后，它是不可以扩容的。
+3、Segment数组中每个Segment里包含一个**HashEntry数组**，一个HashEntry数组中的**每个hashEntry对象是一个链表的头结点**，每个链表结构中包含的元素才是Map集合中的key-value键值对 。
 
-==注意==：Segment内部是由数组+链表组成的。
+4、concurrencyLevel: 并行级别、并发数、Segment 数，怎么翻译不重要，理解它。默认是 16，也就是说 ConcurrentHashMap 有 16 个 Segments，所以理论上，这个时候，最多可以同时支持 16 个线程并发写，只要它们的操作分别分布在不同的 Segment 上。这个值可以在初始化的时候设置为其他值，但是一旦初始化以后，它是不可以扩容的。
+
+==注意==：Segment内部是由**数组+链表**组成的。
+
+
 
 # 二、数据结构
 ## 1、结构介绍
 
-==数组+链表==
+==数组+链表==	
 
-concurrenthashmap包含两个静态内部类 **HashEntry** 和 **Segment**；<br>
-&emsp;&emsp;HashEntry用来封装映射表的键值对；Segment用来充当锁的角色，每个 Segment对象守护整个散列映射表的若干个桶。每个桶是由若干个 HashEntry 对象链接起来的链表。一个 ConcurrentHashMap 实例中包含由若干个 Segment 对象组成的数组。<br>
-&emsp;&emsp;简单理解就是，ConcurrentHashMap 是一个 Segment 数组，==Segment 通过继承ReentrantLock来进行加锁==，所以每次需要加锁的操作锁住的是一个segment，这样只要保证每个Segment是线程安全的，也就实现了全局的线程安全。
+concurrenthashmap包含两个静态内部类 **HashEntry** 和 **Segment**；
+
+HashEntry用来封装映射表的键值对；Segment用来充当锁的角色，每个 Segment对象守护整个散列映射表的若干个桶。每个桶是由若干个 HashEntry 对象链接起来的链表。一个 ConcurrentHashMap 实例中包含由若干个 Segment 对象组成的数组。
+
+简单理解就是，ConcurrentHashMap 是一个 Segment 数组，==Segment 通过继承ReentrantLock来进行加锁==，所以每次需要加锁的操作锁住的是一个segment，这样只要保证每个Segment是线程安全的，也就实现了全局的线程安全。
 
 ## 2、图解
-![image](https://www.pdai.tech/_images/thread/java-thread-x-concurrent-hashmap-1.png)
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200906164609220.png" alt="image-20200906164609220" style="zoom:67%;" />
+
 
 
 # 三、实现原理
+
 ## 1、初始化
 ### 1）参数介绍
 - **initialCapacity**: 初始容量，这个值指的是整个 ConcurrentHashMap 的初始容量，实际操作的时候需要平均分给每个 Segment。
@@ -181,11 +190,20 @@ private void rehash(HashEntry<K,V> node) {
 }
 ```
 
+
+
 ## 3、put 过程分析
+
 ## 1）过程分析
 - 根据 key 计算出对应的 hash 值
 - 根据 hash 值找到对应的Segment 对象：
 - 在这个 Segment 中执行具体的 put 操作：
+  - 将当前 Segment 加锁，通过 key 的 hashcode 定位到 HashEntry
+  - 遍历该 HashEntry， 如果不为空则判断传入的 key 和当前遍历的 key 是否相等，
+    相等则覆盖旧的 value。
+  - 为空则需要新建一个 HashEntry 并加入到 Segment 中， 同时会先判断是否需
+    要扩容。
+  -  最后会解除在 1 中所获取当前 Segment 的锁  
 
 ## 2）源码分析
 ```java
@@ -210,21 +228,53 @@ public V put(K key, V value) {
 ```
 ## 4、get
 
+- 计算 hash 值，找到 segment 数组中的具体位置，或我们前面用的“槽”
+- 槽中也是一个数组，根据 hash 找到数组中具体的位置
+- 到这里是链表了，顺着链表进行查找即可
+
+```java
+public V get(Object key) {
+    Segment<K,V> s; // manually integrate access methods to reduce overhead
+    HashEntry<K,V>[] tab;
+    // 1. hash 值
+    int h = hash(key);
+    long u = (((h >>> segmentShift) & segmentMask) << SSHIFT) + SBASE;
+    // 2. 根据 hash 找到对应的 segment
+    if ((s = (Segment<K,V>)UNSAFE.getObjectVolatile(segments, u)) != null &&
+        (tab = s.table) != null) {
+        // 3. 找到segment 内部数组相应位置的链表，遍历
+        for (HashEntry<K,V> e = (HashEntry<K,V>) UNSAFE.getObjectVolatile
+                 (tab, ((long)(((tab.length - 1) & h)) << TSHIFT) + TBASE);
+             e != null; e = e.next) {
+            K k;
+            if ((k = e.key) == key || (e.hash == h && key.equals(k)))
+                return e.value;
+        }
+    }
+    return null;
+}
+```
 
 
 
 
----
-
----
 
 
-# ConcurrentHashMap JDK1.8:
-在JDK1.7之前，ConcurrentHashMap是通过分段锁机制来实现的，所以其最大并发度受Segment的个数限制。<br>
-&emsp;&emsp;因此，在JDK1.8中，ConcurrentHashMap的实现原理摒弃了这种设计，而是选择了与HashMap类似的数组+链表+红黑树的方式实现，而加锁则采用CAS和synchronized实现
+# ==ConcurrentHashMap JDK1.8==
+在JDK1.7之前，ConcurrentHashMap是通过分段锁机制来实现的，所以其最大并发度受Segment的个数限制。
+
+因此，在JDK1.8中，ConcurrentHashMap的实现原理摒弃了这种设计，而是选择了与HashMap类似的**数组+链表+红黑树**的方式实现，而加锁则采用**CAS和synchronized**实现
+
+将 1.7 中存放数据的 HashEntry 改为 Node
+
+Segment数组仍然保留
 
 # 一、数据结构
-![image-20200627104521796](../../../../../../../../../image-20200627104521796.png)
+![image-20200627112826118](https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200627112826118.png)
+
+
+
+
 
 # 二、底层实现
 
@@ -242,16 +292,19 @@ public ConcurrentHashMap(int initialCapacity) {
     this.sizeCtl = cap;
 }
 ```
-&emsp;&emsp;这个初始化方法有点意思，通过提供初始容量，计算了 sizeCtl，sizeCtl = 【 (1.5 * initialCapacity + 1)，然后向上取最近的 2 的 n 次方】。如 initialCapacity 为 10，那么得到 sizeCtl 为 16，如果 initialCapacity 为 11，得到 sizeCtl 为 32。
+这个初始化方法有点意思，通过提供初始容量，计算了 sizeCtl，sizeCtl = 【 (1.5 * initialCapacity + 1)，然后向上取最近的 2 的 n 次方】。如 initialCapacity 为 10，那么得到 sizeCtl 为 16，如果 initialCapacity 为 11，得到 sizeCtl 为 32。
 
 ## 2、  put 过程分析
 ### 1）put流程
-- 根据 key 计算出 hashcode 。
-- 判断是否需要进行初始化。
-- f 即为当前 key 定位出的 Node，如果为空表示当前位置可以写入数据，利用 CAS 尝试写入，失败则自旋保证成功。
-- 如果当前位置的 hashcode == MOVED == -1,则需要进行扩容。
-- 如果都不满足，则利用 synchronized 锁写入数据。
-- 如果数量大于 TREEIFY_THRESHOLD 则要转换为红黑树。
+- 根据 key 计算出 hashcode 。检查key/value是否为null，如果为null，则抛异常
+- 判断是否需要进行初始化，如果没有，则调用initTable()进行初始化
+- 根据key的hash值计算出其应该在table中储存的位置i，f 即为当前 key 定位出的 Node（即table[i]），根据f的不同有如下三种情况：
+  -  如果**table[i]==null**(即该位置的节点为空，没有发生碰撞)，则利用**CAS操作**直接存储在该位置，如果CAS操作成功则退出死循环（失败则自旋保证成功）
+  - 如果table[i]!=null(即该位置已经有其它节点，发生碰撞)，碰撞处理也有两种情况
+    - 如果当前位置table[i]的 **hashcode == MOVED == -1,**即正在扩容，帮助其扩容
+    - 说明table[i]的节点的hash值不等于MOVED，**synchronized锁**住**头结点table[i]**，进行插入操作 (分为**链表写入和红黑树写入**）   
+- 如果table[i]的节点是链表节点，则检查table的第i个位置的链表的元素个数是否大于了8，**大于8就需要转化为红黑树**，如果需要则调用treeifyBin函数进行转化。
+- 插入成功后，如果key已经存在，返回oldValue；key开始不存在，返回null。
 
 ###  2）代码实现
 ```java
@@ -351,16 +404,18 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 ## 3、get
 ### 1）流程分析
 - 计算 hash 值 根据 hash 值找到数组对应位置: (n - 1) & h 根据该位置处结点性质进行相应查找
-- 如果该位置为 null，那么直接返回 null 就可以了
-- 如果该位置处的节点刚好就是我们需要的，返回该节点的值即可
-- 如果该位置节点的 hash 值小于 0，说明正在扩容，或者是红黑树，后面我们再介绍 find 方法 如果以上 3 条都不满足，那就是链表，进行遍历比对即可
+  - 如果该位置为 null，那么直接返回 null 就可以了
+  - 如果该位置处的节点刚好就是我们需要的，返回该节点的值即可
+- 如果该位置节点的 hash 值小于 0，说明正在扩容；
+- 或者是**红黑树**，就按照树的方式获取值  
+- 后面我们再介绍 find 方法 如果以上 3 条都不满足，那就是**链表**，进行遍历比对即可
 
 ## 4、扩容：tryPresize
-&emsp;&emsp;这个方法要完完全全看懂还需要看之后的 transfer 方法，读者应该提前知道这点。
+这个方法要完完全全看懂还需要看之后的 transfer 方法，读者应该提前知道这点。
 
-&emsp;&emsp;扩容后数组容量为原来的 2 倍。
-### 2）
-&emsp;&emsp;核心在于 sizeCtl 值的操作，首先将其设置为一个负数，然后执行 transfer(tab, null)，再下一个循环将 sizeCtl 加 1，并执行 transfer(tab, nt)，之后可能是继续 sizeCtl 加 1，并执行 transfer(tab, nt)。
+扩容后数组容量为原来的 2 倍。
+### 1）
+核心在于 sizeCtl 值的操作，首先将其设置为一个负数，然后执行 transfer(tab, null)，再下一个循环将 sizeCtl 加 1，并执行 transfer(tab, nt)，之后可能是继续 sizeCtl 加 1，并执行 transfer(tab, nt)。
 
 
 ## 5、数据迁移: transfer
@@ -369,15 +424,28 @@ final V putVal(K key, V value, boolean onlyIfAbsent) {
 
 
 
+# 三、重要知识点
+
+## 1、与hashmap不同之一
+
+底层结构存放的是TreeBin对象，而不是TreeNode对象；TreeBin包装的很多TreeNode节点，它代替了TreeNode的根节点，也就是说在实际的ConcurrentHashMap“数组”中，存放的是TreeBin对象，而不是TreeNode对象，这是与HashMap的区别之一。
 
 
 
 
----
 
-## 参考文章:
 
-https://www.pdai.tech/md/java/thread/java-thread-x-juc-collection-ConcurrentHashMap.html<br>
-https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/index.html  <br>
-https://crossoverjie.top/2018/07/23/java-senior/ConcurrentHashMap/<br>
-https://www.itqiankun.com/article/concurrenthashmap-principle#%E6%80%BB%E7%BB%93
+
+
+
+# 参考文章
+
+[JAVA7与JAVA8中的HASHMAP和CONCURRENTHASHMAP知识点总结](https://www.cnblogs.com/theRhyme/p/9404082.html)
+
+[JUC集合: ConcurrentHashMap详解](https://www.pdai.tech/md/java/thread/java-thread-x-juc-collection-ConcurrentHashMap.html)
+
+[HashMap? ConcurrentHashMap? 相信看完这篇没人能难住你](https://crossoverjie.top/2018/07/23/java-senior/ConcurrentHashMap/)
+
+[探索 ConcurrentHashMap 高并发性的实现机制](https://www.ibm.com/developerworks/cn/java/java-lo-concurrenthashmap/index.html)
+
+[一文彻底搞懂ConcurrentHashMap原理](https://www.itqiankun.com/article/concurrenthashmap-principle#%E6%80%BB%E7%BB%93)

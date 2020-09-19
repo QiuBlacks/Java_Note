@@ -37,12 +37,12 @@
 - 对象操作：Serializable
 - 网络操作：Socket
 - 新的输入/输出：NIO
-![image](https://www.pdai.tech/_images/io/java-io-category-3.png)
+![image](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910164356.png)
 
 
 ## 三、字符、字节流
 ### 1、图解
-![image-20200608194143354](E:\black user\Java\有道云截图\image-20200608194143354.png)
+![image-20200608194143354](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910164811.png)
 
 ### 2、 四大IO抽象类
 

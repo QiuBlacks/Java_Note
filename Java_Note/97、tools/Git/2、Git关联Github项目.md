@@ -4,7 +4,7 @@
 
 
 
-![image-20200515093220960](E:\black user\Java\有道云截图\image-20200515093220960.png)
+![image-20200515093220960](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910183623.png)
 
 
 
@@ -70,16 +70,24 @@ git clone url  //url为项目服务器地址或github地址
 
 
 
-.gitignore  文件
+创建  .gitignore  文件，在里面编写：
+
+| 命令        | 作用                                                   |
+| ----------- | ------------------------------------------------------ |
+| log/        | 忽略log下的所有文件                                    |
+| /a.txt      | 仅忽略项目根目录下的 a.txt，不包括 Game/a.txt          |
+| build/*.txt | 忽略 build下一级所有的.txt，但不包括 build/debug/a.txt |
+| !a.exe      | 但 a.exe 除外                                          |
+| *.exe       | 忽略所有 .exe 结尾的文件                               |
+
+
+
+但是通常配置完后不会生效，因为.gitignore只能忽略那些原来没有被track的文件，如果某些文件已经被纳入了版本管理中，则修改.gitignore是无效的。那么解决方法就是先把本地缓存删除（改变成未track状态），然后再提交：
 
 ```
-target          //忽略这个target目录
-angular.json    //忽略这个angular.json文件
-log/*           //忽略log下的所有文件
-css/*.css       //忽略css目录下的.css文件
+git rm -r --cached 
+ git add -A
+git commit -m '×××××'
+git push
 ```
-
-
-
-
 

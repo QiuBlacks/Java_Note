@@ -1,10 +1,6 @@
 [TOC]
 
-
-
 # Comparable和Comparator接口
-
-
 
 ## 一、Comparable接口（内比较器）
 

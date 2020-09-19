@@ -1,7 +1,5 @@
 [TOC]
 
-
-
 # HashTable
 
 ## 一、基本介绍
@@ -17,14 +15,12 @@ public class Hashtable<K,V>  extends Dictionary<K,V>
 
 
 
-
-
 ### 2、主要属性
 
 ```java
 table：Entry[] 数组类型，实际上 Entry 是一个单向链表。每一个 Entry 都是一个键值对，哈希表的"key-value键值对"都是存储在 Entry 数组中的。
 count：HashTable的大小，它是Hashtable保存的键值对的数量（不是HashTable 容器的大小，是所有 Entry 键值对的总数）。
-threshold：HashTable 容量的阈值，用于判断是否需要调整Hashtable的容量。threshold的值=“容量加载因子”。
+threshold：HashTable 容量的阈值，用于判断是否需要调整Hashtable的容量。threshold的值=“容量*加载因子”。
 loadFactor：加载因子，默认0.75f。
 modCount：HashTable 被改变的次数，用来实现 fail-fast 机制。
 ```
@@ -53,9 +49,9 @@ public Hashtable(Map<? extends K, ? extends V> t) {
 
 ### 1、put 方法
 
-① 确保 value 值不为空。
+① 确保 value 值不为空
 
-② 计算key的hash值，直接使用 key.hashCode()，表明 key 不为空，否则也会 NPE。
+② 计算key的hash值，直接使用 key.hashCode()，表明 key 不为空，否则也会 NPE
 
 ③ 确认 key 在 table[] 中的索引位置，具体的算法是：key 的 hash 值去除最高位，然后和 table 的长度取余。
 
@@ -85,7 +81,7 @@ public synchronized V get(Object key) {
 
 键值对数组
 
-![image-20200618103227744](E:/black user/Java/有道云截图/image-20200618103227744.png)
+![image-20200618103227744](https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200618103227744.png)
 
 
 

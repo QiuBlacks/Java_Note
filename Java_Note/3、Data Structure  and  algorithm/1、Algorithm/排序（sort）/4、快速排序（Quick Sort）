@@ -4,8 +4,6 @@
 
 [TOC]
 
-
-
 # 一、基本思想
 
 快速排序（Quicksort）是对冒泡排序的一种改进，借用了分治的思想
@@ -48,7 +46,7 @@
 
 ## 2、图解
 
-![image-20200513172237028](E:\black user\Java\有道云截图\image-20200513172237028.png)
+![image-20200513172237028](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181719.png)
 
 
 
@@ -61,42 +59,42 @@
 图解过程参考：https://blog.csdn.net/shujuelin/article/details/82423852
 
 ```java
-    public static void quickSort(int arr[], int low, int high) {
-        if (arr == null || arr.length <= 0) {
-            return;
-        }
-        if (low >= high) {
-            return;
-        }
-        int left = low;
-        int right = high;
-
-        int key = arr[left];
-		//条件：左边的数组比key小，右边的比key大
-        while (left < right) {
-            while (left < right && arr[right] >= key) {
-                right--;
-            }
-            
-            while (left < right && arr[left] <= key) {
-                left++;
-            }
-            //两边找到各自不符合条件的数进行交换
-            if (left < right) {
-                swap(arr, left, right);
-            }
-        }
-        //将基准值与中间值交换交换
-        swap(arr, low, left);
-        quickSort(arr, low, left - 1);
-        quickSort(arr, left + 1, high);
+public static void quickSort(int arr[], int low, int high) {
+    if (arr == null || arr.length <= 0) {
+        return;
     }
-
-    public static void swap(int arr[], int low, int high) {
-        int tmp = arr[low];
-        arr[low] = arr[high];
-        arr[high] = tmp;
+    if (low >= high) {
+        return;
     }
+    int left = low;
+    int right = high;
+
+    int key = arr[left];
+    //条件：bao'z左边的数组比key小，右边的比key大
+    while (left < right) {
+        while (left < right && arr[right] >= key) {
+            right--;
+        }
+
+        while (left < right && arr[left] <= key) {
+            left++;
+        }
+        //两边找到各自不符合条件的数进行交换
+        if (left < right) {
+            swap(arr, left, right);
+        }
+    }
+    //将基准值与中间值交换交换
+    swap(arr, low, left);
+    quickSort(arr, low, left - 1);
+    quickSort(arr, left + 1, high);
+}
+
+public static void swap(int arr[], int low, int high) {
+    int tmp = arr[low];
+    arr[low] = arr[high];
+    arr[high] = tmp;
+}
 ```
 
 

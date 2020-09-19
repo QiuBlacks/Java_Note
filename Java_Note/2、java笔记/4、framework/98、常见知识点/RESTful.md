@@ -22,7 +22,7 @@ RESTful不是一种标准，而是一种设计风格。
 
 # 二、SpringMVC实现RESTful风格**
 
-![image-20200513144207279](E:\black user\Java\有道云截图\image-20200513144207279.png)
+![image-20200513144207279](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181602.png)
 
 ## **1、** **Spring对RESTful的支持**
 

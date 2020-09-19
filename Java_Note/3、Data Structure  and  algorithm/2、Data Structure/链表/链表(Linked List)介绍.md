@@ -1,8 +1,8 @@
-# 一、**链表(Linked List)介绍**
+# 一、链表(Linked List)介绍
 
 链表是有序的列表，但是它在内存中是存储如下
 
-![image-20200513173511199](E:\black user\Java\有道云截图\image-20200513173511199.png)
+![image-20200513173511199](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181904.png)
 
 小结:
 
@@ -14,8 +14,8 @@
 
 4)链表分带头节点的链表和没有头节点的链表，根据实际的需求来确定
 
-# 二、**单链表介绍**
+# 二、单链表介绍
 
 单链表(带头结点) **逻辑结构**示意图如下
 
-![image-20200513173522274](E:\black user\Java\有道云截图\image-20200513173522274.png)
+![image-20200513173522274](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181905.png)

@@ -1,20 +1,24 @@
-# **JdbcTemplate实现jdbc的基本操作以及几个重要的包**
+[TOC]
 
-数据库连接   **url=**    **jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8**
 
-# **一、查询操作(重点)**
 
-![image-20200530104327932](E:\black user\Java\有道云截图\image-20200530104327932.png)
+# JdbcTemplate实现jdbc的基本操作以及几个重要的包
 
-## **1、BeanPropertyRowMapper**
+数据库连接   url=    jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8
+
+# 一、查询操作(重点)
+
+![image-20200530104327932](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910165936.png)
+
+## 1、BeanPropertyRowMapper
 
  **实现了 RowMapper 接口；**
 
-**List accounts = jt.query("select \* from account where money > ?",new BeanPropertyRowMapper(Account.class),1000f);**
+List accounts = jt.query("select  from account where money > ?",new BeanPropertyRowMapper(Account.class),1000f);
 
 可以代替以下代码：
 
-```
+```java
 //查询所有
 //需要定义AccountRowMapper实现AccountRowMapper
 List<Account> accounts = jt.query("select * from account where money > ?",new AccountRowMapper(),1000f);
@@ -51,7 +55,7 @@ class AccountRowMapper implements RowMapper<Account>{
 
 
 
-# **二、增删改**
+# 二、增删改
 
 ```
 public static void main(String[] args) {
@@ -81,18 +85,18 @@ public static void main(String[] args) {
 
 
 
-# **三、JdbcDaoSupport** 
+# 三、JdbcDaoSupport 
 
-## **1、JdbcDaoSupport 可以直接由Spring支持**
+## 1、JdbcDaoSupport 可以直接由Spring支持
 
-```
+```java
 import org.springframework.jdbc.core.support.JdbcDaoSupport;
 
 public class AccountDaoImpl extends JdbcDaoSupport implements IAccountDao {
     }
 ```
 
-```
+```xml
 //注入数据<!-- 配置账户的持久层-->
 <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl">
     <property name="dataSource"  ref="dataSource"></property>
@@ -109,9 +113,9 @@ public class AccountDaoImpl extends JdbcDaoSupport implements IAccountDao {
 
 
 
-## **2、它的底层实现：**
+## 2、它的底层实现：
 
-```
+```java
 @Repository
 public class AccountDaoImpl2 extends  JdbcDaoSupport  implements IAccountDao {
 
@@ -131,7 +135,7 @@ public class AccountDaoImpl2 extends  JdbcDaoSupport  implements IAccountDao {
 
 这部分代码提取出来，建立并**继承JdbcDaoSupport**实现
 
-```
+```java
 public class JdbcDaoSupport {
 
     private JdbcTemplate jdbcTemplate;
@@ -159,7 +163,7 @@ public class JdbcDaoSupport {
 
 然后便可以通过注入dataSource实现
 
-```
+```xml
 <!-- 配置账户的持久层-->
 <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl">
     <property name="dataSource"  ref="dataSource"></property>
@@ -176,7 +180,7 @@ public class JdbcDaoSupport {
 
 **来代替原本的**
 
-```
+```xml
 <!-- 配置账户的持久层-->
 <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl">
     <property name="jdbcTemplate" ref="jdbcTemplate"></property> 

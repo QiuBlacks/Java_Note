@@ -4,13 +4,13 @@
 
 
 
-## **一、spring中基于注解 的声明式事务控制配置步骤**
+## 一、spring中基于注解 的声明式事务控制配置步骤
 
-### **1、配置事务管理器**
+### 1、配置事务管理器
 
-### **2、开启spring对注解事务的支持**
+### 2、开启spring对注解事务的支持
 
-### **3、在需要事务支持的地方使用@Transactional注解**
+### 3、在需要事务支持的地方使用@Transactional注解
 
 在基于xml配置的基础上
 
@@ -65,7 +65,7 @@
 </beans>
 ```
 
-**因为transfer方法需要用到增删改，所以要另外设置，如果有多个需要改动的方法，就比较麻烦，这时用基于xml配置比较容易**
+因为transfer方法需要用到增删改，所以要另外设置，如果有多个需要改动的方法，就比较麻烦，这时用基于xml配置比较容易
 
 ```java
 @Service("account1service")
@@ -81,11 +81,11 @@ public class Account1ServiceImpl implements IAccount1Service {
         return account1Dao.findById(id);
     }
 
-    /***转账接口方法
-     * @param sourceName    转出账户名称
-     * @param targetName    转入账户名称
-     * @param money         转账金钱
-     */
+    /转账接口方法
+      @param sourceName    转出账户名称
+      @param targetName    转入账户名称
+      @param money         转账金钱
+     /
 
     //其中把单独的转账，也就是需要用到增删改相关的方法，注解为读写型事务配置
     @Transactional(propagation = Propagation.REQUIRED,readOnly = false)

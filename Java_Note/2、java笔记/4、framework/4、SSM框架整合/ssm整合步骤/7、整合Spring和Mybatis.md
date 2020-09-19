@@ -1,6 +1,6 @@
-## **整合Spring和Mybatis**
+## 整合Spring和Mybatis
 
-### **1、将mybatis配置文件SqlMapConfig.xml配置到Spring配置文件applicationContext.xml文件中**
+### 1、将mybatis配置文件SqlMapConfig.xml配置到Spring配置文件applicationContext.xml文件中
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -56,14 +56,14 @@
     <!--配置事务通知-->
     <tx:advice id="txAdvice" transaction-manager="transactionManager">
         <tx:attributes>
-            <tx:method name="find*" read-only="true"/>
-            <tx:method name="*" isolation="DEFAULT"/>
+            <tx:method name="find" read-only="true"/>
+            <tx:method name="" isolation="DEFAULT"/>
         </tx:attributes>
     </tx:advice>
 
     <!--配置AOP增强-->
     <aop:config>
-        <aop:advisor advice-ref="txAdvice" pointcut="execution(* com.qiu.services.impl.*ServiceImpl.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut="execution( com.qiu.services.impl.ServiceImpl.(..))"/>
     </aop:config>
 
 </beans>

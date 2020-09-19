@@ -1,6 +1,6 @@
-## **spring中基于注解 的声明式事务控制配置步骤(不需xml)**
+## spring中基于注解 的声明式事务控制配置步骤(不需xml)
 
-### **在基于仍需要xml配置的基础上**
+### 在基于仍需要xml配置的基础上
 
 #### 替换bean.xml:
 
@@ -8,11 +8,8 @@
 
 JdbcConfig
 
-```
-
-/**
- * 和连接数据库相关的配置类
- */
+```java
+// 和连接数据库相关的配置类
 public class JdbcConfig {
 
     @Value("${jdbc.driver}")
@@ -27,20 +24,15 @@ public class JdbcConfig {
     @Value("${jdbc.password}")
     private String password;
 
-    /**
-     * 创建JdbcTemplate
-     * @param dataSource
-     * @return
-     */
+
+//      创建JdbcTemplate 
     @Bean(name="jdbcTemplate")
     public JdbcTemplate createJdbcTemplate(DataSource dataSource){
         return new JdbcTemplate(dataSource);
     }
 
-    /**
-     * 创建数据源对象
-     * @return
-     */
+ 
+//      创建数据源对象
     @Bean(name="dataSource")
     public DataSource createDataSource(){
         DriverManagerDataSource ds = new DriverManagerDataSource();
@@ -56,9 +48,9 @@ public class JdbcConfig {
 SpringConfiguration
 
 ```
-/**
- * spring的配置类，相当于bean.xml
- */
+/
+  spring的配置类，相当于bean.xml
+ /
 @Configuration
 @ComponentScan("com.itheima")
 @Import({JdbcConfig.class,TransactionConfig.class})
@@ -73,11 +65,11 @@ TransactionConfig
 ```
 public class TransactionConfig {
 
-    /**
-     * 用于创建事务管理器对象
-     * @param dataSource
-     * @return
-     */
+    /
+      用于创建事务管理器对象
+      @param dataSource
+      @return
+     /
     @Bean(name="transactionManager")
     public PlatformTransactionManager createTransactionManager(DataSource dataSource){
         return new DataSourceTransactionManager(dataSource);

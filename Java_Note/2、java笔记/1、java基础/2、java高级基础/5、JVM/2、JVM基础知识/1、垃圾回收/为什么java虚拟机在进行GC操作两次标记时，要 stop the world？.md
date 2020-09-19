@@ -1,7 +1,5 @@
 ## 为什么java虚拟机在进行GC操作两次标记时，要 stop the world？
 
-
-
 ## 1、CMS及其执行过程？
 
 ​    CMS，全称Concurrent Mark and Sweep，用于对年老代进行回收，目标是尽量减少应用的暂停时间，减少full gc发生的机率，利用和应用程序线程并发的垃圾回收线程来标记清除年老代。CMS并非没有暂停，而是用两次短暂停来替代串行标记整理算法的长暂停。
@@ -23,6 +21,8 @@
 　　7）CMS-concurrent-reset 并发重设状态等待下次CMS的触发
 
 其中，CMS-initial-mark和CMS-remark会stop-the-world。
+
+
 
 ## 2、为什么 CMS两次标记时要 stop the world？
 

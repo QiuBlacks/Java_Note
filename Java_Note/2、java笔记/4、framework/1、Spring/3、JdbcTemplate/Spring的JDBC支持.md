@@ -1,10 +1,10 @@
-# **Spring的JDBC支持**
+# Spring的JDBC支持
 
-# **一、JdbcTemplate  概述**
+# 一、JdbcTemplate  概述
 
-**1、是 spring 框架中提供的一个对象，是对原始 Jdbc API 对象的简单封装。**
+1、是 spring 框架中提供的一个对象，是对原始 Jdbc API 对象的简单封装。
 
-**2、spring 框架为我们提供了很多的操作模板类。**
+2、spring 框架为我们提供了很多的操作模板类。
 
 ​	操作关系型数据的：
 
@@ -22,11 +22,11 @@
 
 
 
-# **二、spring配置JdbcTemplate**
+# 二、spring配置JdbcTemplate
 
-数据库连接   **url=**    **jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8**
+数据库连接   url=    jdbc:mysql://localhost:3306/mybatis?characterEncoding=utf8
 
-## **1、 引入相应jar包**
+## 1、 引入相应jar包
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -70,7 +70,7 @@
 
 
 
-## **2、编写spring  的配置文件**
+## 2、编写spring  的配置文件
 
 ```
 <?xml version="1.0" encoding="UTF-8"?>
@@ -82,9 +82,9 @@
 
 
 
-### **配置连接池的三种方式**
+### 配置连接池的三种方式
 
-#### **1）Spring默认的连接池:**
+#### 1）Spring默认的连接池:
 
 ```
 <!-- 配置Spring默认的连接池 -->
@@ -111,6 +111,6 @@ public static void main(String[] args) {
 
 
 
-#### **2）DBCP连接池**
+#### 2）DBCP连接池
 
-#### **3）C3P0连接池**
+#### 3）C3P0连接池

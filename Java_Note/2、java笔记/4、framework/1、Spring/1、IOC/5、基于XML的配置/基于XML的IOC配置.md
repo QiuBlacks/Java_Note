@@ -25,7 +25,7 @@ http://repo.springsource.org/libs-release-local/org/springframework/spring
     http://www.springframework.org/schema/beans/spring-beans.xsd">
 </beans>
 ```
-#### 第三步让spring管理资源配置，在配置文件中配置 service和 dao
+#### 第三步：让spring管理资源配置，在配置文件中配置 service和 dao
 ```xml
 <!-- bean 标签：用于配置让 spring 创建对象，并且存入 ioc 容器之中
 id 属性：对象的唯一标识。
@@ -37,8 +37,8 @@ class 属性：指定要创建对象的全限定类名
 <!-- 配置 dao -->
 <bean id="accountDao" class="com.itheima.dao.impl.AccountDaoImpl"></bean>
 ```
-#### 第四步、测试配置是否成功
-```      //1、获取核心容器对象
+#### 第四步：测试配置是否成功
+```      java
         ApplicationContext ac=new ClassPathXmlApplicationContext("bean.xml");
         //2、根据Id获取Bean对象
         IAccountService as=(IAccountService)ac.getBean("accountService");

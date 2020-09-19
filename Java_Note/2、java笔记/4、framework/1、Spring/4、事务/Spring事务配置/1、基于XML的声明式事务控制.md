@@ -2,13 +2,13 @@
 
 
 
-## **spring中基于XML的声明式事务控制配置步骤**
+## spring中基于XML的声明式事务控制配置步骤
 
-## **一、配置步骤**   
+## 一、配置步骤   
 
-### **1、配置事务管理器**
+### 1、配置事务管理器
 
-### **2、配置事务的通知**
+### 2、配置事务的通知
 
 ​            此时我们需要导入事务的约束 tx名称空间和约束，同时也需要aop的
 
@@ -24,11 +24,11 @@
 
 
 
-### **3、配置AOP中的通用切入点表达式**
+### 3、配置AOP中的通用切入点表达式
 
-### **4、建立事务通知和切入点表达式的对应关系**
+### 4、建立事务通知和切入点表达式的对应关系
 
-### **5、配置事务的属性**
+### 5、配置事务的属性
 
 ​           是在事务的通知tx:advice标签的内部
 
@@ -50,15 +50,15 @@
     -->
     <!-- 给哪些方法配置事务-->
     <tx:attributes>
-        <tx:method name="*" propagation="REQUIRED" read-only="false"/>
-        <tx:method name="find*" propagation="SUPPORTS" read-only="true"></tx:method>
+        <tx:method name="" propagation="REQUIRED" read-only="false"/>
+        <tx:method name="find" propagation="SUPPORTS" read-only="true"></tx:method>
     </tx:attributes>
 </tx:advice>
 
 <!-- 配置aop-->
 <aop:config>
     <!-- 配置切入点表达式-->
-    <aop:pointcut id="pt1" expression="execution(* com.itheima.service.impl.*.*(..))"></aop:pointcut>
+    <aop:pointcut id="pt1" expression="execution( com.itheima.service.impl..(..))"></aop:pointcut>
     <!--建立切入点表达式和事务通知的对应关系 -->
     <aop:advisor advice-ref="txAdvice" pointcut-ref="pt1"></aop:advisor>
 </aop:config>

@@ -1,18 +1,14 @@
-# **希尔排序 （Shell Sort) -----缩小增量排序**
-
-------
-
 [TOC]
 
+# 希尔排序 （Shell Sort) -----缩小增量排序
 
-
-## **一、基本思想：**
+## 一、基本思想：
 
 先将整个待排序的记录序列分割成为若干子序列分别进行直接插入排序，待整个序列中的记录“基本有序”时，再对全体记录进行依次直接插入排序。
 
 希尔排序也是一种**插入排序**，它是简单插入排序经过改进之后的一个**更高效的版本**，也称为**缩小增量排序**
 
-## **二、算法描述**
+## 二、算法描述
 
 ①. 选择一个增量（等差：差为gap）序列t1，t2，…， [tk ](http://www.liuhaihua.cn/archives/tag/tk)，其中ti>tj，tk=1；（一般初次取数组半长，之后每次再减半，直到增量为1）
 
@@ -25,24 +21,24 @@
 ### 		1、交换法
 
 ```java
-    public static int[] sort(int[] arr){
-        //初始化gap
-        int gap = arr.length/2;
-        while(gap > 0){
-            //插入排序
-            for(int i = gap; i < arr.length; i++){
-                int j=i;
-                while(j >= gap && arr[j-gap] > arr[j]){
-                    int temp = arr[j-gap]+arr[j];
-                    arr[j-gap] = temp-arr[j-gap];
-                    arr[j] = temp-arr[j-gap];
-                    j -= gap;
-                }
+public static int[] sort(int[] arr){
+    //初始化gap
+    int gap = arr.length/2;
+    while(gap > 0){
+        //插入排序
+        for(int i = gap; i < arr.length; i++){
+            int j=i;
+            while(j >= gap && arr[j-gap] > arr[j]){
+                int temp = arr[j-gap]+arr[j];
+                arr[j-gap] = temp-arr[j-gap];
+                arr[j] = temp-arr[j-gap];
+                j -= gap;
             }
-            gap = gap/2;
         }
-        return arr;
-    } 
+        gap = gap/2;
+    }
+    return arr;
+} 
 
 
 public static void shellSort(int[] arr) {

@@ -1,29 +1,29 @@
-# **springmvc文件上传**
+# springmvc文件上传
 
-# **一、基本介绍**
+# 一、基本介绍
 
-## **1、主要知识点**
+## 1、主要知识点
 
-**主要通过文件解析器对象org.springframework.web.multipart.commons.CommonsMultipartResolver来实现了传统文件的解析功能等等。**
+主要通过文件解析器对象org.springframework.web.multipart.commons.CommonsMultipartResolver来实现了传统文件的解析功能等等。
 
-**可以去看它的源码**
+可以去看它的源码
 
-## **2、原理图解**
+## 2、原理图解
 
-<img src="E:\black user\Java\有道云截图\image-20200513145808417.png" alt="image-20200513145808417" style="zoom:150%;" />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170711.png" alt="image-20200513145808417" style="zoom:150%;" />
 
-## **3、注意点**
+## 3、注意点
 
-**1）文件解析器的id必须固定multipartResolver**
+1）文件解析器的id必须固定multipartResolver
 
 ```
 <!--配置文件解析器对象-->
-    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <property name="maxUploadSize" value="10485760" />
-    </bean>
+</bean>
 ```
 
-**2）文件表单的属性名必须和MultipartFile方法形参名一样**
+2）文件表单的属性名必须和MultipartFile方法形参名一样
 
 ```
 <input type="file" name="upload" /><br/>
@@ -33,9 +33,9 @@
 public String fileuoload2(HttpServletRequest request, MultipartFile upload) throws Exception
 ```
 
-# **二、实现步骤**
+# 二、实现步骤
 
-## **1、配置文件解析器对象**
+## 1、配置文件解析器对象
 
 ```java
 <?xml version="1.0" encoding="UTF-8"?>
@@ -61,7 +61,7 @@ public String fileuoload2(HttpServletRequest request, MultipartFile upload) thro
     </bean>
 
     <!--前端控制器，哪些静态资源不拦截-->
-    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/js/" mapping="/js/"/>
 
     <!--配置文件解析器对象-->
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
@@ -74,7 +74,7 @@ public String fileuoload2(HttpServletRequest request, MultipartFile upload) thro
 </beans>
 ```
 
-**2、配置表单操作页面**
+2、配置表单操作页面
 
 ```java
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -95,17 +95,17 @@ public String fileuoload2(HttpServletRequest request, MultipartFile upload) thro
 </html>
 ```
 
-**3、配置文件上传解析**
+3、配置文件上传解析
 
 ```java
 @Controller
 @RequestMapping("/user")
 public class UserController {
 
-    /**
-     * 文件上传
-     * @return
-     */
+    /
+      文件上传
+      @return
+     /
     @RequestMapping("/fileupload2")
     public String fileuoload2(HttpServletRequest request, MultipartFile upload) throws Exception {
         System.out.println("springmvc文件上传...");
