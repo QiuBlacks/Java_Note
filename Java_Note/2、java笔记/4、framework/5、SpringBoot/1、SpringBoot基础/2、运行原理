@@ -1,5 +1,3 @@
-[TOC]
-
 # SpringBoot运行原理
 
 ## 一、pom.xml
@@ -194,10 +192,6 @@ public SpringApplication(ResourceLoader resourceLoader, Class... primarySources)
 
 
 ![img](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910181513.jpg)
-
-
-
-
 
 
 

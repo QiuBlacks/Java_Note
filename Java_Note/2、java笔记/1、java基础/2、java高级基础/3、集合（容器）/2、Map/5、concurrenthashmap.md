@@ -8,17 +8,17 @@ ConcurrentHashMap只是**针对put方法进行了加锁**，而对于get方法�
 
 因为对数组的操作，在主内存和工作内存中，load和use、assgin和store是必然连在一起的，一旦使用（use）发生，那load必先行发生于use之前，use前必然从主内存中加载最新的值到工作内存的变量副本里。而一旦赋值（assgin），必然先行发生于store将值传递给主内存，在write到主内存中去。==所以get方式无需加锁也能获取到最新的结果。==
 
-
 ## 2、concurrenthashmap1.7和1.8
-## 1） JDK1.7：
+
+### 1） JDK1.7
 - 使用分段锁机制实现；即Segment 通过继承ReentrantLock来进行加锁
 - 两个静态内部类 HashEntry链表数组 和 Segment数组；
 - 查询遍历链表效率太慢；
 
-<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200906164739680.png" alt="image-20200906164739680" style="zoom:67%;" />
+![img](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200929165847.png)
 
 
-## 2）JDK1.8
+### 2）JDK1.8
 - 使用数组+链表+红黑树数据结构，加锁则采用CAS和synchronized实现
 - 将 1.7 中存放数据的 HashEntry 改为 Node，但作用都是相同的
 
@@ -194,18 +194,18 @@ private void rehash(HashEntry<K,V> node) {
 
 ## 3、put 过程分析
 
-## 1）过程分析
+### 1）过程分析
 - 根据 key 计算出对应的 hash 值
 - 根据 hash 值找到对应的Segment 对象：
 - 在这个 Segment 中执行具体的 put 操作：
-  - 将当前 Segment 加锁，通过 key 的 hashcode 定位到 HashEntry
+  - 将**当前 Segment 加锁**，通过 key 的 hashcode 定位到 HashEntry
   - 遍历该 HashEntry， 如果不为空则判断传入的 key 和当前遍历的 key 是否相等，
     相等则覆盖旧的 value。
   - 为空则需要新建一个 HashEntry 并加入到 Segment 中， 同时会先判断是否需
     要扩容。
   -  最后会解除在 1 中所获取当前 Segment 的锁  
 
-## 2）源码分析
+### 2）源码分析
 ```java
 public V put(K key, V value) {
     Segment<K,V> s;
@@ -265,9 +265,7 @@ public V get(Object key) {
 
 因此，在JDK1.8中，ConcurrentHashMap的实现原理摒弃了这种设计，而是选择了与HashMap类似的**数组+链表+红黑树**的方式实现，而加锁则采用**CAS和synchronized**实现
 
-将 1.7 中存放数据的 HashEntry 改为 Node
-
-Segment数组仍然保留
+将 1.7 中存放数据的 **HashEntry 改为 Node，Segment数组仍然保留**
 
 # 一、数据结构
 ![image-20200627112826118](https://gitee.com/BlacksJack/picture-bed/raw/master/img/image-20200627112826118.png)
@@ -300,7 +298,7 @@ public ConcurrentHashMap(int initialCapacity) {
 - 判断是否需要进行初始化，如果没有，则调用initTable()进行初始化
 - 根据key的hash值计算出其应该在table中储存的位置i，f 即为当前 key 定位出的 Node（即table[i]），根据f的不同有如下三种情况：
   -  如果**table[i]==null**(即该位置的节点为空，没有发生碰撞)，则利用**CAS操作**直接存储在该位置，如果CAS操作成功则退出死循环（失败则自旋保证成功）
-  - 如果table[i]!=null(即该位置已经有其它节点，发生碰撞)，碰撞处理也有两种情况
+  - 如果**table[i] != null** (即该位置已经有其它节点，发生碰撞)，碰撞处理也有两种情况
     - 如果当前位置table[i]的 **hashcode == MOVED == -1,**即正在扩容，帮助其扩容
     - 说明table[i]的节点的hash值不等于MOVED，**synchronized锁**住**头结点table[i]**，进行插入操作 (分为**链表写入和红黑树写入**）   
 - 如果table[i]的节点是链表节点，则检查table的第i个位置的链表的元素个数是否大于了8，**大于8就需要转化为红黑树**，如果需要则调用treeifyBin函数进行转化。

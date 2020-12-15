@@ -1,5 +1,3 @@
-
-
 # Thymeleaf模板引擎
 
 ## 一、基础知识
@@ -8,6 +6,8 @@
 
 thymeleaf 跟 JSP 一样，就是运行之后，就得到纯 HTML了。 区别在与，不运行之前， thymeleaf 也是 纯 html ...
 		所以 thymeleaf 不需要 服务端的支持，就能够被以 html 的方式打开，这样就方便前端人员独立设计与调试, jsp 就不行了， 不启动服务器 jsp 都没法运行出结果来。
+
+
 
 ### 2、标准表达式语法
 
@@ -132,6 +132,8 @@ https://docs.spring.io/spring-boot/docs/2.2.5.RELEASE/reference/htmlsingle/#usin
     </body>
 </html>
 ```
+
+
 
 ### 3、编写Controller类
 

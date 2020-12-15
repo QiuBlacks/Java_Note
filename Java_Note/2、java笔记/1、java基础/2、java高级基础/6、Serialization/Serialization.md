@@ -3,12 +3,16 @@
 # 一、基本介绍
 ## 1、背景介绍
 Java平台允许我们在内存中创建可复用的Java对象，但一般情况下，只有当JVM处于运行时，这些对象才可能存在，即，这些对象的生命周期不会比JVM的生命周期更长。但在现实应用中，就可能要求在JVM停止运行之后能够保存(持久化)指定的对象，并在将来重新读取被保存的对象。Java对象序列化就能够帮助我们实现该功能。
+
+
+
 ## 2、基本概念
 - Serialization（序列化）是一种将一个对象表示为一个字节序列的过程；
 - deserialization(反序列化)是一种将这些字节序列重建成一个对象的过程。
 
- &emsp;&emsp;该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。<br>
- &emsp;&emsp;如果去掉继承Serialization会报：==java.io.NotSerializableException==
+该字节序列包括该对象的数据、有关对象的类型的信息和存储在对象中数据的类型。<br>
+
+如果去掉继承Serialization会报：==java.io.NotSerializableException==
 
 
 

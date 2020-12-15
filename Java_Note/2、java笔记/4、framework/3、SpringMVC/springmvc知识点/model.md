@@ -1,16 +1,16 @@
-# model
+# 一、model
 
 ## 一、基本介绍
 
-### 1、概念
+### 1.1、概念
 
 控制器是通过Model对象把数据传到view层的
 
-### 2、作用
+### 1.2、作用
 
 主要是保存数据，可以借助它们将数据带到前端
 
-### 3、使用方法
+### 1.3、使用方法
 
 ```java
   @RequestMapping("/testString")
@@ -36,7 +36,7 @@ ${requestScope}
 
 
 
-## 二、ModelMap
+# 二、ModelMap
 
 ### 1、继承LinkedHashMap
 
@@ -79,9 +79,7 @@ public String testVelocity(ModelMap model,String name){
 
 
 
-## 三、ModelAndView
-
-
+# 三、ModelAndView
 
 
 

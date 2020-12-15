@@ -1,8 +1,4 @@
-​	
-
 # 快速排序（Quick Sort）
-
-[TOC]
 
 # 一、基本思想
 
@@ -18,7 +14,7 @@
 
 ## 1、算法思路
 
-①. 挖坑法 
+① 挖坑法 
 
 （1）low = L; high = R; 将基准数挖出形成第一个坑a[low]。
 
@@ -30,7 +26,7 @@
 
 
 
-②. 左右指针法
+② 左右指针法
 
 用伪代码描述如下：
 
@@ -70,7 +66,7 @@ public static void quickSort(int arr[], int low, int high) {
     int right = high;
 
     int key = arr[left];
-    //条件：bao'z左边的数组比key小，右边的比key大
+    //条件：保证左边的数组比key小，右边的比key大
     while (left < right) {
         while (left < right && arr[right] >= key) {
             right--;
@@ -112,8 +108,6 @@ public static void swap(int arr[], int low, int high) {
 
 
 # 三、优化
-
-
 
 ## 1、基本概念
 
@@ -275,6 +269,7 @@ public class QuickSort {
             }
         }
     }
+    
 	//交换算法
     public static void swap(int low,int high){
         int temp = low;

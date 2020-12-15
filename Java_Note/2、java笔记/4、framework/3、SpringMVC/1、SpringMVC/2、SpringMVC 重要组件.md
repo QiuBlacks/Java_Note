@@ -1,5 +1,3 @@
-[TOC]
-
 ## 一、DispatcherServlet（前端控制器）
 
 ### 1、介绍
@@ -10,15 +8,19 @@
 
 Spring MVC 的入口函数。接收请求，响应结果，相当于转发器，中央处理器。有了 DispatcherServlet 减少了其它组件之间的耦合度。用户请求到达前端控制器，它就相当于mvc模式中的c，DispatcherServlet是整个流程控制的中心，由它调用其它组件处理用户的请求，DispatcherServlet的存在降低了组件之间的耦合性。
 
+
+
 ## 二、HandlerMapping（处理器映射器）
 
 
 
 ### 2、作用：
 
-根据请求的url查找Handler。HandlerMapping负责根据用户请求找到Handler即处理器（Controller），SpringMVC提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
+根据请求的url查找Handler。
 
+HandlerMapping负责根据用户请求URL找到Handler即处理器（Controller），SpringMVC提供了不同的映射器实现不同的映射方式，例如：配置文件方式，实现接口方式，注解方式等
 
+将在springmvc.xml中配置的或者注解的url与对应的处理类找到并进行存储，用**map<url,handler>**这样的方式来存储。
 
 ## 三、HandlerAdapter（处理器适配器）
 

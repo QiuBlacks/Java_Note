@@ -57,7 +57,7 @@ public static void shellSort(int[] arr) {
                         arr[j] = arr[j + gap];
                         arr[j + gap] = temp;
                     }
-                }
+                } 
             }
         }
     }

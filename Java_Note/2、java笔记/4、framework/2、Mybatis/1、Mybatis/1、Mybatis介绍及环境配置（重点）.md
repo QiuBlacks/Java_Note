@@ -2,6 +2,8 @@
 
 # 一、MyBatis 框架概述
 
+## 1、基本介绍
+
 mybatis 是一个优秀的基于 java 的持久层框架，它内部封装了 jdbc，使开发者只需要关注 sql 语句本身， 而不需要花费精力去处理加载驱动、创建连接、创建 statement 等繁杂的过程
 
 mybatis 通过XML或注解的方式将要执行的各种 statement 配置起来，并通过 java 对象和statement 中sql 的动态参数进行映射生成最终执行的 sql 语句，最后由 mybatis 框架执行 sql 并将结果映射为 java 对象并返回
@@ -10,29 +12,117 @@ mybatis 通过XML或注解的方式将要执行的各种 statement 配置起来�
 
 
 
-## 1、ORM 思想
+## 2、ORM 思想
 
-Object Relational Mapping，对象关系映射
+Object Relational Mapping，对象关系映射，是一种为了解决关系型数据库数据与简单Java对象（POJO）的映射关系的技术。简单的说，ORM是通过使用描述对象和数据库之间映射的元数据，将程序中的对象自动持久化到关系型数据库中。
 
 （1）实体类和数据库表一一对应，实体类属性和表中字段一一对应
 
 （2）不需要直接操作数据库表，只需操作表对应的实体类对象即可
 
-
-
-# 二、jdbc缺点分析
-
-![image-20200513133010283](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170027.png)
+而Mybatis在查询关联对象或关联集合对象时，需要**手动编写sql**来完成，所以，称之为**半自动ORM映射工具。**
 
 
 
-# 三、整体结构
+## 3、Mybatis优缺点
 
-<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170028.png" alt="image-20200513133028737" style="zoom:200%;" />
+### 1）优点
+
+与传统的数据库访问技术相比，ORM有以下优点：
+
+- 基于SQL语句编程，相当灵活，不会对应用程序或者数据库的现有设计造成任何影响，SQL写在XML里，解除sql与程序代码的耦合，便于统一管理；提供XML标签，支持编写动态SQL语句，并可重用
+- 与JDBC相比，减少了50%以上的代码量，消除了JDBC大量冗余的代码，不需要手动开关连接
+- 很好的与各种数据库兼容（因为MyBatis使用JDBC来连接数据库，所以只要JDBC支持的数据库MyBatis都支持）
+- 提供映射标签，支持对象与数据库的ORM字段关系映射；提供对象关系映射标签，支持对象关系组件维护
+- 能够与Spring很好的集成
+
+### 2）缺点
+
+- SQL语句的编写工作量较大，尤其当字段多、关联表多时，对开发人员编写SQL语句的功底有一定要求
+- SQL语句依赖于数据库，导致数据库移植性差，不能随意更换数据库
 
 
 
-# 四、环境搭配（重点）
+## 4、MyBatis框架适用场景
+
+- MyBatis专注于SQL本身，是一个足够灵活的DAO层解决方案。
+- 对性能的要求很高，或者需求变化较多的项目，如互联网项目，MyBatis将是不错的选择。
+
+
+
+
+
+# 二、JDBC和Mybatis
+
+## 1、传统jdbc缺点分析
+
+- 频繁创建数据库连接对象、释放，容易造成系统资源浪费，影响系统性能。可以使用连接池解决这个问题。但是使用jdbc需要自己实现连接池。
+- sql语句定义、参数设置、结果集处理存在硬编码。实际项目中sql语句变化的可能性较大，一旦发生变化，需要修改java代码，系统需要重新编译，重新发布。不好维护。
+- 使用preparedStatement向占有位符号传参数存在硬编码，因为sql语句的where条件不一定，可能多也可能少，修改sql还要修改代码，系统不易维护。
+- 结果集处理存在重复代码，处理麻烦。如果可以映射成Java对象会比较方便。
+
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170027.png" alt="image-20200513133010283" style="zoom:67%;" />
+
+
+
+## 2、JDBC编程有哪些不足之处，MyBatis是如何解决这些问题的？
+
+1、数据库链接创建、释放频繁造成系统资源浪费从而影响系统性能，如果使用数据库连接池可解决此问题。
+
+解决：在mybatis-config.xml中配置数据链接池，使用连接池管理数据库连接。
+
+2、Sql语句写在代码中造成代码不易维护，实际应用sql变化的可能较大，sql变动需要改变java代码。
+
+解决：将Sql语句配置在XXXXmapper.xml文件中与java代码分离。
+
+3、向sql语句传参数麻烦，因为sql语句的where条件不一定，可能多也可能少，占位符需要和参数一一对应。
+
+解决： Mybatis自动将java对象映射至sql语句。
+
+4、对结果集解析麻烦，sql变化导致解析代码变化，且解析前需要遍历，如果能将数据库记录封装成pojo对象解析比较方便。
+
+解决：Mybatis自动将sql执行结果映射至java对象。
+
+
+
+## 3、Hibernate 和 MyBatis 的区别
+
+MyBatis 是一个小巧、方便、高效、简单、直接、半自动化的持久层框架，
+
+Hibernate 是一个强大、方便、高效、复杂、间接、全自动化的持久层框架。
+
+### 1）相同点
+
+都是对jdbc的封装，都是持久层的框架，都用于dao层的开发。
+
+### 2）不同点
+
+映射关系
+
+- MyBatis 是一个半自动映射的框架，配置Java对象与sql语句执行结果的对应关系，多表关联关系配置简单
+- Hibernate 是一个全表映射的框架，配置Java对象与数据库表的对应关系，多表关联关系配置复杂
+
+SQL优化和移植性
+
+- Hibernate 对SQL语句封装，提供了日志、缓存、级联（级联比 MyBatis 强大）等特性，此外还提供 HQL（Hibernate Query Language）操作数据库，数据库无关性支持好，但会多消耗性能。如果项目需要支持多种数据库，代码开发量少，但SQL语句优化困难。
+- MyBatis 需要手动编写 SQL，支持动态 SQL、处理列表、动态生成表名、支持存储过程。开发工作量相对大些。直接使用SQL语句操作数据库，不支持数据库无关性，但sql语句优化容易。
+
+### 3）开发难易程度和学习成本
+
+- Hibernate 是重量级框架，学习使用门槛高，适合于需求相对稳定，中小型的项目，比如：办公自动化系统
+- MyBatis 是轻量级框架，学习使用门槛低，适合于需求变化频繁，大型的项目，比如：互联网电子商务系统
+
+
+
+
+
+
+
+
+
+
+
+# 三、环境搭配（重点）
 
 ## 1、环境搭建的注意事项：（重点）
 
@@ -57,6 +147,8 @@ Object Relational Mapping，对象关系映射
 第五个：映射配置文件的操作配置（select），id属性的取值必须是dao接口的方法名
 
 ​		当我们遵从了第三，四，五点之后，我们在开发中就无须再写dao的实现类。
+
+
 
 ## 2、步骤
 
@@ -190,16 +282,18 @@ SqlSessionFactory sqlSessionFactory = new SqlSessionFactoryBuilder().build(input
 
 2)打开sqlSession会话，并执行sql	 
 
-```
-   // 获取sqlSession
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        // 操作CRUD，第一个参数：指定statement，规则：命名空间+“.”+statementId
-        // 第二个参数：指定传入sql的参数：这里是用户id
-        User user = sqlSession.selectOne("MyMapper.selectUser", 1);
-        System.out.println(user);
+```java
+// 获取sqlSession
+SqlSession sqlSession = sqlSessionFactory.openSession();
+// 操作CRUD，第一个参数：指定statement，规则：命名空间+“.”+statementId
+// 第二个参数：指定传入sql的参数：这里是用户id
+User user = sqlSession.selectOne("MyMapper.selectUser", 1);
+System.out.println(user);
 ```
 
-6、缺点分析
+
+
+### 2.6、缺点分析
 
 <img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170030.png" alt="image-20200513133135334" style="zoom:200%;" />
 

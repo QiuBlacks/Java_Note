@@ -4,7 +4,7 @@
 
 ## 1、原理
 
-　　默认情况下Spring MVC将模型中的数据存储到**request域**中。当一个请求结束后，数据就失效了。如果要跨页面使用。那么需要使用到session。而@SessionAttributes注解就可以使得模型中的数据存储一份到session域中。
+默认情况下Spring MVC将模型中的数据存储到**request域**中。当一个请求结束后，数据就失效了。如果要跨页面使用。那么需要使用到session。而@SessionAttributes注解就可以使得模型中的数据存储一份到session域中。
 
  
 

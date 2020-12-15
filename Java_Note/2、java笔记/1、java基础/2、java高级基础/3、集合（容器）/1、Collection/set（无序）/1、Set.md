@@ -28,5 +28,13 @@
 
 
 
+# 二、常用方法
+
+## 1、Contains(obj)
+
+　当调用HashSet的contains(Object obj)方法时，其实是先调用每个元素的hashCode()方法来返回哈希码，如果哈希码的值相等的情况下再调用equals(obj)方法去判断是否相等，只有在这两个方法所返回的值都相等的情况下，才判定这个HashSet包含某个元素。
+
+因此，**需重写类的hashCode()方法和equals()方法**
+
 
 

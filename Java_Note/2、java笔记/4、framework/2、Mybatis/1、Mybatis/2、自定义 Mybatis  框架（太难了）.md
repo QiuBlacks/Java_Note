@@ -1,6 +1,6 @@
-# **自定义 Mybatis  框架（太难了）**
+# 自定义 Mybatis  框架（太难了）
 
-# **一、自定义框架分析**
+# 一、自定义框架分析
 
 mybatis在使用代理dao的方式实现增删改查时做什么事呢？
 
@@ -12,12 +12,18 @@ mybatis在使用代理dao的方式实现增删改查时做什么事呢？
 
 
 
-**自定义mybatis流程图![2cf31ea038b2e990f4ef9af6ea9f4f77_WEBRESOURCE44c190dd1f88fdbea8d37a5519526fd5](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170033.png)**
+自定义mybatis流程图
+
+
+
+![s's](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20201016155042.png)
 
 
 
 ![自定义mybatis开发流程图 (1)](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170034.png)
 
-# **二、手写mybatis**
+
+
+# 二、手写mybatis
 
 参考https://blog.csdn.net/weixin_44450604/article/details/87468776

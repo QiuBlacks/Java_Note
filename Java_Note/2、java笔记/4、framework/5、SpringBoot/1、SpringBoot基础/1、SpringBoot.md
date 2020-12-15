@@ -1,16 +1,10 @@
-
-
-[TOC]
-
-
-
 # SpringBoot
 
-
-
-## 一、基本介绍
+# 一、基本介绍
 
 核心思想：**约定大于配置**
+
+
 
 **主要优点：**
 
@@ -21,9 +15,11 @@
 
 
 
+Spring Boot有四大神器，分别是auto-configuration、starters、cli、actuator
 
 
-## 二、
+
+# 二、
 
 ```xml
 <!-- 父依赖 -->

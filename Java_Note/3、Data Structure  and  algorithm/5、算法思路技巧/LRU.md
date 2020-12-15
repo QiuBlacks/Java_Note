@@ -8,7 +8,7 @@ LRU 将**最近最少（久未被）使用的页面换出**。
 
 ## 1、HashMap + LinkedList（面试写这个）
 
-注意：删除key值要加个(Integer)key，不然它会将key当作list索引
+注意：**删除key值要加个(Integer)key，不然它会将key当作list索引**
 
 ```java
 class LRUCache {

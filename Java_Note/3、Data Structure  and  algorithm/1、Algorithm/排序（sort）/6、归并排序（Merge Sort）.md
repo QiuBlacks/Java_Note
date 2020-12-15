@@ -1,12 +1,12 @@
-[TOC]
-
 # 归并排序（Merge Sort）
 
 ##  一、基本介绍
 
 归并排序（MERGE-SORT）是利用归并的思想实现的排序方法，该算法采用经典的分治策略（分治法将问题分成一些小的问题然后递归求解，而治的阶段则将分的阶段得到的各答案"修补"在一起，即分而治之)。
 
-## 二、基本思想:
+
+
+## 二、基本思想
 
 ### 1、算法思路
 
@@ -45,7 +45,7 @@ private void mergeSort(int[] nums, int left, int right, int[] temp) {
         return leftPairs + rightPairs;
     }
 
-    mergeTwoSortedArray(nums, left, mid, right, temp);
+    mergeTwoSortedArray(nums, left, mid, right);
 
 }
 
@@ -59,6 +59,7 @@ private void mergeSort(int[] nums, int left, int right, int[] temp) {
  * @param mid
  * @param right arr[mid+1,right] 已经是排好序的
  */
+
 private void mergeTwoSortedArray(int[] arr, int left, int mid, int right) {
     
     // 首先计算出这个数组的长度
@@ -237,8 +238,6 @@ public class Solution {
     }
 
 }
-
-
 ```
 
 

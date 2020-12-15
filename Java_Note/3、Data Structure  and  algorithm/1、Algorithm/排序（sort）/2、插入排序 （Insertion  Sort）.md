@@ -4,7 +4,7 @@
 
 插入式排序属于内部排序法，是对于欲排序的元素以插入的方式找寻该元素的适当位置，以达到排序的目的。
 
- 
+ 遍历每个数，插入相应的位置
 
 ## 二、插入排序法
 
@@ -26,10 +26,13 @@
 public void insertionSort(int array[]) {
 		int i, j, temp = 0;
 		for (i = 1; i < array.length; i++) {
+            //数组是有序的，如果后面的大于前面的，就不用排序
 			if(array[i]<array[i-1]){
-				temp = array[i];
-                for(j = i ; j > 0 && temp < numbers[j-1] ; j --)
+				temp = array[i];	
+                //数组后移
+                for(j = i ; j > 0 && temp < array[j-1] ; j--)
 					array[j ] = array[j-1];
+                //插入
 				array[j] = temp;
 			}
 		}
@@ -40,7 +43,7 @@ public void insertionSort(int array[]) {
 
 
 
-## **四、 算法效率**
+## 四、 算法效率
 
 直接插入排序不是稳定的排序算法。
 

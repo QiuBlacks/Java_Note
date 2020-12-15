@@ -2,7 +2,9 @@
 
 # 一、基本介绍
 
-## 1、作用： 
+## 1、作用：
+
+注解实现接收http请求的json数据，将json转换为java对象。 
 
    i) 该注解用于读取Request请求的body部分数据，使用系统默认配置的HttpMessageConverter进行解析，然后把相应的数据绑定到要返回的对象上；
 
@@ -61,3 +63,12 @@ B)   PUT方式提交时， 根据request header Content-Type的值来判断:
 name=张三&age=12
 ```
 
+
+
+
+
+# @ResponseBody
+
+作用： 该注解用于将Controller的方法返回的对象，通过适当的HttpMessageConverter转换为指定格式后，写入到Response对象的body数据区。
+
+使用时机：返回的数据不是html标签的页面，而是其他某种格式的数据时（如json、xml等）使用；

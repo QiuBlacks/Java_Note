@@ -80,7 +80,7 @@ public class Logger {
         System.out.println("最终通知Logger类中的afterPrintLog方法开始记录日志了。。。");
     }
 
-    /
+    /*
       环绕通知
       问题：
            当我们配置了环绕通知之后，切入点方法没有执行，而通知方法执行了。
@@ -92,7 +92,7 @@ public class Logger {
      
       spring中的环绕通知：
            它是spring框架为我们提供的一种可以在代码中手动控制增强方法何时执行的方式。
-     /
+     */
     @Around("pt1()")
     public Object aroundPringLog(ProceedingJoinPoint pjp) throws Throwable{
         Object rtValue = null;

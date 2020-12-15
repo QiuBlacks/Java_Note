@@ -1,16 +1,16 @@
 # SpringMVC拦截器（重点）
 
-## 一、基本介绍
+# 一、基本介绍
 
-### 1、概念
+## 1、概念
 
 SpringMVC的处理器拦截器,类似于Servlet开发中的过滤器Filter，用于对处理器进行预处理和后处理。
 
 拦截器链：就是将拦截器按一定的顺序联结成一条链。在访问被拦截的方法或字段时，拦截器链中的拦截器就会按其之前定义的顺序被调用。
 
-### 2、过滤器和拦截器的区别
+## 2、过滤器和拦截器的区别
 
-（1）过滤器：
+### （1）过滤器：
 
 依赖于**servlet容器**，**任何 java web 工程都可以使用**；
 
@@ -20,7 +20,7 @@ SpringMVC的处理器拦截器,类似于Servlet开发中的过滤器Filter，用
 
 使用过滤器的目的是用来做一些过滤操作，比如：在过滤器中修改字符编码；在过滤器中修改HttpServletRequest的一些参数，包括：过滤低俗文字、危险字符等。
 
-（2）拦截器：
+### （2）拦截器：
 
 **只适用于springmvc框架**，在实现上基于Java的反射机制，属于面向切面编程（AOP）的一种运用。
 
@@ -28,7 +28,7 @@ SpringMVC的处理器拦截器,类似于Servlet开发中的过滤器Filter，用
 
 **只会拦截访问的控制器controller方法**，如果访问的是静态资源是不会进行拦截的，例如 jsp，html,css,image 或者 js 。（但可以通过springmvc配置解决）
 
-### 3、应用场景
+## 3、应用场景
 
 1）日志记录：记录请求信息的日志，以便进行信息监控、信息统计、计算PV（Page View）等。
 
@@ -40,9 +40,11 @@ SpringMVC的处理器拦截器,类似于Servlet开发中的过滤器Filter，用
 
 5）OpenSessionInView：如Hibernate，在进入处理器打开Session，在完成后关闭Session。
 
-## 二、详细属性
 
-### 1、实现方式
+
+# 二、详细属性
+
+## 1、实现方式
 
 第一种方式是要定义的（Interceptor）拦截类要实现了Spring的**HandlerInterceptor**接口
 
@@ -60,7 +62,7 @@ public class HandlerInterceptor1 extends HandlerInterceptorAdapter
 
 
 
-### 2、HandlerInterceptor 接口的3个回调方法
+## 2、HandlerInterceptor 接口的3个回调方法
 
 ```java
 public interface HandlerInterceptor {
@@ -83,13 +85,13 @@ public interface HandlerInterceptor {
 
 
 
-### 3、拦截器适配器：HandlerInterceptorAdapter
+## 3、拦截器适配器：HandlerInterceptorAdapter
 
   有时我们可能只需要实现三个回调方法中的某一个，如果实现HandlerInterceptor接口的话，三个方法必须实现，此时spring提供了一个HandlerInterceptorAdapter适配器（一种适配器设计模式的实现），允许我们只实现需要的回调方法。
 
 
 
-## 三、springmvc配置拦截器（重点）
+# 三、springmvc配置拦截器（重点）
 
 ```xml
 <!-- 配置拦截器 -->

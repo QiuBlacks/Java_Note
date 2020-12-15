@@ -1,5 +1,3 @@
-
-
 # IoC （Inversion of control ）：控制反转/反转控制
 
 # 一、基本介绍
@@ -12,9 +10,17 @@
 
 **IoC 容器是 Spring 用来实现 IoC 的载体， IoC 容器实际上就是个 Map（key，value）,Map 中存放的是各种对象。**
 
-## 2、思想
+Spring IOC 负责创建对象，管理对象（通过依赖注入（DI），装配对象，配置对象，并且管理这些对象的整个生命周期。
+
+
+
+## 2、实现机制
+
+工厂模式加反射机制
 
 不通过 new 关键字来创建对象，而是IoC 容器(Spring 框架) 通过**反射**帮助我们实例化对象。我们需要哪个对象，直接从 IoC 容器里面过去即可
+
+
 
 ## 3、控制反转
 
@@ -24,9 +30,14 @@
 
  即将原本在程序中手动创建对象的控制权，交由Spring框架来管理
 
-## 4、好处
+
+
+## 4、优点
 
 - 对象之间的耦合度或者说依赖程度降低；
+- IOC 或 依赖注入把应用的代码量降到最低。
+- 它使应用容易测试，单元测试不再需要单例和JNDI查找机制。
+- IOC容器支持加载服务时的饿汉式初始化和懒加载。
 - 资源变的容易管理；
 
 
@@ -39,13 +50,15 @@
 
 简单的容器，就是一个管理 Bean 的工厂，它主要负责初始化各种 Bean，并调用它们的生命周期方法。
 
+是Spring里面最底层的接口，包含了各种Bean的定义，读取bean配置文档，管理bean的加载、实例化，控制bean的生命周期，维护bean之间的依赖关系。
+
 ## 2、ApplicationContext
 
 ApplicationContext 是 BeanFactory 的子接口，也被称为应用上下文。
 
 ### 2.1 更加强大的功能
 
-1) 国际化i18n（MessageSource）
+1) 支持国际化i18n（MessageSource）
 
 2) 访问资源，如URL和文件（ResourceLoader）
 
@@ -55,15 +68,17 @@ ApplicationContext 是 BeanFactory 的子接口，也被称为应用上下文。
 
 5) AOP（拦截器）
 
+6）同时加载多个配置文件
+
 ### 2.2  常用实现类
 
 |     ApplicationContext常用实现类      |                             作用                             |
 | :-----------------------------------: | :----------------------------------------------------------: |
 |  AnnotationConfigApplicationContext   | 从一个或多个基于java的配置类中加载上下文定义，适用于java注解的方式。 |
-|    ClassPathXmlApplicationContext     | 从类路径下的一个或多个xml配置文件中加载上下文定义，适用于xml配置的方式。 |
-|    FileSystemXmlApplicationContext    | 从文件系统下的一个或多个xml配置文件中加载上下文定义，也就是说系统盘符中加载xml配置文件。 |
+|  **ClassPathXmlApplicationContext**   | 从类路径下的一个或多个xml配置文件中加载上下文定义，适用于xml配置的方式。 |
+|  **FileSystemXmlApplicationContext**  | 从文件系统下的一个或多个xml配置文件中加载上下文定义，也就是说系统盘符中加载xml配置文件。 |
 | AnnotationConfigWebApplicationContext |            专门为web应用准备的，适用于注解方式。             |
-|       XmlWebApplicationContext        | 从web应用下的一个或多个xml配置文件加载上下文定义，适用于xml配置方式。 |
+|     **WebXmlApplicationContext**      | 从web应用下的一个或多个xml配置文件加载上下文定义，适用于xml配置方式。 |
 
 
 
@@ -79,9 +94,13 @@ BeanFactroy采用的是**延迟加载形式**来注入Bean的，即只有在使�
 
 相对于基本的BeanFactory，ApplicationContext 唯一的不足是占用内存空间。当应用程序配置Bean较多时，程序启动较慢。
 
-### 3.2 BeanPostProcessor
+### 3.2 注册方式
 
-BeanFactory和ApplicationContext都支持BeanFactoryPostProcessor的使用，但两者之间的区别是：BeanFactory需要手动注册，而ApplicationContext则是自动注册。（Applicationcontext比 beanFactory 加入了一些更好使用的功能。而且 beanFactory 的许多功能需要通过编程实现而 Applicationcontext 可以通过配置实现。比如后处理 bean ， Applicationcontext 直接配置在配置文件即可而 beanFactory 这要在代码中显示的写出来才可以被容器识别。 ）
+BeanFactory和ApplicationContext都支持BeanFactoryPostProcessor的使用，但两者之间的区别是：
+
+BeanFactory需要手动注册，而ApplicationContext则是自动注册。
+
+（Applicationcontext比 beanFactory 加入了一些更好使用的功能。而且 beanFactory 的许多功能需要通过编程实现而 Applicationcontext 可以通过配置实现。比如后处理 bean ， Applicationcontext 直接配置在配置文件即可而 beanFactory 这要在代码中显示的写出来才可以被容器识别。 ）
 
 
 

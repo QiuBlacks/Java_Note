@@ -26,6 +26,33 @@ B是A的子结构， 即 A中有出现和B相同的结构和节点值。
 
 
 # 二、解题方法
+
+
+
+```java
+public boolean isSubStructure(TreeNode A, TreeNode B) {
+    if (A == null || B == null)
+        return false;
+    //先从根节点判断B是不是A的子结构，如果不是在分别从左右两个子树判断，
+    //只要有一个为true，就说明B是A的子结构
+    return isSub(A, B) || isSubStructure(A.left, B) || isSubStructure(A.right, B);
+}
+
+boolean isSub(TreeNode A, TreeNode B) {
+    //这里如果B为空，说明B已经访问完了，确定是A的子结构
+    if (B == null)
+        return true;
+    //如果B不为空A为空，或者这两个节点值不同，说明B树不是
+    //A的子结构，直接返回false
+    if (A == null || A.val != B.val)
+        return false;
+    //当前节点比较完之后还要继续判断左右子节点
+    return isSub(A.left, B.left) && isSub(A.right, B.right);
+}
+```
+
+
+
 ## 1、先序遍历 + 包含判断
 https://leetcode-cn.com/problems/shu-de-zi-jie-gou-lcof/solution/mian-shi-ti-26-shu-de-zi-jie-gou-xian-xu-bian-li-p/
 

@@ -1,10 +1,10 @@
-[TOC]
-
 # ArrayList（动态数组）
 
-## 一、基本介绍
+# 一、基本介绍
 
-### 1、特点
+## 1、优缺点
+
+### 1.1 优点
 
 - 底层基于数组实现容量大小动态变化
 
@@ -13,7 +13,16 @@
 - 支持快速访问、复制、序列化
 - 非同步，可以随机访问
 
-### 2、构造方法
+ArrayList 实现了 **RandomAccess** 接口，Linkedlist没有实现，因此查找的时候非常快。
+
+### 1.2 缺点
+
+- 删除元素的时候，需要做一次元素复制操作。如果要复制的元素很多，那么就会比较耗费性能。
+- 插入元素的时候，也需要做一次元素复制操作，缺点同上。
+
+ArrayList 比较适合顺序添加、随机访问的场景。
+
+## 2、构造方法
 
 ```java
 - new ArrayList();
@@ -21,7 +30,7 @@
 - new ArrayList(另外一个集合);//使用另外一个集合创建一个新集合，新集合中包含了参数的所有元素
 ```
 
-### 3、常用方法
+## 3、常用方法
 
 ```java
 add(int index,E element)
@@ -37,7 +46,7 @@ toArray()
 
 
 
-## 二、ArrayList线程不安全问题
+# 二、ArrayList线程不安全问题
 
 举个例子：
 
@@ -95,6 +104,64 @@ public class ArrayList<E>
 
 
 
-## 三、知识点
+# 三、知识点
 
-1、arraylist的扩容增长率为目前数组长度的1.5倍，当数组大小不够且将要添加数据时扩容
+## 1、扩容倍数
+
+arraylist的扩容增长率为目前数组长度的1.5倍，当数组大小不够且将要添加数据时扩容
+
+## 2、如何实现数组和 List 之间的转换？
+
+- 数组转 List：使用 Arrays. asList(array) 进行转换。
+- List 转数组：使用 List 自带的 toArray() 方法。
+
+
+
+## 3、多线程场景下如何使用 ArrayList？
+
+ArrayList 不是线程安全的，如果遇到多线程场景，可以通过 Collections 的 synchronizedList 方法将其转换成线程安全的容器后再使用。例如像下面这样：
+
+```java
+List<String> synchronizedList = Collections.synchronizedList(list);
+synchronizedList.add("aaa");
+synchronizedList.add("bbb");
+
+for (int i = 0; i < synchronizedList.size(); i++) {
+    System.out.println(synchronizedList.get(i));
+}
+```
+
+
+
+## 4、“ArrayList集合默认长度是多少？”
+
+------
+
+> **完美的回答**：默认长度为10。但是ArrayList的默认长度是有jdk版本差异的，在jdk8版本之前默认长度是10。而在jdk8版本的时候对ArrayList数组的默认长度进行了优化，将原来的默认长度10，改为了初始长度为0。当我们在首次添加元素，需要分配数组空间时，jdk自动帮我们进行了扩容操作，将初始数组长度扩容成了10。这样做有效地降低了无用内存的占用！它利用了数组扩容的特性来完成集合的这些功能，这也就是ArrayList集合查询快、增删慢的原因了！
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

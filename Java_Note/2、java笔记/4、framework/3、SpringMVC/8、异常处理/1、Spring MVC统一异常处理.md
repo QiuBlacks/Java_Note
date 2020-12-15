@@ -8,9 +8,13 @@
 
 在springmvc中，能将所有类型的异常处理从各处理过程解耦出来，既保证了相关处理过程的功能较单一，也实现了异常信息的统一处理和维护。这篇文章主要总结一下SpringMVC中如何统一处理异常。
 
+
+
 ## 2、图解
 
 ![image-20200513150419551](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170721.png)
+
+
 
 ## 3、Spring MVC 统一异常处理有以下 3 种方式：
 

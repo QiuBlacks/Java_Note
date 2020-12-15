@@ -1,8 +1,8 @@
 # LinkedList  (双向链表）
 
-## 一、基本介绍
+# 一、基本介绍
 
-### 1、特点
+## 1、特点
 
 - 基于双向链表实现
 - 支持队列，克隆和序列化操作
@@ -13,13 +13,13 @@
 
 
 
-### 2、属性
+## 2、属性
 
  提供了以下三个成员变量：size，first，last
 
 
 
-### 3、构造方法
+## 3、构造方法
 
 LinkedList() ：构造一个空的列表，没有任何元素。size = 0。first 和 last 都为 null。
 
@@ -27,12 +27,23 @@ LinkedList(Collection<? extends E> c)：构造一个包含指定 Collection 中�
 
 
 
-### 4、常用方法
+## 4、常用方法
 
+```
 add(int index, E element)：在指定的位置插入元素
-
 get
-
 remove
-
 insert
+```
+
+
+
+
+
+
+
+
+
+
+
+二、

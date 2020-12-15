@@ -58,7 +58,7 @@ public class Solution {
 
 第一次相遇：
 
-​		f=2s, f  = 2s+b;  得：f  = 2nb，s=nb
+​		f=2s, f  =  s + nb;  得：f  = 2nb，s=nb
 
 ​		又：所有到达环入口走的步数为 a+mb
 

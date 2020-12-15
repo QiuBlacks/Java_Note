@@ -1,4 +1,4 @@
-[TOC]
+
 
 刷题网址 ：https://www.nowcoder.com/ta/sql
 
@@ -27,7 +27,8 @@ PRIMARY KEY (`emp_no`));
 #运行时间：17ms ,占用内存：4756k
 select * from employees
     order by hire_date desc
-    limit 1; 
+    limit 1;
+    
 #运行时间：12ms  占用内存：3324k
 SELECT s1.emp_no , s1.birth_date, s1.first_name,s1.last_name,s1.gender,s1.hire_date
 FROM employees AS s1 WHERE s1.hire_date = (SELECT MAX(hire_date) FROM employees);    

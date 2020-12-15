@@ -1,6 +1,6 @@
 # SpringMVC
 
-## 一、MVC  模型
+# 一、MVC  模型
 
 MVC 全名是 Model View Controller，是模型(model)－视图(view)－控制器(controller)的缩写，是一种用于设计创建 Web 应用程序表现层的模式。MVC 中每个部分各司其职：
 
@@ -32,7 +32,17 @@ MVC 全名是 Model View Controller，是模型(model)－视图(view)－控制�
 
 
 
-## 二、SpringMVC位置（表现层）
+## 4、好处
+
+分层设计，实现了业务系统各个组件之间的解耦，有利于业务系统的可扩展性，可维护性。
+
+有利于系统的并行开发，提升开发效率。
+
+
+
+
+
+# 二、SpringMVC位置（控制层，表现层）
 
 
 
@@ -40,7 +50,7 @@ MVC 全名是 Model View Controller，是模型(model)－视图(view)－控制�
 
 
 
-## 三、SpringMVC 的优势
+# 三、SpringMVC 的优势
 
 1、清晰的角色划分：
 
@@ -84,27 +94,39 @@ MVC 全名是 Model View Controller，是模型(model)－视图(view)－控制�
 
 
 
-## 四、SpringMVC的执行流程（重点）
+# 四、SpringMVC的执行流程（重点）
 
-<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170625.png" alt="image-20200513141457038" style="zoom:200%;" />
+<img src="https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910170625.png" alt="image-20200513141457038" style="zoom: 100%;" />
 
-1. 用户发起请求到前端控制器（Controller）
-2. 前端控制器没有处理业务逻辑的能力，需要找到具体的模型对象处理（Handler），到处理器映射器（HandlerMapping）中查找Handler对象（Model）
-3. HandlerMapping返回执行链，包含了2部分内容： ① Handler对象       ② 拦截器数组
-4. 前端处理器通过处理器适配器包装后执行Handler对象
-5. 处理业务逻辑
-6. Handler处理完业务逻辑，返回ModelAndView对象，其中view是视图名称，不是真正的视图对象
-7. 将ModelAndView返回给前端控制器
-8. 视图解析器（ViewResolver）返回真正的视图对象（View）
-9. （此时前端控制器中既有视图又有Model对象数据）前端控制器根据模型数据和视图对象，进行视图渲染
-10. 返回渲染后的视图（html/json/xml）返回
-11. 给用户产生响应
+（1）用户发送请求至前端控制器DispatcherServlet；
+
+（2） DispatcherServlet收到请求后，调用HandlerMapping处理器映射器，请求获取Handle处理器；
+
+（3）处理器映射器根据**请求url**找到具体的处理器，生成**处理器对象Handler及处理器拦截器(如果有则生成)**一并返回给DispatcherServlet；
+
+（4）DispatcherServlet 调用 HandlerAdapter处理器适配器；
+
+（5）HandlerAdapter 经过适配调用 具体处理器(Handler，也叫后端控制器)，并执行处理器Handler；
+
+（6）Handler执行完成返回ModelAndView给HandlerAdapter；
+
+（7）HandlerAdapter将Handler执行结果ModelAndView返回给DispatcherServlet；
+
+（8）DispatcherServlet将ModelAndView传给ViewResolver视图解析器进行解析，根据逻辑视图名解析成真正的视图(jsp)；
+
+（9）ViewResolver解析后返回具体View；
+
+（10）DispatcherServlet对View进行渲染视图（即将模型数据填充至视图中）
+
+（11）DispatcherServlet响应用户。
 
 
 
-## 五、SpringMVC 和 和 Struts2  的优略分析
 
-### 1、共同点：
+
+# 五、SpringMVC 和 和 Struts2  的优略分析
+
+## 1、共同点：
 
 它们都是表现层框架，都是基于 MVC 模型编写的。
 
@@ -112,7 +134,7 @@ MVC 全名是 Model View Controller，是模型(model)－视图(view)－控制�
 
 它们处理请求的机制都是一个核心控制器。
 
-### 2、区别：
+## 2、区别：
 
 Spring MVC 的入口是 Servlet, 而 Struts2 是 Filter
 

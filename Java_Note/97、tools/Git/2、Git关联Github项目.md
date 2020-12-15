@@ -1,10 +1,14 @@
 
 
-[TOC]
 
 
+工作目录(working directory)，暂存区域(staging area)，以及本地仓库(local repository)，Remote repository远程仓库
 
 ![image-20200515093220960](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20200910183623.png)
+
+
+
+
 
 
 
@@ -60,7 +64,7 @@ git clone url  //url为项目服务器地址或github地址
 
 ​	也可以 git add -A全部更新
 
-3、git commit -m "java_note_update"	
+3、git commit -m "source-code-update"	
 
 4、 git push
 

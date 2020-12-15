@@ -1,18 +1,14 @@
-
-
-[TOC]
-
 # HashSet
 
-## 一、基本介绍
+# 一、基本介绍
 
-### 1、特点：
+## 1、特点：
 
 无序性：无序性指的是元素在底层存储的位置是无序的，不等于随机性；
 
 不可重复性：当向Set中添加相同的元素时，只能添加进第一个，后面的不能被添加进去
 
-### 2、常用构造方法
+## 2、常用构造方法
 
 ```java
 //构造一个包含指定集合中的元素的新集合。 
@@ -25,7 +21,15 @@ HashSet(int initialCapacity, float loadFactor)
 
 
 
-### 3、什么是初始化大小与装载因子：
+```
+HashSet<> set = new HashSet<>(map.values());//构造直接添加集合，很方便
+```
+
+
+
+
+
+## 3、什么是初始化大小与装载因子：
 
 初始化尺寸就是当创建哈希表（HashSet内部用哈希表的数据结构）的时候桶（buckets）的数量。如果当前的尺寸已经满了，那么桶的数量会自动增长。
 
@@ -39,7 +43,7 @@ HashSet(int initialCapacity, float loadFactor)
 
 例如：如果内部容量为16，装载因子为0.75，那么当表中有12个元素的时候，桶的数量就会自动增长
 
-### 4、HashSet中的一些重要方法：
+## 4、HashSet中的一些重要方法：
 
 ```
   boolean add(E e)：如果不存在则添加，存在则返回false。
@@ -51,13 +55,13 @@ HashSet(int initialCapacity, float loadFactor)
 
 
 
-## 二、HashSet中元素的存储原理（哈希算法）：
+# 二、HashSet中元素的存储原理（哈希算法）：
 
 当向Set中添加对象时，首先调用此对象所在类的hashCode()方法，计算次对象的哈希值，此哈希值决定了此对象在Set中存放的位置；若此位置没有被存储对象则直接存储，若已有对象则通过对象所在类的equals()比较两个对象是否相同，相同则不能被添加。
 
-HashSet存放的是哈希值，Hashset存储元素的顺序并不是按照存入时的顺序(和List显然不同)，是按照哈希值来存的，所以取数据也是按照哈希值取的。		    		    
+HashSet存放的是哈希值，Hashset存储元素的顺序并不是按照存入时的顺序(和List显然不同)，是按照**哈希值**来存的，所以取数据也是按照哈希值取的。		    		    
 
-HashSet不存入重复元素的规则：使用hashcode和equals。 那么HashSet是如何检查重复？其实原理：HashSet会通过元素的hashcode()和equals()方法进行判断，当试图将元素加入到Set集合中，HashSet首先会使用对象的hashcode来判断对象加入的位置。
+HashSet不存入重复元素的规则：使用**hashcode和equals**。 那么HashSet是如何检查重复？其实原理：HashSet会通过元素的hashcode()和equals()方法进行判断，当试图将元素加入到Set集合中，HashSet首先会使用对象的hashcode来判断对象加入的位置。
 
 同时也会与其他已经加入的对象的hashcode进行比较，如果没有相等的hashcode，HashSet就认为这个对象之前不存在，如果之前存在同样的hashcode值，就会进一步的比较equals()方法，如果equals()比较返回结果是true，那么认为该对象在集合中的对象是一模一样的，不会将其加入；
 
@@ -99,6 +103,20 @@ public class HashSet<E>
 
 
 
+
+# 四、遍历
+
+```
+Iterator iterator = set.iterator();
+		while (iterator.hasNext()) {
+			System.out.println(iterator.next());			
+		}	
+		//或者这样
+		for (String s:set) {
+			System.out.println(s);
+		}
+
+```
 
 
 

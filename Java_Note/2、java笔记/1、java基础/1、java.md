@@ -49,7 +49,7 @@ java是解释型的语言，因为虽然java也需要编译，编译成.class文
 
 ##  三、知识体系
 
-![image](https://www.pdai.tech/_images/java_basic.png)
+![image](https://gitee.com/BlacksJack/picture-bed/raw/master/img/20201003165832.png)
 
 
 

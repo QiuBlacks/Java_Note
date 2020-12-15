@@ -1,14 +1,12 @@
-
-
 # Spring 框架使用的设计模式
 
-## 一、工厂设计模式 
+# 一、工厂设计模式 
 
-### 1、基本介绍
+## 1、基本介绍
 
 ​			Spring使用工厂模式通过 `BeanFactory`、`ApplicationContext` 创建 bean 对象。
 
-### 2、两者对比：
+## 2、两者对比：
 
 - `BeanFactory` ：延迟注入(使用到某个 bean 的时候才会注入),相比于`BeanFactory`来说会占用更少的内存，程序启动速度更快。
 - `ApplicationContext` ：容器启动的时候，不管你用没用到，一次性创建所有 bean 。`BeanFactory` 仅提供了最基本的依赖注入支持，`ApplicationContext` 扩展了 `BeanFactory` ,除了有`BeanFactory`的功能还有额外更多功能，所以一般开发人员使用`ApplicationContext`会更多。
@@ -21,24 +19,24 @@ ApplicationContext的三个实现类：
 
 
 
-## 二、单例设计模式 
+# 二、单例设计模式 
 
-### 1、基本介绍
+## 1、基本介绍
 
 在我们的系统中，有一些对象其实我们只需要一个，比如说：线程池、缓存、对话框、注册表、日志对象、充当打印机、显卡等设备驱动程序的对象。事实上，这一类对象只能有一个实例，如果制造出多个实例就可能会导致一些问题的产生，比如：程序的行为异常、资源使用过量、或者不一致性的结果。
 
-==Spring 中的 Bean 默认作用域都是单例的==
+Spring 中的 Bean **默认作用域都是单例**的
 
 ==Spring 通过 `ConcurrentHashMap` 实现单例注册表的特殊方式实现单例模式==
 
 
 
-### 2、使用单例模式的好处
+## 2、使用单例模式的好处
 
 - 对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；
 - 由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。
 
-### 3、Spring 实现单例的方式
+## 3、Spring 实现单例的方式
 
 ```java
 //xml
@@ -49,7 +47,7 @@ ApplicationContext的三个实现类：
 
 
 
-## 三、代理设计模式 : AOP的实现
+# 三、代理设计模式 : AOP的实现
 
 ### 1、基本介绍
 
@@ -69,7 +67,7 @@ Spring AOP 已经集成了 AspectJ ，AspectJ 应该算的上是 Java 生态系�
 
 
 
-## 四、模板方法模式
+# 四、模板方法模式
 
 ### 1、基本介绍
 
@@ -111,7 +109,7 @@ public class TemplateImpl extends Template {
 
 
 
-## 五、适配器模式
+# 五、适配器模式
 
 ### 1、基本介绍
 
@@ -121,7 +119,9 @@ public class TemplateImpl extends Template {
 
 ### 2、spring AOP中的适配器模式
 
-我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是`AdvisorAdapter` 。Advice 常用的类型有：`BeforeAdvice`（目标方法调用前,前置通知）、`AfterAdvice`（目标方法调用后,后置通知）、`AfterReturningAdvice`(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:`MethodBeforeAdviceInterceptor`、`AfterReturningAdviceAdapter`、`AfterReturningAdviceInterceptor`。Spring预定义的通知要通过对应的适配器，适配成 `MethodInterceptor`接口(方法拦截器)类型的对象（如：`MethodBeforeAdviceInterceptor` 负责适配 `MethodBeforeAdvice`）。
+我们知道 Spring AOP 的实现是基于代理模式，但是 Spring AOP 的增强或通知(Advice)使用到了适配器模式，与之相关的接口是`AdvisorAdapter` 。
+
+Advice 常用的类型有：BeforeAdvice（目标方法调用前,前置通知）、AfterAdvice（目标方法调用后,后置通知）、AfterReturningAdvice(目标方法执行结束后，return之前)等等。每个类型Advice（通知）都有对应的拦截器:MethodBeforeAdviceInterceptor、AfterReturningAdviceAdapter、AfterReturningAdviceInterceptor。**Spring预定义的通知要通过对应的适配器，适配成 MethodInterceptor接口(方法拦截器)类型的对象**（如：MethodBeforeAdviceInterceptor 负责适配 MethodBeforeAdvice）。
 
 
 
@@ -147,7 +147,7 @@ if(mappedHandler.getHandler() instanceof MultiActionController){
 
 
 
-## 六、装饰者模式
+# 六、装饰者模式
 
 ### 1、基本介绍
 
@@ -161,7 +161,7 @@ Spring 中配置 DataSource 的时候，DataSource 可能是不同的数据库�
 
 
 
-## 七、观察者模式
+# 七、观察者模式
 
 ### 1、基本介绍
 
@@ -179,11 +179,9 @@ Spring 中配置 DataSource 的时候，DataSource 可能是不同的数据库�
 
 ### 2、Spring 事件驱动模型中的三种角色
 
-1. #### 事件角色
-
-2. #### 事件监听者角色
-
-3. #### 事件发布者角色
+- 事件角色
+- 事件监听者角色
+- 事件发布者角色
 
 
 
