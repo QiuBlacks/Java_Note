@@ -19,8 +19,8 @@
 1、 绑定github用户名和邮箱
 
 ```java
-$ git config --global user.name "BlackQiu"
-$ git config --global user.email "1789729227@qq.com"
+git config --global user.name "BlacksQiu"
+git config --global user.email "1789729227@qq.com"
 ```
 
 2、 生成密钥并查看复制
@@ -42,7 +42,7 @@ git init
 4、关联
 
 ```java
- git remote add origin  url //添加远程仓库
+git remote add origin https://gitee.com/BlacksQiu/source-code.git //添加远程仓库
  git push -u origin master //第一次将本地仓库上传至Github的仓库并进行关联
 ```
 
@@ -58,6 +58,8 @@ git clone url  //url为项目服务器地址或github地址
 
 ## 三、更新项目
 
+### 第一次后
+
 1、git status
 
 2、git add file，file 为修改文件名
@@ -69,6 +71,18 @@ git clone url  //url为项目服务器地址或github地址
 4、 git push
 
 
+
+## 删除文件
+
+```
+git rm 文件命
+git commit -m
+git push
+```
+
+
+
+git remote set-url origin  https://gitee.com/BlacksJack/source-code.git
 
 ## 四、忽略文件上传
 
